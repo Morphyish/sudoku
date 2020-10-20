@@ -1,4 +1,6 @@
-*Looking for a shareable component template? Go here --> [sveltejs/component-template](https://github.com/sveltejs/component-template)*
+# Sudoku
+
+A small app to generate and solve some sudoku
 
 ---
 
