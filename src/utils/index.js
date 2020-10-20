@@ -1,0 +1,6 @@
+export { removeSymmetricalIndexes } from './removeSymmetricalIndexes'
+export { rotate } from './rotate'
+export { shift } from './shift'
+export { shuffle } from './shuffle'
+export { switchColumns } from './switchColumns'
+export { switchRows } from './switchRows'
