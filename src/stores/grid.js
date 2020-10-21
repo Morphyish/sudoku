@@ -8,7 +8,7 @@ function gridStore() {
 
     grid.subscribe(snapshot => {
         if (snapshot) {
-            helper.update([...snapshot])
+            helper.updateFrom([...snapshot])
         }
     })
 
@@ -55,7 +55,7 @@ function gridStore() {
         })
     }
 
-    const setValueOf = (col, row, value) => {
+    const setCell = (col, row, value) => {
         grid.update(snapshot => {
             const gridToFill = [...snapshot]
             gridToFill[row][col] = value
@@ -68,7 +68,7 @@ function gridStore() {
         ...grid,
         generate,
         getCell,
-        setValueOf,
+        setCell,
         trim,
     }
 }

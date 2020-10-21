@@ -18,7 +18,7 @@
         const key = parseInt(event.key)
 
         if (allowedKeys.includes(key)) {
-            grid.setValueOf(col, row, key)
+            grid.setCell(col, row, key)
         }
     }
 </script>

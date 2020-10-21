@@ -22,11 +22,16 @@ function sudokuStore() {
                 nextStep: undefined,
             }))
             if (isDone(snapshot)) {
-                const isValid = validateGrid(snapshot)
+                const isValid = validateGrid(snapshot, get(helper))
                 if (isValid) {
                     sudoku.update(state => ({
                         ...state,
                         isDone: true,
+                    }))
+                } else {
+                    sudoku.update(state => ({
+                        ...state,
+                        isValid,
                     }))
                 }
             }
@@ -82,7 +87,7 @@ function sudokuStore() {
     }
 
     const getNextStep = () => {
-        const { solved, method, value, coordinates: [row, col] } = nextStep(get(helper))
+        const { solved, method, value, coordinates: [row, col] } = nextStep(helper, true)
         if (solved) {
             sudoku.update(state => ({
                 ...state,
@@ -99,17 +104,19 @@ function sudokuStore() {
     }
 
     const solveNextStep = () => {
-        const { solved, value, coordinates: [row, col] } = nextStep(get(helper))
-        if (solved) {
-            grid.setValueOf(col, row, value)
+        const { solved, value, coordinates: [row, col] } = nextStep(helper)
+        if (solved && value > 0) {
+            grid.setCell(col, row, value)
         }
     }
 
     const solveAll = () => {
         while (!isDone(get(grid))) {
-            const { solved, value, coordinates: [row, col] } = nextStep(get(helper))
+            const { solved, value, coordinates: [row, col] } = nextStep(helper)
             if (solved) {
-                grid.setValueOf(col, row, value)
+                if (value > 0) {
+                    grid.setCell(col, row, value)
+                }
             } else {
                 break;
             }
