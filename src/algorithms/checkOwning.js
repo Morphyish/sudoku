@@ -1,8 +1,23 @@
 export function checkOwning(helper, dryRun) {
     for (let i = 0; i < 9; i++) {
         for (let j = 0; j < 9; j += 3) {
-            const ownInRow = checkSquare(helper, i, j)
-            const takenInRow = findTaken(helper, ownInRow, i, j, dryRun)
+            const takenInRow = new Set()
+            const ownInRow = sqRow(helper, i, j)
+
+            for (let k = 0; k < 6; k++) {
+                const index = (j + k + 3) % 9
+                ownInRow.forEach(num => {
+                    const cell = helper.getCell(index, i)
+                    if (!(cell.indexOf(num) >= 0)) {
+                        return
+                    }
+                    if (!dryRun) {
+                        helper.removeFromCell(index, i, num)
+                    }
+                    takenInRow.add(num)
+                })
+            }
+
             if (takenInRow.size > 0) {
                 const rowsAnchor = 3 * Math.floor(i / 3)
                 const square = `(${rowsAnchor + 1}, ${j + 1}) -> (${rowsAnchor + 3}, ${j + 3})`
@@ -14,8 +29,23 @@ export function checkOwning(helper, dryRun) {
                 }
             }
 
-            const ownInCol = checkSquare(helper, j, i)
-            const takenInCol = findTaken(helper, ownInCol, j, i, dryRun)
+            const takenInCol = new Set()
+            const ownInCol = sqCol(helper, j, i)
+
+            for (let k = 0; k < 6; k++) {
+                const index = (j + k + 3) % 9
+                ownInCol.forEach(num => {
+                    const cell = helper.getCell(i, index)
+                    if (!(cell.indexOf(num) >= 0)) {
+                        return
+                    }
+                    if (!dryRun) {
+                        helper.removeFromCell(i, index, num)
+                    }
+                    takenInCol.add(num)
+                })
+            }
+
             if (takenInCol.size > 0) {
                 const rowAnchor = 3 * Math.floor(i / 3)
                 const square = `(${j + 1}, ${rowAnchor + 1}) -> (${j + 3}, ${rowAnchor + 3})`
@@ -35,41 +65,40 @@ export function checkOwning(helper, dryRun) {
     }
 }
 
-function checkSquare(helper, indexA, indexB) {
-    const anchorA = 3 * Math.floor(indexA / 3)
-    const anchorB = 3 * Math.floor(indexB / 3)
-    let ownInLine = new Set()
-    for (let b = anchorB; b < anchorB + 3; b++) {
-        const own = new Set(helper.getCell(b, indexA))
-        ownInLine = new Set([...ownInLine, ...own])
+function sqRow(helper, row, col) {
+    const rowAnchor = 3 * Math.floor(row / 3)
+    const colAnchor = 3 * Math.floor(col / 3)
+    let ownInRow = new Set()
+    for (let c = colAnchor; c < colAnchor + 3; c++) {
+        const own = new Set(helper.getCell(c, row))
+        ownInRow = new Set([...ownInRow, ...own])
     }
-    for (let a = anchorA; a < anchorA + 3; a++) {
-        if (a === indexA) {
+    for (let r = rowAnchor; r < rowAnchor + 3; r++) {
+        if (r === row) {
             continue
         }
-        for (let b = anchorB; b < anchorB + 3; b++) {
-            helper.getCell(b, a).forEach(n => ownInLine.delete(n))
+        for (let c = colAnchor; c < colAnchor + 3; c++) {
+            helper.getCell(c, r).forEach(n => ownInRow.delete(n))
         }
     }
-    return ownInLine
+    return ownInRow
 }
 
-function findTaken(helper, ownInLine, a, b, dryRun) {
-    const taken = new Set()
-
-    for (let i = 0; i < 6; i++) {
-        const index = (b + i + 3) % 9
-        ownInLine.forEach(num => {
-            const cell = helper.getCell(index, a)
-            if (!(cell.indexOf(num) >= 0)) {
-                return
-            }
-            if (!dryRun) {
-                helper.removeFromCell(index, a, num)
-            }
-            taken.add(num)
-        })
+function sqCol(helper, row, col) {
+    const rowAnchor = 3 * Math.floor(row / 3)
+    const colAnchor = 3 * Math.floor(col / 3)
+    let ownInCol = new Set()
+    for (let r = rowAnchor; r < rowAnchor + 3; r++) {
+        const own = new Set(helper.getCell(col, r))
+        ownInCol = new Set([...ownInCol, ...own])
     }
-
-    return taken
+    for (let r = rowAnchor; r < rowAnchor + 3; r++) {
+        for (let c = colAnchor; c < colAnchor + 3; c++) {
+            if (c === col) {
+                continue
+            }
+            helper.getCell(c, r).forEach(n => ownInCol.delete(n))
+        }
+    }
+    return ownInCol
 }
