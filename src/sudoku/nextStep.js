@@ -11,23 +11,23 @@ export function nextStep(helper, dryRun = false) {
             algorithm: sectorUpdate,
         },
         {
-            name: 'Check Owning',
+            name: 'Square Owning',
             algorithm: checkOwning,
         },
         {
-            name: 'Check Naked Tuple',
+            name: 'Naked Tuple',
             algorithm: checkNakedTuple,
         },
         {
-            name: 'Check Hidden Tuple',
+            name: 'Hidden Tuple',
             algorithm: checkHiddenTuple,
         },
     ]
 
     for (const method of methods) {
         const { solved, ...result } = method.algorithm(helper, dryRun)
-        console.log(method.name, solved)
         if (solved) {
+            console.log(method.name)
             return {
                 solved,
                 method: method.name,
