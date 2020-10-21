@@ -12,10 +12,10 @@ function gridStore() {
         }
     })
 
-    const getCell = (x, y) => {
+    const getCell = (col, row) => {
         const snapshot = get(grid)
 
-        return snapshot[y][x]
+        return snapshot[row][col]
     }
 
     const generate = () => {
@@ -26,10 +26,10 @@ function gridStore() {
     }
 
     const getCoordinatesFromIndex = index => {
-        const x = index % 9
-        const y = index / 9 | 0
+        const col = index % 9
+        const row = index / 9 | 0
 
-        return [x, y]
+        return [col, row]
     }
 
     const trim = () => {
@@ -50,15 +50,15 @@ function gridStore() {
                 indexToRemove = Math.floor(Math.random() * 81)
             }
 
-            const [x, y] = getCoordinatesFromIndex(indexToRemove)
-            return removeSymmetricalIndexes(gridToTrim, x, y)
+            const [col, row] = getCoordinatesFromIndex(indexToRemove)
+            return removeSymmetricalIndexes(gridToTrim, col, row)
         })
     }
 
-    const setValueOf = (x, y, value) => {
+    const setValueOf = (col, row, value) => {
         grid.update(snapshot => {
             const gridToFill = [...snapshot]
-            gridToFill[y][x] = value
+            gridToFill[row][col] = value
 
             return gridToFill
         })

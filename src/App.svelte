@@ -1,5 +1,6 @@
 <script>
 	import Grid from './components/Grid.svelte'
+	import Tip from './components/Tip.svelte'
 	import NextStep from './components/NextStep.svelte'
 
 	import { onMount } from 'svelte'
@@ -25,9 +26,14 @@
 		<button on:click={sudoku.start}>Generate new grid</button>
 		<button on:click={grid.trim}>Remove numbers</button>
 		<button on:click={sudoku.validate}>Validate grid</button>
-		<button on:click={sudoku.solveNextStep}>Next step</button>
+		<button on:click={sudoku.toggleHelpers}>Toggle helpers</button>
+		<button on:click={sudoku.getTip}>Get tip</button>
+		<button on:click={sudoku.getNextStep}>Show next step</button>
+		<button on:click={sudoku.solveNextStep}>Solve next step</button>
+		<button on:click={sudoku.solveAll}>Solve</button>
 		<button on:click={sudoku.save}>Save</button>
 	</div>
+	<Tip />
 	<NextStep />
 </main>
 

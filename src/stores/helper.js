@@ -4,10 +4,10 @@ import { removeValueFromLines, removeValueFromSquares } from '../helper'
 function helperStore() {
     const helper = writable([])
 
-    const getCell = (x, y) => {
+    const getCell = (col, row) => {
         const snapshot = get(helper)
 
-        return snapshot[y][x]
+        return snapshot[row][col]
     }
 
     const init = () => {
@@ -27,16 +27,16 @@ function helperStore() {
         helper.update(snapshot => {
             let updatedHelper = [...snapshot]
 
-            for (let i = 0; i < 9; i++) {
-                for (let j = 0; j < 9; j++) {
-                    if (grid[i][j] === 0) {
+            for (let col = 0; col < 9; col++) {
+                for (let row = 0; row < 9; row++) {
+                    if (grid[col][row] === 0) {
                         continue
                     }
 
-                    updatedHelper = removeValueFromLines(updatedHelper, i, j, grid[i][j])
-                    updatedHelper = removeValueFromSquares(updatedHelper, i, j, grid[i][j])
+                    updatedHelper = removeValueFromLines(updatedHelper, col, row, grid[col][row])
+                    updatedHelper = removeValueFromSquares(updatedHelper, col, row, grid[col][row])
 
-                    updatedHelper[i][j] = []
+                    updatedHelper[col][row] = []
                 }
             }
 

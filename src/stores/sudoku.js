@@ -1,13 +1,14 @@
 import { get, writable } from 'svelte/store'
-import { isDone, validate as validateGrid } from '../sudoku'
+import { isDone, nextStep, validate as validateGrid } from '../sudoku'
 import { grid } from './grid'
 import { helper } from './helper'
-import { easyUpdate } from '../algorithms'
 
 const initialState = {
     isValid: true,
     isDone: false,
-    nextStep: undefined
+    showHelpers: false,
+    tip: undefined,
+    nextStep: undefined,
 }
 
 function sudokuStore() {
@@ -17,6 +18,7 @@ function sudokuStore() {
         if (snapshot) {
             sudoku.update(state => ({
                 ...state,
+                tip: undefined,
                 nextStep: undefined,
             }))
             if (isDone(snapshot)) {
@@ -62,17 +64,55 @@ function sudokuStore() {
         }))
     }
 
-    const solveNextStep = () => {
-        const { solved, value, coordinates } = easyUpdate(get(helper))
-        console.log(solved, value, coordinates)
+    const toggleHelpers = () => {
+        sudoku.update(state => ({
+            ...state,
+            showHelpers: !state.showHelpers,
+        }))
+    }
+
+    const getTip = () => {
+        const { solved, method } = nextStep(get(helper))
         if (solved) {
             sudoku.update(state => ({
                 ...state,
+                tip: method,
+            }))
+        }
+    }
+
+    const getNextStep = () => {
+        const { solved, method, value, coordinates: [row, col] } = nextStep(get(helper))
+        if (solved) {
+            sudoku.update(state => ({
+                ...state,
+                tip: method,
                 nextStep: {
                     value,
-                    coordinates,
+                    coordinates: {
+                        row: row + 1,
+                        col: col + 1,
+                    },
                 },
             }))
+        }
+    }
+
+    const solveNextStep = () => {
+        const { solved, value, coordinates: [row, col] } = nextStep(get(helper))
+        if (solved) {
+            grid.setValueOf(col, row, value)
+        }
+    }
+
+    const solveAll = () => {
+        while (!isDone(get(grid))) {
+            const { solved, value, coordinates: [row, col] } = nextStep(get(helper))
+            if (solved) {
+                grid.setValueOf(col, row, value)
+            } else {
+                break;
+            }
         }
     }
 
@@ -88,7 +128,11 @@ function sudokuStore() {
         ...sudoku,
         start,
         validate,
+        toggleHelpers,
+        getTip,
+        getNextStep,
         solveNextStep,
+        solveAll,
         save,
         load,
     }

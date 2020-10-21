@@ -1,15 +1,15 @@
 <script>
     import Cell from './Cell.svelte'
 
-    const rows = Array(9)
-    const columns = Array(9)
+    const rows = Array.from(Array(9).keys())
+    const columns = Array.from(Array(9).keys())
 </script>
 
 <div class="grid">
-    {#each rows as row, x}
+    {#each rows as row}
         <div class="row">
-            {#each columns as column, y}
-                <Cell {x} {y} />
+            {#each columns as col}
+                <Cell {row} {col} />
             {/each}
         </div>
     {/each}

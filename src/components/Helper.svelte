@@ -1,11 +1,11 @@
 <script>
     import { helper } from '../stores'
 
-    export let x = 0
-    export let y = 0
+    export let col = 0
+    export let row = 0
 
     let values = []
-    $: $helper, values = helper.getCell(x, y)
+    $: $helper, values = helper.getCell(col, row)
 </script>
 
 <div class="helper">

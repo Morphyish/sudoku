@@ -1,13 +1,13 @@
 <script>
     import Helper from './Helper.svelte'
 
-    import { grid } from '../stores'
+    import { grid, sudoku } from '../stores'
 
-    export let x = 0
-    export let y = 0
+    export let col = 0
+    export let row = 0
 
     let cell = 0
-    $: $grid, cell = grid.getCell(x, y)
+    $: $grid, cell = grid.getCell(col, row)
 
     const printCoordinates = event => {
         if (event.isComposing || event.keyCode === 229) {
@@ -18,7 +18,7 @@
         const key = parseInt(event.key)
 
         if (allowedKeys.includes(key)) {
-            grid.setValueOf(x, y, key)
+            grid.setValueOf(col, row, key)
         }
     }
 </script>
@@ -26,8 +26,8 @@
 <div class="cell" on:keydown={printCoordinates} tabindex="0">
     {#if cell}
         {cell}
-    {:else}
-        <Helper {x} {y} />
+    {:else if $sudoku.showHelpers}
+        <Helper {col} {row} />
     {/if}
 </div>
 

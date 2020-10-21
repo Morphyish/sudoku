@@ -1,11 +1,11 @@
 import { removeValueFromCell } from './removeValueFromCell'
 
-export function removeValueFromLines(helper, x, y, value) {
+export function removeValueFromLines(helper, col, row, value) {
     const updatedHelper = [...helper]
 
     for (let k = 0; k < 9; k++) {
-        updatedHelper[x][k] = removeValueFromCell(updatedHelper[x][k], value)
-        updatedHelper[k][y] = removeValueFromCell(updatedHelper[k][y], value)
+        updatedHelper[col][k] = removeValueFromCell(updatedHelper[col][k], value)
+        updatedHelper[k][row] = removeValueFromCell(updatedHelper[k][row], value)
     }
 
     return updatedHelper

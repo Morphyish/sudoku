@@ -1,11 +1,11 @@
 export function easyUpdate(helper) {
-    for (let i = 0; i < 9; i++) {
-        for (let j = 0; j < 9; j++) {
-            if (helper[i][j].length === 1) {
+    for (let row = 0; row < 9; row++) {
+        for (let col = 0; col < 9; col++) {
+            if (helper[row][col].length === 1) {
                 return {
                     solved: true,
-                    value: helper[i][j][0],
-                    coordinates: [i, j],
+                    value: helper[row][col][0],
+                    coordinates: [row, col],
                 }
             }
         }
@@ -13,7 +13,5 @@ export function easyUpdate(helper) {
 
     return {
         solved: false,
-        value: 0,
-        coordinates: [-1, -1],
     }
 }
