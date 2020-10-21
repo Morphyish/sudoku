@@ -2,23 +2,31 @@ import { get, writable } from 'svelte/store'
 import { isDone, validate as validateGrid } from '../sudoku'
 import { grid } from './grid'
 import { helper } from './helper'
+import { easyUpdate } from '../algorithms'
 
 const initialState = {
     isValid: true,
     isDone: false,
+    nextStep: undefined
 }
 
 function sudokuStore() {
     const sudoku = writable(initialState)
 
     grid.subscribe(snapshot => {
-        if (snapshot && isDone(snapshot)) {
-            const isValid = validateGrid(snapshot)
-            if (isValid) {
-                sudoku.update(state => ({
-                    ...state,
-                    isDone: true,
-                }))
+        if (snapshot) {
+            sudoku.update(state => ({
+                ...state,
+                nextStep: undefined,
+            }))
+            if (isDone(snapshot)) {
+                const isValid = validateGrid(snapshot)
+                if (isValid) {
+                    sudoku.update(state => ({
+                        ...state,
+                        isDone: true,
+                    }))
+                }
             }
         }
     })
@@ -54,6 +62,20 @@ function sudokuStore() {
         }))
     }
 
+    const solveNextStep = () => {
+        const { solved, value, coordinates } = easyUpdate(get(helper))
+        console.log(solved, value, coordinates)
+        if (solved) {
+            sudoku.update(state => ({
+                ...state,
+                nextStep: {
+                    value,
+                    coordinates,
+                },
+            }))
+        }
+    }
+
     const save = () => {
         const sudokuSnapshop = get(sudoku)
         const gridSnapshot = get(grid)
@@ -66,6 +88,7 @@ function sudokuStore() {
         ...sudoku,
         start,
         validate,
+        solveNextStep,
         save,
         load,
     }

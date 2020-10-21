@@ -1,5 +1,6 @@
 <script>
 	import Grid from './components/Grid.svelte'
+	import NextStep from './components/NextStep.svelte'
 
 	import { onMount } from 'svelte'
 	import { grid, sudoku } from './stores'
@@ -24,8 +25,10 @@
 		<button on:click={sudoku.start}>Generate new grid</button>
 		<button on:click={grid.trim}>Remove numbers</button>
 		<button on:click={sudoku.validate}>Validate grid</button>
+		<button on:click={sudoku.solveNextStep}>Next step</button>
 		<button on:click={sudoku.save}>Save</button>
 	</div>
+	<NextStep />
 </main>
 
 <style>
