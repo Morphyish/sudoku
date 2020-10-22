@@ -1,12 +1,13 @@
 export function checkOwning(helper, dryRun) {
     for (let i = 0; i < 9; i++) {
+        const { rowAnchor } = getAnchors(0, i)
+
         for (let j = 0; j < 9; j += 3) {
-            const ownInRow = sqRow(helper, i, j)
+            const ownInRow = findOwnInRow(helper, j, i)
             const takenInRow = removeTakenFromRow(helper, ownInRow, i, j, dryRun)
 
             if (takenInRow.size > 0) {
-                const rowsAnchor = 3 * Math.floor(i / 3)
-                const square = `(${rowsAnchor + 1}, ${j + 1}) -> (${rowsAnchor + 3}, ${j + 3})`
+                const square = `(${rowAnchor + 1}, ${j + 1}) -> (${rowAnchor + 3}, ${j + 3})`
                 console.log(`${[...takenInRow]} taken in row ${i + 1} by square ${square}`)
                 return {
                     solved: true,
@@ -15,11 +16,10 @@ export function checkOwning(helper, dryRun) {
                 }
             }
 
-            const ownInCol = sqCol(helper, j, i)
+            const ownInCol = findOwnInCol(helper, i, j)
             const takenInCol = removeTakenFromCol(helper, ownInCol, i, j, dryRun)
 
             if (takenInCol.size > 0) {
-                const rowAnchor = 3 * Math.floor(i / 3)
                 const square = `(${j + 1}, ${rowAnchor + 1}) -> (${j + 3}, ${rowAnchor + 3})`
                 console.log(`${[...takenInCol]} taken in col ${i + 1} by square ${square}`)
                 return {
@@ -38,77 +38,42 @@ export function checkOwning(helper, dryRun) {
 }
 
 function findOwnInRow(helper, col, row) {
-    const colAnchor = 3 * Math.floor(col / 3)
-    const rowAnchor = 3 * Math.floor(row / 3)
+    const { colAnchor, rowAnchor } = getAnchors(col, row)
 
-    let rowHelpers = getLineHelpers(helper, colAnchor, row)
-
-    removeSquareDuplicatesFromLine(helper, rowHelpers, colAnchor, rowAnchor, -1, row)
+    let rowHelpers = new Set()
+    for (let c = colAnchor; c < colAnchor + 3; c++) {
+        const own = new Set(helper.getCell(c, row))
+        rowHelpers = new Set([...rowHelpers, ...own])
+    }
+    removeSquareDuplicatesFromLine(helper, rowHelpers, undefined, row, colAnchor, rowAnchor)
 
     return rowHelpers
 }
 
 function findOwnInCol(helper, col, row) {
-    const colAnchor = 3 * Math.floor(col / 3)
-    const rowAnchor = 3 * Math.floor(row / 3)
+    const { colAnchor, rowAnchor } = getAnchors(col, row)
 
-    let colHelpers = getLineHelpers(helper, rowAnchor, col)
-
-    removeSquareDuplicatesFromLine(helper, colHelpers, rowAnchor, colAnchor, col, -1)
+    let colHelpers = new Set()
+    for (let r = rowAnchor; r < rowAnchor + 3; r++) {
+        const own = new Set(helper.getCell(col, r))
+        colHelpers = new Set([...colHelpers, ...own])
+    }
+    removeSquareDuplicatesFromLine(helper, colHelpers, col, undefined, colAnchor, rowAnchor)
 
     return colHelpers
 }
 
-function sqRow(helper, row, col) {
-    const rowAnchor = 3 * Math.floor(row / 3)
+function getAnchors(col, row) {
     const colAnchor = 3 * Math.floor(col / 3)
-    let ownInRow = new Set()
-    for (let c = colAnchor; c < colAnchor + 3; c++) {
-        const own = new Set(helper.getCell(c, row))
-        ownInRow = new Set([...ownInRow, ...own])
-    }
-    for (let r = rowAnchor; r < rowAnchor + 3; r++) {
-        if (r === row) {
-            continue
-        }
-        for (let c = colAnchor; c < colAnchor + 3; c++) {
-            helper.getCell(c, r).forEach(n => ownInRow.delete(n))
-        }
-    }
-    return ownInRow
-}
-
-function sqCol(helper, row, col) {
     const rowAnchor = 3 * Math.floor(row / 3)
-    const colAnchor = 3 * Math.floor(col / 3)
-    let ownInCol = new Set()
-    for (let r = rowAnchor; r < rowAnchor + 3; r++) {
-        const own = new Set(helper.getCell(col, r))
-        ownInCol = new Set([...ownInCol, ...own])
+
+    return {
+        colAnchor,
+        rowAnchor,
     }
-    for (let r = rowAnchor; r < rowAnchor + 3; r++) {
-        for (let c = colAnchor; c < colAnchor + 3; c++) {
-            if (c === col) {
-                continue
-            }
-            helper.getCell(c, r).forEach(n => ownInCol.delete(n))
-        }
-    }
-    return ownInCol
 }
 
-function getLineHelpers(helper, anchorIndex, lineIndex) {
-    let rowHelpers = new Set()
-
-    for (let i = anchorIndex; i < anchorIndex + 3; i++) {
-        const own = new Set(helper.getCell(i, lineIndex))
-        rowHelpers = new Set([...rowHelpers, ...own])
-    }
-
-    return rowHelpers
-}
-
-function removeSquareDuplicatesFromLine(helper, ownInLine, colAnchor, rowAnchor, col, row) {
+function removeSquareDuplicatesFromLine(helper, ownInLine, col, row, colAnchor, rowAnchor) {
     for (let r = rowAnchor; r < rowAnchor + 3; r++) {
         if (r === row) {
             continue
