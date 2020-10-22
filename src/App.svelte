@@ -62,14 +62,15 @@
 	}
 
 	.buttons {
+		display: flex;
+		flex-wrap: wrap;
+		justify-content: center;
 		margin-top: 2rem;
+		margin-left: -2rem;
 	}
 
 	button {
 		text-transform: uppercase;
-	}
-
-	button + button {
 		margin-left: 2rem;
 	}
 
