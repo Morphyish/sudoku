@@ -36,6 +36,8 @@ export function nextStep(helper, dryRun = false) {
         }
     }
 
+    console.log('No solution found!')
+
     return {
         solved: false,
         value: 0,
