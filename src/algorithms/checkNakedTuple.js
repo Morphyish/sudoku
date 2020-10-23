@@ -37,10 +37,10 @@ export function checkNakedTuple(helper, dryRun) {
     }
 }
 
-function remove(helper, snapshot, values, index, str, dryRun) {
+function remove(helper, snapshot, values, index, zone, dryRun) {
     let edited = false
 
-    switch (str) {
+    switch (zone) {
         case 'row':
             const helperRow = getRow(index, snapshot)
             helperRow.forEach((cell, col) => {
