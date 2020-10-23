@@ -1,23 +1,15 @@
-import { getCol, getRow } from '../helper'
+import { getCol, getRow, getSquare } from '../helper'
 
 export function checkNakedTuple(helper, dryRun) {
     const snapshot = helper.snapshot()
 
     for (let i = 0; i < 9; i++) {
-        const currentRow = getRow(i, snapshot)
-        const currentCol = []
-        for (let j = 0; j < 9; j++) {
-            currentCol.push(helper.getCell(i, j))
+        const zones = {
+            row: getRow(i, snapshot),
+            col: getCol(i, snapshot),
+            square: getSquare(i, snapshot),
         }
-        const currentSquare = []
-        const rowAnchor = 3 * Math.floor(i / 3)
-        const colAnchor = 3 * (i % 3)
-        for (let j = 0; j < 3; j++) {
-            for (let k = 0; k < 3; k++) {
-                currentSquare.push(helper.getCell(k + colAnchor, j + rowAnchor))
-            }
-        }
-        const zones = { row: currentRow, col: currentCol, square: currentSquare }
+
         for (let [key, value] of Object.entries(zones)) {
             const updated = value.some(row => {
                 const temp = value.filter(r => JSON.stringify(r) === JSON.stringify(row))
