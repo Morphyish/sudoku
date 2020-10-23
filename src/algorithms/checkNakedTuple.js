@@ -17,8 +17,8 @@ export function checkNakedTuple(helper, dryRun) {
                 currentSquare.push(helper.getCell(k + colAnchor, j + rowAnchor))
             }
         }
-        const tdict = { row: currentRow, col: currentCol, square: currentSquare }
-        for (let [key, value] of Object.entries(tdict)) {
+        const zones = { row: currentRow, col: currentCol, square: currentSquare }
+        for (let [key, value] of Object.entries(zones)) {
             const updated = value.some(row => {
                 const temp = value.filter(r => JSON.stringify(r) === JSON.stringify(row))
                 if (temp.length === row.length) {
