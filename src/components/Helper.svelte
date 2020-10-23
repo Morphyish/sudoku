@@ -4,13 +4,15 @@
     export let col = 0
     export let row = 0
 
+    const cells = Array.from(Array(9).keys())
+
     let values = []
     $: $helper, values = helper.getCell(col, row)
 </script>
 
 <div class="helper">
-    {#each values as value}
-        <div class="value">{value}</div>
+    {#each cells as cell}
+        <div class="value">{values.includes(cell) ? cell + 1 : ''}</div>
     {/each}
 </div>
 
