@@ -77,7 +77,7 @@ function sudokuStore() {
     }
 
     const getTip = () => {
-        const { solved, method } = nextStep(get(helper))
+        const { solved, method } = nextStep(helper, true)
         if (solved) {
             sudoku.update(state => ({
                 ...state,
