@@ -4,7 +4,7 @@
     export let col = 0
     export let row = 0
 
-    const cells = Array.from(Array(9).keys())
+    const cells = Array.from(Array(9).keys()).map(v => v + 1)
 
     let values = []
     $: $helper, values = helper.getCell(col, row)
@@ -12,7 +12,7 @@
 
 <div class="helper">
     {#each cells as cell}
-        <div class="value">{values.includes(cell) ? cell + 1 : ''}</div>
+        <div class="value">{values.includes(cell) ? cell : ''}</div>
     {/each}
 </div>
 
