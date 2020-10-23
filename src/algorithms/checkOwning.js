@@ -93,7 +93,7 @@ function removeTakenFromRow(helper, ownInRow, i, j, dryRun) {
     for (let k = 0; k < 6; k++) {
         const index = (j + k + 3) % 9
         const takenInLine = removeFromLine(helper, ownInRow, index, i, dryRun)
-        takenInRow = [...takenInRow, takenInLine]
+        takenInRow = new Set([...takenInRow, ...takenInLine])
     }
 
     return takenInRow
@@ -105,7 +105,7 @@ function removeTakenFromCol(helper, ownInCol, i, j, dryRun) {
     for (let k = 0; k < 6; k++) {
         const index = (j + k + 3) % 9
         const takenInLine = removeFromLine(helper, ownInCol, i, index, dryRun)
-        takenInCol = [...takenInCol, takenInLine]
+        takenInCol = new Set([...takenInCol, ...takenInLine])
     }
 
     return takenInCol
