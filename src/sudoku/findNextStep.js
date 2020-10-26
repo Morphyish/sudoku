@@ -1,6 +1,6 @@
 import { checkHiddenTuple, checkNakedTuple, checkOwning, easyUpdate, sectorUpdate } from '../algorithms'
 
-export function nextStep(helper, dryRun = false) {
+export function findNextStep(helper, dryRun = false) {
     const methods = [
         {
             name: 'Easy Update',

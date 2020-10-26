@@ -1,5 +1,5 @@
 import { get, writable } from 'svelte/store'
-import { isDone, nextStep, validate as validateGrid } from '../sudoku'
+import { isDone, findNextStep, validate as validateGrid } from '../sudoku'
 import { grid } from './grid'
 import { helper } from './helper'
 
@@ -77,7 +77,7 @@ function sudokuStore() {
     }
 
     const getTip = () => {
-        const { solved, method } = nextStep(helper, true)
+        const { solved, method } = findNextStep(helper, true)
         if (solved) {
             sudoku.update(state => ({
                 ...state,
@@ -87,7 +87,7 @@ function sudokuStore() {
     }
 
     const getNextStep = () => {
-        const { solved, method, value, coordinates: [row, col] } = nextStep(helper, true)
+        const { solved, method, value, coordinates: [row, col] } = findNextStep(helper, true)
         if (solved) {
             sudoku.update(state => ({
                 ...state,
@@ -104,7 +104,7 @@ function sudokuStore() {
     }
 
     const solveNextStep = () => {
-        const { solved, value, coordinates: [row, col] } = nextStep(helper)
+        const { solved, value, coordinates: [row, col] } = findNextStep(helper)
         if (solved && value > 0) {
             grid.setCell(col, row, value)
         }
@@ -112,7 +112,7 @@ function sudokuStore() {
 
     const solveAll = () => {
         while (!isDone(get(grid))) {
-            const { solved, value, coordinates: [row, col] } = nextStep(helper)
+            const { solved, value, coordinates: [row, col] } = findNextStep(helper)
             if (solved) {
                 if (value > 0) {
                     grid.setCell(col, row, value)

@@ -1,3 +1,3 @@
 export { isDone } from './isDone'
-export { nextStep } from './nextStep'
+export { findNextStep } from './findNextStep'
 export { validate } from './validate'
