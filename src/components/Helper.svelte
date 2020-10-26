@@ -1,13 +1,7 @@
 <script>
-    import { helper } from '../stores'
-
-    export let col = 0
-    export let row = 0
+    export let values = []
 
     const cells = Array.from(Array(9).keys()).map(v => v + 1)
-
-    let values = []
-    $: $helper, values = helper.getCell(col, row)
 </script>
 
 <div class="helper">

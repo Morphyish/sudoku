@@ -100,13 +100,13 @@ function sudokuStore() {
     const applyStep = step => {
         if (step.grid) {
             for (const { col, row, value } of step.grid) {
-                grid.setCell(col, row, value)
+                setCellValue(col, row, value)
             }
         }
 
         if (step.helpers) {
             for (const { col, row, values } of step.helpers) {
-                helper.setCell(col, row, values)
+               setHelperValues(col, row, values)
             }
         }
     }
@@ -129,6 +129,14 @@ function sudokuStore() {
         }
     }
 
+    const setCellValue = (col, row, value) => {
+        grid.setCell(col, row, value)
+    }
+
+    const setHelperValues = (col, row, values) => {
+        helper.setCell(col, row, values)
+    }
+
     const save = () => {
         const sudokuSnapshop = get(sudoku)
         const gridSnapshot = get(grid)
@@ -144,6 +152,7 @@ function sudokuStore() {
         toggleHelpers,
         getTip,
         getNextStep,
+        setCellValue,
         solveNextStep,
         solveAll,
         save,

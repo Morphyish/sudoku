@@ -1,15 +1,35 @@
 <script>
     import Cell from './Cell.svelte'
+    import { grid, helper, sudoku } from '../stores'
+    import { getCell } from '../utils'
 
     const rows = Array.from(Array(9).keys())
     const columns = Array.from(Array(9).keys())
+
+    const handleUserInput = (col, row) => event => {
+        if (event.isComposing || event.keyCode === 229) {
+            return
+        }
+
+        const allowedKeys = [1, 2, 3, 4, 5, 6, 7, 8, 9]
+        const key = parseInt(event.key)
+
+        if (allowedKeys.includes(key)) {
+            sudoku.setCellValue(col, row, key)
+        }
+    }
 </script>
 
 <div class="grid">
     {#each rows as row}
         <div class="row">
             {#each columns as col}
-                <Cell {row} {col} />
+                <Cell
+                    cell={getCell($grid, col, row)}
+                    helpers={getCell($helper, col, row)}
+                    showHelpers={$sudoku.showHelpers}
+                    on:keydown={handleUserInput(col, row)}
+                />
             {/each}
         </div>
     {/each}
