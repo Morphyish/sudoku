@@ -1,5 +1,6 @@
 import { get, writable } from 'svelte/store'
 import { removeValueFromCell, removeValueFromLines, removeValueFromSquares } from '../helper'
+import { clone } from '../utils'
 
 function helperStore() {
     const helper = writable([])
@@ -12,7 +13,7 @@ function helperStore() {
 
     const setCell = (col, row, values) => {
         helper.update(snapshot => {
-            const updatedHelper = [...snapshot]
+            const updatedHelper = clone(snapshot)
 
             updatedHelper[row][col] = values
 
@@ -22,7 +23,7 @@ function helperStore() {
 
     const removeFromCell =(col, row, value) => {
         helper.update(snapshot => {
-            const updatedHelper = [...snapshot]
+            const updatedHelper = clone(snapshot)
 
             updatedHelper[row][col] = removeValueFromCell(updatedHelper[row][col], value)
 
@@ -45,7 +46,7 @@ function helperStore() {
 
     const updateFrom = grid => {
         helper.update(snapshot => {
-            let updatedHelper = [...snapshot]
+            let updatedHelper = clone(snapshot)
 
             for (let col = 0; col < 9; col++) {
                 for (let row = 0; row < 9; row++) {

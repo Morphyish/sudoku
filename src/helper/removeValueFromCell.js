@@ -1,5 +1,7 @@
+import { clone } from '../utils'
+
 export function removeValueFromCell(cell, value) {
-    const updatedCell = [...cell]
+    const updatedCell = clone(cell)
 
     const index = updatedCell.indexOf(value)
     if (index >= 0) {

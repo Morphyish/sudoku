@@ -1,7 +1,8 @@
+import { clone } from '../utils'
 import { removeValueFromCell } from './removeValueFromCell'
 
 export function removeValueFromSquares(helper, col, row, value) {
-    const updatedHelper = [...helper]
+    const updatedHelper = clone(helper)
 
     const xCorner = 3 * Math.floor(col / 3)
     const yCorner = 3 * Math.floor(row / 3)
