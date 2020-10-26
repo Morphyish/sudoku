@@ -1,6 +1,8 @@
 import { checkHiddenPair, checkNakedTuple, checkOwning, easyUpdate, sectorUpdate } from '../algorithms'
 
-export function findNextStep(helper) {
+// TODO: Update method and algorithms to use a snapshot of helpers, with the getCell utils method
+
+export function findNextStep(helpers) {
     const methods = [
         {
             name: 'Easy Update',
@@ -25,7 +27,7 @@ export function findNextStep(helper) {
     ]
 
     for (const method of methods) {
-        const nextStep = method.algorithm(helper)
+        const nextStep = method.algorithm(helpers)
         if (nextStep) {
             console.log(method.name)
             console.log(nextStep)
