@@ -1,6 +1,6 @@
-import { checkHiddenTuple, checkNakedTuple, checkOwning, easyUpdate, sectorUpdate } from '../algorithms'
+import { checkHiddenPair, checkNakedTuple, checkOwning, easyUpdate, sectorUpdate } from '../algorithms'
 
-export function findNextStep(helper, dryRun = false) {
+export function findNextStep(helper) {
     const methods = [
         {
             name: 'Easy Update',
@@ -19,19 +19,19 @@ export function findNextStep(helper, dryRun = false) {
             algorithm: checkNakedTuple,
         },
         {
-            name: 'Hidden Tuple',
-            algorithm: checkHiddenTuple,
+            name: 'Hidden Pair',
+            algorithm: checkHiddenPair,
         },
     ]
 
     for (const method of methods) {
-        const { solved, ...result } = method.algorithm(helper, dryRun)
-        if (solved) {
+        const nextStep = method.algorithm(helper)
+        if (nextStep) {
             console.log(method.name)
+            console.log(nextStep)
             return {
-                solved,
                 method: method.name,
-                ...result
+                nextStep,
             }
         }
     }
@@ -39,8 +39,6 @@ export function findNextStep(helper, dryRun = false) {
     console.log('No solution found!')
 
     return {
-        solved: false,
-        value: 0,
-        coordinates: [],
+        nextStep: null,
     }
 }

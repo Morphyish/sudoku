@@ -1,40 +1,32 @@
-export function checkOwning(helper, dryRun) {
+export function checkOwning(helper) {
     for (let i = 0; i < 9; i++) {
         const { rowAnchor } = getAnchors(0, i)
 
         for (let j = 0; j < 9; j += 3) {
             const ownInRow = findOwnInRow(helper, j, i)
-            const takenInRow = removeTakenFromRow(helper, ownInRow, i, j, dryRun)
+            const { takenInRow, cells: cellsFromRow } = removeTakenFromRow(helper, ownInRow, i, j)
 
             if (takenInRow.size > 0) {
                 const square = `(${rowAnchor + 1}, ${j + 1}) -> (${rowAnchor + 3}, ${j + 3})`
                 console.log(`${[...takenInRow]} taken in row ${i + 1} by square ${square}`)
                 return {
-                    solved: true,
-                    value: 0,
-                    coordinates: [],
+                    helpers: cellsFromRow
                 }
             }
 
             const ownInCol = findOwnInCol(helper, i, j)
-            const takenInCol = removeTakenFromCol(helper, ownInCol, i, j, dryRun)
+            const { takenInCol, cells: cellsFromCol } = removeTakenFromCol(helper, ownInCol, i, j)
 
             if (takenInCol.size > 0) {
                 const square = `(${j + 1}, ${rowAnchor + 1}) -> (${j + 3}, ${rowAnchor + 3})`
                 console.log(`${[...takenInCol]} taken in col ${i + 1} by square ${square}`)
                 return {
-                    solved: true,
-                    value: 0,
-                    coordinates: [],
+                    helpers: cellsFromCol
                 }
             }
         }
     }
-    return {
-        solved: false,
-        value: 0,
-        coordinates: [],
-    }
+    return null
 }
 
 function findOwnInRow(helper, col, row) {
@@ -87,43 +79,60 @@ function removeSquareDuplicatesFromLine(helper, ownInLine, col, row, colAnchor, 
     }
 }
 
-function removeTakenFromRow(helper, ownInRow, i, j, dryRun) {
+function removeTakenFromRow(helper, ownInRow, i, j) {
     let takenInRow = new Set()
+    const cells = []
 
     for (let k = 0; k < 6; k++) {
         const index = (j + k + 3) % 9
-        const takenInLine = removeFromLine(helper, ownInRow, index, i, dryRun)
-        takenInRow = new Set([...takenInRow, ...takenInLine])
+        const { takenInCell, cells: updatedCells } = removeFromCell(helper, ownInRow, index, i)
+        takenInRow = new Set([...takenInRow, ...takenInCell])
+        cells.push(...updatedCells)
     }
 
-    return takenInRow
+    return {
+        takenInRow,
+        cells,
+    }
 }
 
-function removeTakenFromCol(helper, ownInCol, i, j, dryRun) {
+function removeTakenFromCol(helper, ownInCol, i, j) {
     let takenInCol = new Set()
+    const cells = []
 
     for (let k = 0; k < 6; k++) {
         const index = (j + k + 3) % 9
-        const takenInLine = removeFromLine(helper, ownInCol, i, index, dryRun)
-        takenInCol = new Set([...takenInCol, ...takenInLine])
+        const { takenInCell, cells: updatedCells } = removeFromCell(helper, ownInCol, i, index)
+        takenInCol = new Set([...takenInCol, ...takenInCell])
+        cells.push(...updatedCells)
     }
 
-    return takenInCol
+    return {
+        takenInCol,
+        cells,
+    }
 }
 
-function removeFromLine(helper, ownInLine, col, row, dryRun) {
-    const takenInLine = new Set()
+function removeFromCell(helper, ownInLine, col, row) {
+    const takenInCell = new Set()
+    const cells = []
 
     ownInLine.forEach(num => {
         const cell = helper.getCell(col, row)
-        if (!(cell.indexOf(num) >= 0)) {
+        if (cell.indexOf(num) === -1) {
             return
         }
-        if (!dryRun) {
-            helper.removeFromCell(col, row, num)
-        }
-        takenInLine.add(num)
+        const newValues = cell.filter(value => value !== num)
+        cells.push({
+            col,
+            row,
+            values: newValues,
+        })
+        takenInCell.add(num)
     })
 
-    return takenInLine
+    return {
+        takenInCell,
+        cells,
+    }
 }

@@ -12,9 +12,11 @@ export function sectorUpdate(helper) {
         const rowIdx = rows.indexOf(1)
         if (rowIdx) {
             for (let j = 0; j < 9; j++) {
-                const val = checkHelper(helper, j, i, rowIdx + 1)
-                if (val) {
-                    return val
+                const update = checkHelper(helper, j, i, rowIdx + 1)
+                if (update) {
+                    return {
+                        grid: [update]
+                    }
                 }
             }
         }
@@ -23,9 +25,11 @@ export function sectorUpdate(helper) {
         const colIdx = cols.indexOf(1)
         if (colIdx) {
             for (let j = 0; j < 9; j++) {
-                const val = checkHelper(helper, i, j, colIdx + 1)
-                if (val) {
-                    return val
+                const update = checkHelper(helper, i, j, colIdx + 1)
+                if (update) {
+                    return {
+                        grid: [update]
+                    }
                 }
             }
         }
@@ -38,25 +42,23 @@ export function sectorUpdate(helper) {
             for (let j = 0; j < 3; j++) {
                 for (let k = 0; k < 3; k++) {
                     const [col, row] = [j + rowsAnchor, k + colsAnchor]
-                    const val = checkHelper(
+                    const update = checkHelper(
                         helper,
                         col,
                         row,
                         squareIdx + 1,
                     )
-                    if (val) {
-                        return val
+                    if (update) {
+                        return {
+                            grid: [update]
+                        }
                     }
                 }
             }
         }
     }
 
-    return {
-        solved: false,
-        value: 0,
-        coordinates: [],
-    }
+    return null
 }
 
 function fill(arr) {
@@ -66,9 +68,9 @@ function fill(arr) {
 function checkHelper(helper, col, row, value) {
     if (helper.getCell(col, row).indexOf(value) >= 0) {
         return {
-            solved: true,
+            col,
+            row,
             value,
-            coordinates: [row, col],
         }
     }
     return null

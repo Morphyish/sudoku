@@ -77,8 +77,8 @@ function sudokuStore() {
     }
 
     const getTip = () => {
-        const { solved, method } = findNextStep(helper, true)
-        if (solved) {
+        const { nextStep, method } = findNextStep(helper)
+        if (nextStep) {
             sudoku.update(state => ({
                 ...state,
                 tip: method,
@@ -87,36 +87,42 @@ function sudokuStore() {
     }
 
     const getNextStep = () => {
-        const { solved, method, value, coordinates: [row, col] } = findNextStep(helper, true)
-        if (solved) {
+        const { nextStep, method } = findNextStep(helper)
+        if (nextStep) {
             sudoku.update(state => ({
                 ...state,
                 tip: method,
-                nextStep: {
-                    value,
-                    coordinates: {
-                        row: row + 1,
-                        col: col + 1,
-                    },
-                },
+                nextStep,
             }))
         }
     }
 
+    const applyStep = step => {
+        if (step.grid) {
+            for (const { col, row, value } of step.grid) {
+                grid.setCell(col, row, value)
+            }
+        }
+
+        if (step.helpers) {
+            for (const { col, row, values } of step.helpers) {
+                helper.setCell(col, row, values)
+            }
+        }
+    }
+
     const solveNextStep = () => {
-        const { solved, value, coordinates: [row, col] } = findNextStep(helper)
-        if (solved && value > 0) {
-            grid.setCell(col, row, value)
+        const { nextStep } = findNextStep(helper)
+        if (nextStep) {
+            applyStep(nextStep)
         }
     }
 
     const solveAll = () => {
         while (!isDone(get(grid))) {
-            const { solved, value, coordinates: [row, col] } = findNextStep(helper)
-            if (solved) {
-                if (value > 0) {
-                    grid.setCell(col, row, value)
-                }
+            const { nextStep } = findNextStep(helper)
+            if (nextStep) {
+                applyStep(nextStep)
             } else {
                 break;
             }

@@ -2,7 +2,7 @@ import { getCol, getRow, getSquare } from '../helper'
 
 // TODO: Improve upon algo to handle more than 2-tuples
 
-export function checkHiddenTuple(helper, dryRun) {
+export function checkHiddenPair(helper) {
     const snapshot = helper.snapshot()
 
     for (let i = 0; i < 9; i++) {
@@ -12,20 +12,18 @@ export function checkHiddenTuple(helper, dryRun) {
             square: getSquare(i, snapshot),
         }
 
-        for (let [key, value] of Object.entries(zones)) {
-            const hiddenPairs = findHiddenPairs(value)
+        for (let [label, zone] of Object.entries(zones)) {
+            const hiddenPairs = findHiddenPairs(zone)
             if (hiddenPairs) {
                 for (const hiddenPair of hiddenPairs) {
                     const [pair, indexes] = hiddenPair
                     const tuple = pair.split(',').map(v => parseInt(v))
-                    const updated = remove(helper, i, tuple, indexes, key, dryRun)
+                    const {updated, cells} = remove(helper, i, tuple, indexes, label)
 
                     if (updated) {
-                        console.log(`found hidden tuple ${pair} in ${key} ${i + 1}`)
+                        console.log(`found hidden tuple ${pair} in ${label} ${i + 1}`)
                         return {
-                            solved: true,
-                            value: 0,
-                            coordinates: [],
+                            helpers: cells,
                         }
                     }
                 }
@@ -33,11 +31,7 @@ export function checkHiddenTuple(helper, dryRun) {
         }
     }
 
-    return {
-        solved: false,
-        value: 0,
-        coordinates: [],
-    }
+    return null
 }
 
 function findHiddenPairs(array) {
@@ -90,34 +84,37 @@ function findPairs(array) {
         .flat()
 }
 
-function remove(helper, num, tuple, indexes, zone, dryRun) {
-    let edited = false
+function remove(helper, num, tuple, indexes, zone) {
+    let updated = false
+    const cells = []
 
     switch (zone) {
         case 'row':
             for (const index of indexes) {
                 const cell = helper.getCell(index, num)
-                const oldVal = [...cell]
-                if (JSON.stringify(oldVal) !== JSON.stringify(tuple)) {
-                    if (!dryRun) {
-                        helper.setCell(index, num, tuple)
-                    }
-                    edited = true
+                if (JSON.stringify(cell) !== JSON.stringify(tuple)) {
+                    updated = true
+                    cells.push({
+                        col: index,
+                        row: num,
+                        values: tuple,
+                    })
                 }
             }
-            return edited
+            break
         case 'col':
             for (const index of indexes) {
                 const cell = helper.getCell(num, index)
-                const oldVal = [...cell]
-                if (JSON.stringify(oldVal) !== JSON.stringify(tuple)) {
-                    if (!dryRun) {
-                        helper.setCell(num, index, tuple)
-                    }
-                    edited = true
+                if (JSON.stringify(cell) !== JSON.stringify(tuple)) {
+                    updated = true
+                    cells.push({
+                        col: num,
+                        row: index,
+                        values: tuple,
+                    })
                 }
             }
-            return edited
+            break
         case 'square':
             const rowAnchor = 3 * Math.floor(num / 3)
             const colAnchor = 3 * (num % 3)
@@ -125,15 +122,23 @@ function remove(helper, num, tuple, indexes, zone, dryRun) {
                 const col = colAnchor + (index % 3)
                 const row = rowAnchor + Math.floor(index / 3)
                 const cell = helper.getCell(col, row)
-                const oldVal = [...cell]
-                if (JSON.stringify(oldVal) !== JSON.stringify(tuple)) {
-                    if (!dryRun) {
-                        helper.setCell(col, row, tuple)
-                    }
-                    edited = true
+                if (JSON.stringify(cell) !== JSON.stringify(tuple)) {
+                    updated = true
+                    cells.push({
+                        col,
+                        row,
+                        values: tuple,
+                    })
                 }
             }
-            return edited
+            break
+        default:
+            break
+    }
+
+    return {
+        updated,
+        cells,
     }
 }
 
