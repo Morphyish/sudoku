@@ -1,5 +1,4 @@
-import { getCol, getRow, getSquare } from '../helper'
-import { getCell } from '../utils'
+import { getCell, getCol, getRow, getSquare } from '../utils'
 
 // TODO: Improve upon algo to handle more than 2-tuples
 

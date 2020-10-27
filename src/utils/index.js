@@ -1,5 +1,8 @@
 export { clone } from './clone'
 export { getCell } from './getCell'
+export { getCol } from './getCol'
+export { getRow } from './getRow'
+export { getSquare } from './getSquare'
 export { removeSymmetricalIndexes } from './removeSymmetricalIndexes'
 export { rotate } from './rotate'
 export { shift } from './shift'

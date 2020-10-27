@@ -1,5 +1,4 @@
-import { getCol, getRow, getSquare } from '../helper'
-import { getCell } from '../utils'
+import { getCell, getCol, getRow, getSquare } from '../utils'
 
 export function checkNakedTuple(helpers) {
     for (let i = 0; i < 9; i++) {
