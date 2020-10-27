@@ -10,7 +10,7 @@ export function checkOwning(helpers) {
 
             if (takenInRow.size > 0) {
                 const square = `(${rowAnchor + 1}, ${j + 1}) -> (${rowAnchor + 3}, ${j + 3})`
-                console.log(`${[...takenInRow]} taken in row ${i + 1} by square ${square}`)
+                // console.log(`${[...takenInRow]} taken in row ${i + 1} by square ${square}`)
                 return {
                     helpers: cellsFromRow
                 }
@@ -21,7 +21,7 @@ export function checkOwning(helpers) {
 
             if (takenInCol.size > 0) {
                 const square = `(${j + 1}, ${rowAnchor + 1}) -> (${j + 3}, ${rowAnchor + 3})`
-                console.log(`${[...takenInCol]} taken in col ${i + 1} by square ${square}`)
+                // console.log(`${[...takenInCol]} taken in col ${i + 1} by square ${square}`)
                 return {
                     helpers: cellsFromCol
                 }

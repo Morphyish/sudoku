@@ -14,7 +14,7 @@ export function checkNakedTuple(helpers) {
                 if (sameValueCells.length === values.length) {
                     const { updated, cells } = remove(helpers, values, i, label)
                     if (updated) {
-                        console.log(`found tuple ${values} in ${label} ${i + 1}`)
+                        // console.log(`found tuple ${values} in ${label} ${i + 1}`)
                         return updatedCells.push(...cells)
                     }
                 }
