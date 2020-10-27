@@ -17,7 +17,7 @@ function sudokuStore() {
 
     grid.subscribe(snapshot => {
         if (snapshot) {
-            helper.updateFrom(clone(snapshot))
+            helper.updateFrom(snapshot)
             sudoku.update(state => ({
                 ...state,
                 tip: undefined,

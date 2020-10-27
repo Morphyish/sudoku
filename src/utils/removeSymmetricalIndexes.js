@@ -1,11 +1,11 @@
-export function removeSymmetricalIndexes(grid, x, y) {
+export function removeSymmetricalIndexes(grid, col, row) {
     const trimmedGrid = [...grid]
 
-    const symX = trimmedGrid[0].length - 1 - x
-    const symY = trimmedGrid.length - 1 - y
+    const symCol = trimmedGrid[0].length - 1 - col
+    const symRow = trimmedGrid.length - 1 - row
 
-    trimmedGrid[y][x] = 0
-    trimmedGrid[symY][symX] = 0
+    trimmedGrid[row][col] = 0
+    trimmedGrid[symRow][symCol] = 0
 
     return trimmedGrid
 }

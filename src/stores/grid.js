@@ -1,6 +1,6 @@
 import { get, writable } from 'svelte/store'
-import { create, obfuscate } from '../grid'
-import { clone, removeSymmetricalIndexes } from '../utils'
+import { create, empty, obfuscate } from '../grid'
+import { clone, getCoordinatesFromIndex, removeSymmetricalIndexes } from '../utils'
 
 function gridStore() {
     const grid = writable(null)
@@ -14,15 +14,9 @@ function gridStore() {
     const generate = () => {
         const newGrid = create()
         const obfuscatedGrid = obfuscate(newGrid)
+        const finishedGrid = empty(obfuscatedGrid)
 
-        grid.set(obfuscatedGrid)
-    }
-
-    const getCoordinatesFromIndex = index => {
-        const col = index % 9
-        const row = index / 9 | 0
-
-        return [col, row]
+        grid.set(finishedGrid)
     }
 
     const trim = () => {
