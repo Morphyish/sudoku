@@ -1,16 +1,9 @@
 import { get, writable } from 'svelte/store'
 import { create, obfuscate } from '../grid'
 import { clone, removeSymmetricalIndexes } from '../utils'
-import { helper } from './helper'
 
 function gridStore() {
     const grid = writable(null)
-
-    grid.subscribe(snapshot => {
-        if (snapshot) {
-            helper.updateFrom(clone(snapshot))
-        }
-    })
 
     const getCell = (col, row) => {
         const snapshot = get(grid)
@@ -33,7 +26,6 @@ function gridStore() {
     }
 
     const trim = () => {
-        helper.init()
         grid.update(snapshot => {
             const gridToTrim = clone(snapshot)
             const flattenedGrid = gridToTrim.flat()

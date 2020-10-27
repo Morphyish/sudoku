@@ -5,10 +5,8 @@ import { clone } from '../utils'
 function helperStore() {
     const helper = writable([])
 
-    const snapshot = () => get(helper)
-
     const getCell = (col, row) => {
-        return snapshot()[row][col]
+        return get(helper)[row][col]
     }
 
     const setCell = (col, row, values) => {
@@ -67,7 +65,6 @@ function helperStore() {
 
     return {
         ...helper,
-        snapshot,
         getCell,
         setCell,
         removeFromCell,

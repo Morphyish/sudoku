@@ -1,5 +1,6 @@
 import { get, writable } from 'svelte/store'
 import { isDone, findNextStep, validate as validateGrid } from '../sudoku'
+import { clone } from '../utils'
 import { grid } from './grid'
 import { helper } from './helper'
 
@@ -16,6 +17,7 @@ function sudokuStore() {
 
     grid.subscribe(snapshot => {
         if (snapshot) {
+            helper.updateFrom(clone(snapshot))
             sudoku.update(state => ({
                 ...state,
                 tip: undefined,
@@ -133,6 +135,11 @@ function sudokuStore() {
         grid.setCell(col, row, value)
     }
 
+    const removeNumbers = () => {
+        helper.init()
+        grid.trim()
+    }
+
     const setHelperValues = (col, row, values) => {
         helper.setCell(col, row, values)
     }
@@ -152,6 +159,7 @@ function sudokuStore() {
         toggleHelpers,
         getTip,
         getNextStep,
+        removeNumbers,
         setCellValue,
         solveNextStep,
         solveAll,
