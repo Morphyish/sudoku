@@ -1,15 +1,14 @@
 import { getCol, getRow, getSquare } from '../helper'
+import { getCell } from '../utils'
 
 // TODO: Improve upon algo to handle more than 2-tuples
 
-export function checkHiddenPair(helper) {
-    const snapshot = helper.snapshot()
-
+export function checkHiddenPair(helpers) {
     for (let i = 0; i < 9; i++) {
         const zones = {
-            row: getRow(i, snapshot),
-            col: getCol(i, snapshot),
-            square: getSquare(i, snapshot),
+            row: getRow(i, helpers),
+            col: getCol(i, helpers),
+            square: getSquare(i, helpers),
         }
 
         for (let [label, zone] of Object.entries(zones)) {
@@ -18,7 +17,7 @@ export function checkHiddenPair(helper) {
                 for (const hiddenPair of hiddenPairs) {
                     const [pair, indexes] = hiddenPair
                     const tuple = pair.split(',').map(v => parseInt(v))
-                    const {updated, cells} = remove(helper, i, tuple, indexes, label)
+                    const {updated, cells} = remove(helpers, i, tuple, indexes, label)
 
                     if (updated) {
                         console.log(`found hidden tuple ${pair} in ${label} ${i + 1}`)
@@ -84,14 +83,14 @@ function findPairs(array) {
         .flat()
 }
 
-function remove(helper, num, tuple, indexes, zone) {
+function remove(helpers, num, tuple, indexes, zone) {
     let updated = false
     const cells = []
 
     switch (zone) {
         case 'row':
             for (const index of indexes) {
-                const cell = helper.getCell(index, num)
+                const cell = getCell(helpers, index, num)
                 if (JSON.stringify(cell) !== JSON.stringify(tuple)) {
                     updated = true
                     cells.push({
@@ -104,7 +103,7 @@ function remove(helper, num, tuple, indexes, zone) {
             break
         case 'col':
             for (const index of indexes) {
-                const cell = helper.getCell(num, index)
+                const cell = getCell(helpers, num, index)
                 if (JSON.stringify(cell) !== JSON.stringify(tuple)) {
                     updated = true
                     cells.push({
@@ -121,7 +120,7 @@ function remove(helper, num, tuple, indexes, zone) {
             for (const index of indexes) {
                 const col = colAnchor + (index % 3)
                 const row = rowAnchor + Math.floor(index / 3)
-                const cell = helper.getCell(col, row)
+                const cell = getCell(helpers, col, row)
                 if (JSON.stringify(cell) !== JSON.stringify(tuple)) {
                     updated = true
                     cells.push({

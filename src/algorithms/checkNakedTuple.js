@@ -1,20 +1,19 @@
 import { getCol, getRow, getSquare } from '../helper'
+import { getCell } from '../utils'
 
-export function checkNakedTuple(helper) {
-    const snapshot = helper.snapshot()
-
+export function checkNakedTuple(helpers) {
     for (let i = 0; i < 9; i++) {
         const zones = {
-            row: getRow(i, snapshot),
-            col: getCol(i, snapshot),
-            square: getSquare(i, snapshot),
+            row: getRow(i, helpers),
+            col: getCol(i, helpers),
+            square: getSquare(i, helpers),
         }
 
         for (let [label, zone] of Object.entries(zones)) {
             const updatedHelpers = zone.some((updatedCells, values) => {
                 const sameValueCells = zone.filter(cell => JSON.stringify(cell) === JSON.stringify(values))
                 if (sameValueCells.length === values.length) {
-                    const { updated, cells } = remove(helper, snapshot, values, i, label)
+                    const { updated, cells } = remove(helpers, values, i, label)
                     if (updated) {
                         console.log(`found tuple ${values} in ${label} ${i + 1}`)
                         return updatedCells.push(...cells)
@@ -32,13 +31,13 @@ export function checkNakedTuple(helper) {
     return null
 }
 
-function remove(helper, snapshot, values, index, zone) {
+function remove(helpers, values, index, zone) {
     let updated = false
     const cells = []
 
     switch (zone) {
         case 'row':
-            const helperRow = getRow(index, snapshot)
+            const helperRow = getRow(index, helpers)
             helperRow.forEach((cell, col) => {
                 if (JSON.stringify(cell) !== JSON.stringify(values)) {
                     const newValues = filterOutValues(cell, values)
@@ -52,7 +51,7 @@ function remove(helper, snapshot, values, index, zone) {
             })
             break
         case 'col':
-            const helperCol = getCol(index, snapshot)
+            const helperCol = getCol(index, helpers)
             helperCol.forEach((cell, row) => {
                 if (JSON.stringify(cell) !== JSON.stringify(values)) {
                     const newValues = filterOutValues(cell, values)
@@ -70,7 +69,7 @@ function remove(helper, snapshot, values, index, zone) {
             const colAnchor = 3 * (index % 3)
             for (let col = 0; col < 3; col++) {
                 for (let row = 0; row < 3; row++) {
-                    const cell = helper.getCell(colAnchor + col, rowAnchor + row)
+                    const cell = getCell(helpers, colAnchor + col, rowAnchor + row)
                     if (JSON.stringify(cell) !== JSON.stringify(values)) {
                         const newValues = filterOutValues(cell, values)
                         cells.push({

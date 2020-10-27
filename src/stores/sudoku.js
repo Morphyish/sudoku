@@ -77,7 +77,7 @@ function sudokuStore() {
     }
 
     const getTip = () => {
-        const { nextStep, method } = findNextStep(helper)
+        const { nextStep, method } = findNextStep(get(helper))
         if (nextStep) {
             sudoku.update(state => ({
                 ...state,
@@ -87,7 +87,7 @@ function sudokuStore() {
     }
 
     const getNextStep = () => {
-        const { nextStep, method } = findNextStep(helper)
+        const { nextStep, method } = findNextStep(get(helper))
         if (nextStep) {
             sudoku.update(state => ({
                 ...state,
@@ -112,7 +112,7 @@ function sudokuStore() {
     }
 
     const solveNextStep = () => {
-        const { nextStep } = findNextStep(helper)
+        const { nextStep } = findNextStep(get(helper))
         if (nextStep) {
             applyStep(nextStep)
         }
@@ -120,7 +120,7 @@ function sudokuStore() {
 
     const solveAll = () => {
         while (!isDone(get(grid))) {
-            const { nextStep } = findNextStep(helper)
+            const { nextStep } = findNextStep(get(helper))
             if (nextStep) {
                 applyStep(nextStep)
             } else {
