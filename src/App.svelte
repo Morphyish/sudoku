@@ -24,7 +24,6 @@
 	{/if}
 	<div class="buttons">
 		<button on:click={sudoku.start}>Generate new grid</button>
-		<button on:click={sudoku.removeNumbers}>Remove numbers</button>
 		<button on:click={sudoku.validate}>Validate grid</button>
 		<button on:click={sudoku.toggleHelpers}>Toggle helpers</button>
 		<button on:click={sudoku.getTip}>Get tip</button>

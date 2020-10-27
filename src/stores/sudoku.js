@@ -135,11 +135,6 @@ function sudokuStore() {
         grid.setCell(col, row, value)
     }
 
-    const removeNumbers = () => {
-        helper.init()
-        grid.trim()
-    }
-
     const setHelperValues = (col, row, values) => {
         helper.setCell(col, row, values)
     }
@@ -159,7 +154,6 @@ function sudokuStore() {
         toggleHelpers,
         getTip,
         getNextStep,
-        removeNumbers,
         setCellValue,
         solveNextStep,
         solveAll,
