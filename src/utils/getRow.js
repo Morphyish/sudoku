@@ -1,3 +1,3 @@
-export function getRow(num, arr) {
+export function getRow(arr, num) {
     return arr[num]
 }

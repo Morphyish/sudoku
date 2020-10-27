@@ -1,4 +1,4 @@
-export function getSquare(num, arr) {
+export function getSquare(arr, num) {
     const result = []
 
     const rowAnchor = 3 * Math.floor(num / 3)

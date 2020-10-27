@@ -6,7 +6,7 @@ export function sectorUpdate(helpers) {
         const cols = [0, 0, 0, 0, 0, 0, 0, 0, 0]
         const squares = [0, 0, 0, 0, 0, 0, 0, 0, 0]
 
-        getRow(i, helpers).forEach(fill(rows))
+        getRow(helpers, i).forEach(fill(rows))
         const rowIdx = rows.indexOf(1)
         if (rowIdx) {
             for (let j = 0; j < 9; j++) {
@@ -19,7 +19,7 @@ export function sectorUpdate(helpers) {
             }
         }
 
-        getCol(i, helpers).forEach(fill(cols))
+        getCol(helpers, i).forEach(fill(cols))
         const colIdx = cols.indexOf(1)
         if (colIdx) {
             for (let j = 0; j < 9; j++) {
@@ -32,7 +32,7 @@ export function sectorUpdate(helpers) {
             }
         }
 
-        getSquare(i, helpers).forEach(fill(squares))
+        getSquare(helpers, i).forEach(fill(squares))
         const squareIdx = squares.indexOf(1)
         if (squareIdx) {
             const rowsAnchor = 3 * Math.floor(i / 3)

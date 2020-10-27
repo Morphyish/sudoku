@@ -5,9 +5,9 @@ import { getCell, getCol, getRow, getSquare } from '../utils'
 export function checkHiddenPair(helpers) {
     for (let i = 0; i < 9; i++) {
         const zones = {
-            row: getRow(i, helpers),
-            col: getCol(i, helpers),
-            square: getSquare(i, helpers),
+            row: getRow(helpers, i),
+            col: getCol(helpers, i),
+            square: getSquare(helpers, i),
         }
 
         for (let [label, zone] of Object.entries(zones)) {

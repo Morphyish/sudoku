@@ -1,4 +1,4 @@
-export function getCol(num, arr) {
+export function getCol(arr, num) {
     const result = []
 
     for (const row of arr) {

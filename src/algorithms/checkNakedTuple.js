@@ -3,9 +3,9 @@ import { getCell, getCol, getRow, getSquare } from '../utils'
 export function checkNakedTuple(helpers) {
     for (let i = 0; i < 9; i++) {
         const zones = {
-            row: getRow(i, helpers),
-            col: getCol(i, helpers),
-            square: getSquare(i, helpers),
+            row: getRow(helpers, i),
+            col: getCol(helpers, i),
+            square: getSquare(helpers, i),
         }
 
         for (let [label, zone] of Object.entries(zones)) {
@@ -36,7 +36,7 @@ function remove(helpers, values, index, zone) {
 
     switch (zone) {
         case 'row':
-            const helperRow = getRow(index, helpers)
+            const helperRow = getRow(helpers, index)
             helperRow.forEach((cell, col) => {
                 if (JSON.stringify(cell) !== JSON.stringify(values)) {
                     const newValues = filterOutValues(cell, values)
@@ -50,7 +50,7 @@ function remove(helpers, values, index, zone) {
             })
             break
         case 'col':
-            const helperCol = getCol(index, helpers)
+            const helperCol = getCol(helpers, index)
             helperCol.forEach((cell, row) => {
                 if (JSON.stringify(cell) !== JSON.stringify(values)) {
                     const newValues = filterOutValues(cell, values)
