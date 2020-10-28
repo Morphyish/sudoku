@@ -1,7 +1,10 @@
 <script>
     import Cell from './Cell.svelte'
     import { errors, grid, helper, settings, sudoku } from '../stores'
-    import { getCell } from '../utils'
+    import { getCell, getCoordinatesFromIndex } from '../utils'
+
+    const cells = []
+    let focusedCell = 0
 
     const rows = Array.from(Array(9).keys())
     const columns = Array.from(Array(9).keys())
@@ -16,11 +19,48 @@
 
         if (allowedKeys.includes(key)) {
             sudoku.handleUserInput(col, row, key)
+            return
         }
+
+        const [col, row] = getCoordinatesFromIndex(focusedCell)
+
+        switch (event.key) {
+            case 'ArrowUp':
+                if (row > 0) {
+                    focusedCell -= 9
+                    cells[focusedCell].focus()
+                }
+                return
+            case 'ArrowDown':
+                if (row < 8) {
+                    focusedCell += 9
+                    cells[focusedCell].focus()
+                }
+                return
+            case 'ArrowLeft':
+                if (col > 0) {
+                    focusedCell -= 1
+                    cells[focusedCell].focus()
+                }
+                return
+            case 'ArrowRight':
+                if (col < 8) {
+                    focusedCell += 1
+                    cells[focusedCell].focus()
+                }
+                return
+            default:
+                break
+        }
+    }
+
+    const focusFirstCell = () => {
+        focusedCell = 0
+        cells[0].focus()
     }
 </script>
 
-<div class="grid">
+<div class="grid" tabindex="0" on:focus={focusFirstCell}>
     {#each rows as row}
         <div class="row">
             {#each columns as col}
@@ -30,7 +70,9 @@
                     hasError={$errors.has(`${col},${row}`)}
                     showErrors={$settings.showErrors}
                     showHelpers={$settings.showHelpers}
+                    on:focus={() => focusedCell = 9 * row + col}
                     on:keydown={handleUserInput(col, row)}
+                    bind:element={cells[9 * row + col]}
                 />
             {/each}
         </div>

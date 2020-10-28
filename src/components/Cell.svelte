@@ -1,6 +1,7 @@
 <script>
     import Helper from './Helper.svelte'
 
+    export let element
     export let cell = 0
     export let helpers = []
     export let hasError = false
@@ -8,7 +9,7 @@
     export let showHelpers = false
 </script>
 
-<div class="cell" class:error={hasError && showErrors} on:keydown tabindex="0">
+<div class="cell" class:error={hasError && showErrors} bind:this={element} on:focus on:keydown tabindex="-1">
     {#if cell}
         {cell}
     {:else if showHelpers}
