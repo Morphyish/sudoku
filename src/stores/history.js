@@ -9,7 +9,10 @@ function historyStore() {
     const history = writable(initialState)
 
     const addEntry = entry => {
-        history.update(snapshot => ([...snapshot, entry]))
+        history.update(snapshot => ({
+            ...snapshot,
+            entries: [...snapshot.entries, entry],
+        }))
     }
 
     const goToStep = step => {

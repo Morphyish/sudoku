@@ -7,13 +7,12 @@ import { applyStep } from './applyStep'
 export function solve(grid) {
     let clonedGrid = clone(grid)
 
-    let i = 0
     const steps = []
     let helpers = initHelpers()
     helpers = updateHelpers(helpers, clonedGrid)
 
-    while (!isDone(clonedGrid) && i++ < 100) {
-        const { nextStep } = findNextStep(helpers)
+    while (!isDone(clonedGrid)) {
+        const nextStep = findNextStep(helpers)
         if (nextStep) {
             steps.push(nextStep)
             const { grid: updatedGrid , helpers: updatedHelpers } = applyStep(clonedGrid, helpers, nextStep)

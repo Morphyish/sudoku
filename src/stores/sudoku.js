@@ -1,8 +1,8 @@
 import { get, writable } from 'svelte/store'
-import { isDone, findNextStep, validate as validateGrid } from '../sudoku'
-import { clone } from '../utils'
+import { isDone, findNextStep, validate as validateGrid, solve } from '../sudoku'
 import { grid } from './grid'
 import { helper } from './helper'
+import { history } from './history'
 
 const initialState = {
     isValid: true,
@@ -79,21 +79,21 @@ function sudokuStore() {
     }
 
     const getTip = () => {
-        const { nextStep, method } = findNextStep(get(helper))
+        const nextStep = findNextStep(get(helper))
         if (nextStep) {
             sudoku.update(state => ({
                 ...state,
-                tip: method,
+                tip: nextStep.method,
             }))
         }
     }
 
     const getNextStep = () => {
-        const { nextStep, method } = findNextStep(get(helper))
+        const nextStep = findNextStep(get(helper))
         if (nextStep) {
             sudoku.update(state => ({
                 ...state,
-                tip: method,
+                tip: nextStep.method,
                 nextStep,
             }))
         }
@@ -102,41 +102,47 @@ function sudokuStore() {
     const applyStep = step => {
         if (step.grid) {
             for (const { col, row, value } of step.grid) {
-                setCellValue(col, row, value)
+                grid.setCell(col, row, value)
             }
         }
 
         if (step.helpers) {
             for (const { col, row, values } of step.helpers) {
-               setHelperValues(col, row, values)
+                helper.setCell(col, row, values)
             }
         }
+
+        history.addEntry(step)
+        history.goToLastStep()
     }
 
     const solveNextStep = () => {
-        const { nextStep } = findNextStep(get(helper))
+        const nextStep = findNextStep(get(helper))
         if (nextStep) {
             applyStep(nextStep)
         }
     }
 
     const solveAll = () => {
-        while (!isDone(get(grid))) {
-            const { nextStep } = findNextStep(get(helper))
-            if (nextStep) {
-                applyStep(nextStep)
-            } else {
-                break;
-            }
+        const { isSolvable, steps } = solve(get(grid))
+
+        if (isSolvable) {
+            steps.forEach(applyStep)
+        } else {
+            sudoku.update(state => ({
+                ...state,
+                isValid: false,
+            }))
         }
     }
 
-    const setCellValue = (col, row, value) => {
-        grid.setCell(col, row, value)
-    }
+    const handleUserInput = (col, row, value) => {
+        const step = {
+            method: 'User input',
+            grid: [{ col, row, value }],
+        }
 
-    const setHelperValues = (col, row, values) => {
-        helper.setCell(col, row, values)
+        applyStep(step)
     }
 
     const save = () => {
@@ -154,7 +160,7 @@ function sudokuStore() {
         toggleHelpers,
         getTip,
         getNextStep,
-        setCellValue,
+        handleUserInput,
         solveNextStep,
         solveAll,
         save,

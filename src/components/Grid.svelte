@@ -15,7 +15,7 @@
         const key = parseInt(event.key)
 
         if (allowedKeys.includes(key)) {
-            sudoku.setCellValue(col, row, key)
+            sudoku.handleUserInput(col, row, key)
         }
     }
 </script>

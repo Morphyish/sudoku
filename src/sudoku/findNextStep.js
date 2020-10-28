@@ -5,13 +5,11 @@ export function findNextStep(helpers) {
         const nextStep = method.algorithm(helpers)
         if (nextStep) {
             return {
+                ...nextStep,
                 method: method.name,
-                nextStep,
             }
         }
     }
 
-    return {
-        nextStep: null,
-    }
+    return null
 }

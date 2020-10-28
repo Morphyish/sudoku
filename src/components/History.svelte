@@ -1,0 +1,61 @@
+<script>
+    import Entry from './Entry.svelte'
+
+    import { afterUpdate } from 'svelte'
+    import { history } from '../stores'
+
+    let entriesList
+    let entries = []
+
+    afterUpdate(() => {
+        const entry = entries[$history.currentStep]
+        if (entriesList && entry) {
+            const listHeight = entriesList.offsetHeight
+            const entryHeight = entry.offsetHeight
+            const entryPosition = entry.offsetTop
+            entriesList.scrollTop = entryPosition - (listHeight / 2 - entryHeight / 2)
+        }
+    })
+</script>
+
+{#if $history.entries && $history.entries.length}
+    <aside>
+        <h2>History</h2>
+        <div class="entries" bind:this={entriesList}>
+            {#each $history.entries as entry, step}
+                <Entry
+                        {entry}
+                        current={$history.currentStep === step}
+                        bind:element={entries[step]}
+                        on:click={() => history.goToStep(step)}
+                />
+            {/each}
+        </div>
+    </aside>
+{/if}
+
+<style>
+    aside {
+        display: flex;
+        flex-direction: column;
+        width: 30vw;
+    }
+
+    aside > * {
+        padding: 0 8px;
+    }
+
+    h2 {
+        color: #ff3e00;
+        text-transform: uppercase;
+        font-size: 1.25rem;
+        font-weight: 600;
+        margin-top: 0;
+    }
+
+    .entries {
+        position: relative;
+        flex: 1;
+        overflow: auto;
+    }
+</style>
