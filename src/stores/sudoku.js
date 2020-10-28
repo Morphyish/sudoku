@@ -54,6 +54,7 @@ function sudokuStore() {
     }
 
     const start = () => {
+        history.reset()
         helper.init()
         grid.generate()
 
