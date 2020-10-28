@@ -29,7 +29,7 @@
         {/if}
         <div class="buttons">
             <button on:click={sudoku.start}>Generate new grid</button>
-            <button on:click={sudoku.validate}>Validate grid</button>
+            <button on:click={sudoku.toggleErrors}>Toggle errors</button>
             <button on:click={sudoku.toggleHelpers}>Toggle helpers</button>
             <button on:click={sudoku.getTip}>Get tip</button>
             <button on:click={sudoku.getNextStep}>Show next step</button>

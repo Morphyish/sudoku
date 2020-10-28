@@ -1,19 +1,26 @@
 export function validate(grid, helper) {
+    const cellsWithError = new Set()
+    let isValid = true
+
     for (let row = 0; row < 9; row++) {
         for (let col = 0; col < 9; col++) {
             const num = grid[row][col]
             if (num === 0 && helper[row][col].length < 1) {
-                return false
+                isValid = false
             }
             if (num === 0) {
                 continue
             }
             for (let k = 0; k < 9; k++) {
                 if (k !== row && grid[k][col] === num) {
-                    return false
+                    cellsWithError.add(`${col},${row}`)
+                    cellsWithError.add(`${col},${k}`)
+                    isValid = false
                 }
                 if (k !== col && grid[row][k] === num) {
-                    return false
+                    cellsWithError.add(`${col},${row}`)
+                    cellsWithError.add(`${k},${row}`)
+                    isValid = false
                 }
             }
             const icorner = 3 * Math.floor(row / 3)
@@ -23,11 +30,16 @@ export function validate(grid, helper) {
                     const r = icorner + k
                     const c = jcorner + l
                     if (!(r === row && c === col) && grid[r][c] === num) {
-                        return false
+                        cellsWithError.add(`${col},${row}`)
+                        cellsWithError.add(`${c},${r}`)
+                        isValid = false
                     }
                 }
             }
         }
     }
-    return true
+    return {
+        isValid,
+        cellsWithError,
+    }
 }

@@ -1,5 +1,6 @@
 import { get, writable } from 'svelte/store'
-import { isDone, findNextStep, validate as validateGrid, solve } from '../sudoku'
+import { isDone, findNextStep, validate, solve } from '../sudoku'
+import { errors } from './errors'
 import { grid } from './grid'
 import { helper } from './helper'
 import { history } from './history'
@@ -7,6 +8,7 @@ import { history } from './history'
 const initialState = {
     isValid: true,
     isDone: false,
+    showErrors: false,
     showHelpers: false,
     tip: undefined,
     nextStep: undefined,
@@ -23,8 +25,10 @@ function sudokuStore() {
                 tip: undefined,
                 nextStep: undefined,
             }))
+            const { isValid, cellsWithError } = validate(snapshot, get(helper))
+            console.log(isValid, cellsWithError)
+            errors.set(cellsWithError)
             if (isDone(snapshot)) {
-                const isValid = validateGrid(snapshot, get(helper))
                 if (isValid) {
                     sudoku.update(state => ({
                         ...state,
@@ -54,6 +58,7 @@ function sudokuStore() {
     }
 
     const start = () => {
+        errors.reset()
         history.reset()
         helper.init()
         grid.generate()
@@ -63,12 +68,10 @@ function sudokuStore() {
         })
     }
 
-    const validate = () => {
-        const isValid = validateGrid(get(grid), get(helper))
-
+    const toggleErrors = () => {
         sudoku.update(state => ({
             ...state,
-            isValid,
+            showErrors: !state.showErrors,
         }))
     }
 
@@ -157,7 +160,7 @@ function sudokuStore() {
     return {
         ...sudoku,
         start,
-        validate,
+        toggleErrors,
         toggleHelpers,
         getTip,
         getNextStep,

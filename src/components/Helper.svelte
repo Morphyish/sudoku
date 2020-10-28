@@ -16,6 +16,7 @@
         flex-wrap: wrap;
         height: 100%;
         font-size: .625rem;
+        font-weight: 400;
         color: #a7a7a7;
     }
 

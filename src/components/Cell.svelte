@@ -3,10 +3,12 @@
 
     export let cell = 0
     export let helpers = []
+    export let hasError = false
+    export let showErrors = false
     export let showHelpers = false
 </script>
 
-<div class="cell" on:keydown tabindex="0">
+<div class="cell" class:error={hasError && showErrors} on:keydown tabindex="0">
     {#if cell}
         {cell}
     {:else if showHelpers}
@@ -21,6 +23,7 @@
         text-align: center;
         line-height: 3rem;
         border-right: 1px solid #d7d7d7;
+        font-weight: 100;
     }
 
     .cell:nth-child(3n) {
@@ -29,5 +32,9 @@
 
     .cell:last-child {
         border-right: 0;
+    }
+
+    .error {
+        color: #D13C2F;
     }
 </style>
