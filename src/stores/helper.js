@@ -1,5 +1,5 @@
 import { writable } from 'svelte/store'
-import { updateHelpers, initHelpers } from '../helper'
+import { initHelpers } from '../helper'
 import { clone } from '../utils'
 
 function helperStore() {
@@ -17,13 +17,10 @@ function helperStore() {
         })
     }
 
-    const updateFrom = grid => helper.update(snapshot => updateHelpers(snapshot, grid))
-
     return {
         ...helper,
         setCell,
         init,
-        updateFrom,
     }
 }
 

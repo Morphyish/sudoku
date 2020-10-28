@@ -8,37 +8,24 @@ import { history } from './history'
 const initialState = {
     isValid: true,
     isDone: false,
-    tip: undefined,
-    nextStep: undefined,
 }
 
 function sudokuStore() {
     const sudoku = writable(initialState)
 
-    grid.subscribe(snapshot => {
-        if (snapshot) {
-            helper.updateFrom(snapshot)
+    grid.subscribe(gridSnapshot => {
+        if (gridSnapshot) {
+            const helperSnapshot = get(helper)
+            const updatedHelpers = updateHelpers(helperSnapshot, gridSnapshot)
+            const { isValid, cellsWithError } = validate(gridSnapshot, updatedHelpers)
+
+            helper.set(updatedHelpers)
+            errors.set(cellsWithError)
             sudoku.update(state => ({
                 ...state,
-                tip: undefined,
-                nextStep: undefined,
+                isDone: isValid && isDone(gridSnapshot),
+                isValid,
             }))
-            const { isValid, cellsWithError } = validate(snapshot, get(helper))
-            console.log(isValid, cellsWithError)
-            errors.set(cellsWithError)
-            if (isDone(snapshot)) {
-                if (isValid) {
-                    sudoku.update(state => ({
-                        ...state,
-                        isDone: true,
-                    }))
-                } else {
-                    sudoku.update(state => ({
-                        ...state,
-                        isValid,
-                    }))
-                }
-            }
         }
     })
 
@@ -64,27 +51,6 @@ function sudokuStore() {
         sudoku.set({
             ...initialState,
         })
-    }
-
-    const getTip = () => {
-        const nextStep = findNextStep(get(helper))
-        if (nextStep) {
-            sudoku.update(state => ({
-                ...state,
-                tip: nextStep.method,
-            }))
-        }
-    }
-
-    const getNextStep = () => {
-        const nextStep = findNextStep(get(helper))
-        if (nextStep) {
-            sudoku.update(state => ({
-                ...state,
-                tip: nextStep.method,
-                nextStep,
-            }))
-        }
     }
 
     const applyStep = step => {
@@ -144,8 +110,6 @@ function sudokuStore() {
     return {
         ...sudoku,
         start,
-        getTip,
-        getNextStep,
         handleUserInput,
         solveNextStep,
         solveAll,
