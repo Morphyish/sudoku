@@ -1,6 +1,8 @@
 <script>
     import Grid from './components/Grid.svelte'
     import History from './components/History.svelte'
+    import Button from './components/Button.svelte'
+    import Toggle from './components/Toggle.svelte'
 
     import { onMount } from 'svelte'
     import { grid, settings, sudoku } from './stores'
@@ -26,14 +28,14 @@
             <Grid />
         {/if}
         <div class="settings">
-            <button on:click={settings.toggleErrors}>Toggle errors</button>
-            <button on:click={settings.toggleHelpers}>Toggle helpers</button>
+            <Toggle checked={$settings.showErrors} on:click={settings.toggleErrors}>Show errors</Toggle>
+            <Toggle checked={$settings.showHelpers} on:click={settings.toggleHelpers}>Show helpers</Toggle>
         </div>
         <div class="actions">
-            <button on:click={sudoku.start}>Generate new grid</button>
-            <button on:click={sudoku.solveNextStep}>Solve next step</button>
-            <button on:click={sudoku.solveAll}>Solve</button>
-            <button on:click={sudoku.save}>Save</button>
+            <Button on:click={sudoku.start}>Generate new grid</Button>
+            <Button on:click={sudoku.solveNextStep}>Solve next step</Button>
+            <Button on:click={sudoku.solveAll}>Solve</Button>
+            <Button on:click={sudoku.save}>Save</Button>
         </div>
     </div>
     <History />
@@ -77,11 +79,5 @@
         flex-wrap: wrap;
         justify-content: center;
         margin-top: 2rem;
-        margin-left: -2rem;
-    }
-
-    button {
-        text-transform: uppercase;
-        margin-left: 2rem;
     }
 </style>
