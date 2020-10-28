@@ -1,6 +1,6 @@
 <script>
     import Cell from './Cell.svelte'
-    import { errors, grid, helper, sudoku } from '../stores'
+    import { errors, grid, helper, settings, sudoku } from '../stores'
     import { getCell } from '../utils'
 
     const rows = Array.from(Array(9).keys())
@@ -28,8 +28,8 @@
                     cell={getCell($grid, col, row)}
                     helpers={getCell($helper, col, row)}
                     hasError={$errors.has(`${col},${row}`)}
-                    showErrors={$sudoku.showErrors}
-                    showHelpers={$sudoku.showHelpers}
+                    showErrors={$settings.showErrors}
+                    showHelpers={$settings.showHelpers}
                     on:keydown={handleUserInput(col, row)}
                 />
             {/each}

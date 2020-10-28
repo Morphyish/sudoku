@@ -5,7 +5,7 @@
     import NextStep from './components/NextStep.svelte'
 
     import { onMount } from 'svelte'
-    import { grid, sudoku } from './stores'
+    import { grid, settings, sudoku } from './stores'
 
     onMount(() => {
         sudoku.load()
@@ -29,8 +29,8 @@
         {/if}
         <div class="buttons">
             <button on:click={sudoku.start}>Generate new grid</button>
-            <button on:click={sudoku.toggleErrors}>Toggle errors</button>
-            <button on:click={sudoku.toggleHelpers}>Toggle helpers</button>
+            <button on:click={settings.toggleErrors}>Toggle errors</button>
+            <button on:click={settings.toggleHelpers}>Toggle helpers</button>
             <button on:click={sudoku.getTip}>Get tip</button>
             <button on:click={sudoku.getNextStep}>Show next step</button>
             <button on:click={sudoku.solveNextStep}>Solve next step</button>

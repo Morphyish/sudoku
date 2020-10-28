@@ -8,8 +8,6 @@ import { history } from './history'
 const initialState = {
     isValid: true,
     isDone: false,
-    showErrors: false,
-    showHelpers: false,
     tip: undefined,
     nextStep: undefined,
 }
@@ -66,20 +64,6 @@ function sudokuStore() {
         sudoku.set({
             ...initialState,
         })
-    }
-
-    const toggleErrors = () => {
-        sudoku.update(state => ({
-            ...state,
-            showErrors: !state.showErrors,
-        }))
-    }
-
-    const toggleHelpers = () => {
-        sudoku.update(state => ({
-            ...state,
-            showHelpers: !state.showHelpers,
-        }))
     }
 
     const getTip = () => {
@@ -160,8 +144,6 @@ function sudokuStore() {
     return {
         ...sudoku,
         start,
-        toggleErrors,
-        toggleHelpers,
         getTip,
         getNextStep,
         handleUserInput,
