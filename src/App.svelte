@@ -58,6 +58,7 @@
 	.game {
 		display: flex;
 		flex-direction: column;
+        flex: 1;
 		align-items: center;
         padding: 0 8px;
 	}
