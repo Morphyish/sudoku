@@ -1,7 +1,7 @@
 <script>
     export let entry = {}
     export let current = false
-    export let element
+    export let element = null
 </script>
 
 
