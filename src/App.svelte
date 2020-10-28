@@ -31,9 +31,9 @@
         </div>
         <div class="actions">
             <button on:click={sudoku.start}>Generate new grid</button>
-            <button on:click={sudoku.save}>Save</button>
             <button on:click={sudoku.solveNextStep}>Solve next step</button>
             <button on:click={sudoku.solveAll}>Solve</button>
+            <button on:click={sudoku.save}>Save</button>
         </div>
     </div>
     <History />
