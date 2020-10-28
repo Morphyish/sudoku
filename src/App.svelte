@@ -1,8 +1,6 @@
 <script>
     import Grid from './components/Grid.svelte'
     import History from './components/History.svelte'
-    import Tip from './components/Tip.svelte'
-    import NextStep from './components/NextStep.svelte'
 
     import { onMount } from 'svelte'
     import { grid, settings, sudoku } from './stores'
@@ -27,18 +25,16 @@
         {#if $grid}
             <Grid />
         {/if}
-        <div class="buttons">
-            <button on:click={sudoku.start}>Generate new grid</button>
+        <div class="settings">
             <button on:click={settings.toggleErrors}>Toggle errors</button>
             <button on:click={settings.toggleHelpers}>Toggle helpers</button>
-            <button on:click={sudoku.getTip}>Get tip</button>
-            <button on:click={sudoku.getNextStep}>Show next step</button>
+        </div>
+        <div class="actions">
+            <button on:click={sudoku.start}>Generate new grid</button>
+            <button on:click={sudoku.save}>Save</button>
             <button on:click={sudoku.solveNextStep}>Solve next step</button>
             <button on:click={sudoku.solveAll}>Solve</button>
-            <button on:click={sudoku.save}>Save</button>
         </div>
-        <Tip />
-        <NextStep />
     </div>
     <History />
 </main>
@@ -74,7 +70,8 @@
         color: #D13C2F;
     }
 
-    .buttons {
+    .settings,
+    .actions {
         display: flex;
         flex-wrap: wrap;
         justify-content: center;
