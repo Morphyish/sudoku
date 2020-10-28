@@ -9,7 +9,16 @@
         outline: none;
     }
 
+    button:focus,
+    button:hover {
+        border-color: #666;
+    }
+
     button:not(:disabled):active {
         background-color: #ddd;
+    }
+
+    button:disabled {
+        color: #999;
     }
 </style>

@@ -54,12 +54,3 @@ input:disabled {
 button {
 	text-transform: uppercase;
 }
-
-button:focus,
-button:hover {
-	border-color: #666;
-}
-
-button:disabled {
-	color: #999;
-}
