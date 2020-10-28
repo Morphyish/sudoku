@@ -1,11 +1,11 @@
 <script>
-    import Grid from './components/Grid.svelte'
+    import Board from './components/Board.svelte'
     import History from './components/History.svelte'
     import Button from './components/Button.svelte'
     import Toggle from './components/Toggle.svelte'
 
     import { onMount } from 'svelte'
-    import { grid, settings, sudoku } from './stores'
+    import { settings, sudoku } from './stores'
 
     onMount(() => {
         sudoku.load()
@@ -24,13 +24,14 @@
                 The current board might not have a solution, or maybe our current algorithms can't solve it.<br />
             </p>
         {/if}
-        {#if $grid}
-            <Grid />
-        {/if}
+
+        <Board />
+
         <div class="settings">
             <Toggle checked={$settings.showErrors} on:click={settings.toggleErrors}>Show errors</Toggle>
             <Toggle checked={$settings.showHelpers} on:click={settings.toggleHelpers}>Show helpers</Toggle>
         </div>
+
         <div class="actions">
             <Button on:click={sudoku.start}>Generate new grid</Button>
             <Button on:click={sudoku.solveNextStep}>Solve next step</Button>
@@ -57,13 +58,13 @@
         padding: 8px 0;
     }
 
-	.game {
-		display: flex;
-		flex-direction: column;
+    .game {
+        display: flex;
+        flex-direction: column;
         flex: 1;
-		align-items: center;
+        align-items: center;
         padding: 0 8px;
-	}
+    }
 
     .success {
         color: #4CAF50;

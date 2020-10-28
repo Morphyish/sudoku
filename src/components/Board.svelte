@@ -60,24 +60,26 @@
     }
 </script>
 
-<div class="grid" tabindex="0" on:focus={focusFirstCell}>
-    {#each rows as row}
-        <div class="row">
-            {#each columns as col}
-                <Cell
-                    cell={getCell($grid, col, row)}
-                    helpers={getCell($helper, col, row)}
-                    hasError={$errors.has(`${col},${row}`)}
-                    showErrors={$settings.showErrors}
-                    showHelpers={$settings.showHelpers}
-                    on:focus={() => focusedCell = 9 * row + col}
-                    on:keydown={handleUserInput(col, row)}
-                    bind:element={cells[9 * row + col]}
-                />
-            {/each}
-        </div>
-    {/each}
-</div>
+{#if $grid}
+    <div class="grid" tabindex="0" on:focus={focusFirstCell}>
+        {#each rows as row}
+            <div class="row">
+                {#each columns as col}
+                    <Cell
+                            cell={getCell($grid, col, row)}
+                            helpers={getCell($helper, col, row)}
+                            hasError={$errors.has(`${col},${row}`)}
+                            showErrors={$settings.showErrors}
+                            showHelpers={$settings.showHelpers}
+                            on:focus={() => focusedCell = 9 * row + col}
+                            on:keydown={handleUserInput(col, row)}
+                            bind:element={cells[9 * row + col]}
+                    />
+                {/each}
+            </div>
+        {/each}
+    </div>
+{/if}
 
 <style>
     .grid {
