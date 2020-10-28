@@ -1,4 +1,5 @@
 import { get, writable } from 'svelte/store'
+import { updateHelpers } from '../helper'
 import { isDone, findNextStep, validate, solve } from '../sudoku'
 import { errors } from './errors'
 import { grid } from './grid'
