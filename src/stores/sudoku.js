@@ -91,10 +91,19 @@ function sudokuStore() {
         }
     }
 
-    const handleUserInput = (col, row, value) => {
+    const fillCell = (col, row, value) => {
         const step = {
             method: 'User input',
             grid: [{ col, row, value }],
+        }
+
+        applyStep(step)
+    }
+
+    const emptyCell = (col, row) => {
+        const step = {
+            method: 'User input',
+            grid: [{ col, row, value: 0 }],
         }
 
         applyStep(step)
@@ -111,7 +120,8 @@ function sudokuStore() {
     return {
         ...sudoku,
         start,
-        handleUserInput,
+        fillCell,
+        emptyCell,
         solveNextStep,
         solveAll,
         save,

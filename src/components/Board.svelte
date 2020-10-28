@@ -18,33 +18,38 @@
         const key = parseInt(event.key)
 
         if (allowedKeys.includes(key)) {
-            sudoku.handleUserInput(col, row, key)
+            sudoku.fillCell(col, row, key)
             return
         }
 
-        const [col, row] = getCoordinatesFromIndex(focusedCell)
+        if (key === 0 || event.key === 'Backspace') {
+            sudoku.emptyCell(col, row)
+            return
+        }
+
+        const [focusedCol, focusedRow] = getCoordinatesFromIndex(focusedCell)
 
         switch (event.key) {
             case 'ArrowUp':
-                if (row > 0) {
+                if (focusedRow > 0) {
                     focusedCell -= 9
                     cells[focusedCell].focus()
                 }
                 return
             case 'ArrowDown':
-                if (row < 8) {
+                if (focusedRow < 8) {
                     focusedCell += 9
                     cells[focusedCell].focus()
                 }
                 return
             case 'ArrowLeft':
-                if (col > 0) {
+                if (focusedCol > 0) {
                     focusedCell -= 1
                     cells[focusedCell].focus()
                 }
                 return
             case 'ArrowRight':
-                if (col < 8) {
+                if (focusedCol < 8) {
                     focusedCell += 1
                     cells[focusedCell].focus()
                 }
