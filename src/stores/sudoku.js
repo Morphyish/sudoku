@@ -11,7 +11,7 @@ import { history } from './history'
 const initialState = {
     isValid: true,
     isDone: false,
-    initialGrid: null,
+    initialGrid: Array(9).fill(Array(9).fill(0)),
     difficulty: 0,
     methodsUsed: [],
 }

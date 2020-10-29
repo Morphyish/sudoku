@@ -4,12 +4,13 @@
     export let cell = 0
     export let helpers = []
     export let hasError = false
+    export let startingCell = false
     export let showErrors = false
     export let showHelpers = false
     export let element = null
 </script>
 
-<div class="cell" class:error={hasError && showErrors} bind:this={element} on:focus on:keydown tabindex="-1">
+<div class="cell" class:error={hasError && showErrors && !startingCell} class:startingCell={startingCell} bind:this={element} on:focus on:keydown tabindex="-1">
     {#if cell}
         {cell}
     {:else if showHelpers}
@@ -33,6 +34,10 @@
 
     .cell:last-child {
         border-right: 0;
+    }
+
+    .startingCell {
+        font-weight: 400;
     }
 
     .error {

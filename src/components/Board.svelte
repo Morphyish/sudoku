@@ -14,19 +14,6 @@
             return
         }
 
-        const allowedKeys = [1, 2, 3, 4, 5, 6, 7, 8, 9]
-        const key = parseInt(event.key)
-
-        if (allowedKeys.includes(key)) {
-            sudoku.fillCell(col, row, key)
-            return
-        }
-
-        if (key === 0 || event.key === 'Backspace') {
-            sudoku.emptyCell(col, row)
-            return
-        }
-
         const [focusedCol, focusedRow] = getCoordinatesFromIndex(focusedCell)
 
         switch (event.key) {
@@ -57,7 +44,25 @@
             default:
                 break
         }
+
+        if (isStartingCell($sudoku.initialGrid, col, row)) {
+            return
+        }
+
+        const allowedKeys = [1, 2, 3, 4, 5, 6, 7, 8, 9]
+        const key = parseInt(event.key)
+
+        if (allowedKeys.includes(key)) {
+            sudoku.fillCell(col, row, key)
+            return
+        }
+
+        if (key === 0 || event.key === 'Backspace') {
+            sudoku.emptyCell(col, row)
+        }
     }
+
+    const isStartingCell = (initialGrid, col, row) => getCell(initialGrid, col, row) !== 0
 
     const focusFirstCell = () => {
         focusedCell = 0
@@ -73,6 +78,7 @@
                     <Cell
                             cell={getCell($grid, col, row)}
                             helpers={getCell($helper, col, row)}
+                            startingCell={isStartingCell($sudoku.initialGrid, col, row)}
                             hasError={$errors.has(`${col},${row}`)}
                             showErrors={$settings.showErrors}
                             showHelpers={$settings.showHelpers}
