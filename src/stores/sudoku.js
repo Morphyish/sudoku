@@ -66,6 +66,21 @@ function sudokuStore() {
         })
     }
 
+    const restart = () => {
+        errors.reset()
+        history.reset()
+        helper.reset()
+        sudoku.update(snapshot => {
+            grid.set(clone(snapshot.initialGrid))
+
+            return {
+                ...snapshot,
+                isValid: true,
+                isDone: false,
+            }
+        })
+    }
+
     const applyStep = step => {
         if (step.grid) {
             for (const { col, row, value } of step.grid) {
@@ -132,6 +147,7 @@ function sudokuStore() {
     return {
         ...sudoku,
         start,
+        restart,
         fillCell,
         emptyCell,
         solveNextStep,

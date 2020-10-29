@@ -33,7 +33,8 @@
         </div>
 
         <div class="actions">
-            <Button on:click={sudoku.start}>Generate new grid</Button>
+            <Button on:click={sudoku.start}>New grid</Button>
+            <Button on:click={sudoku.restart}>Restart</Button>
             <Button on:click={sudoku.solveNextStep}>Solve next step</Button>
             <Button on:click={sudoku.solveAll}>Solve</Button>
             <Button on:click={sudoku.save}>Save</Button>
