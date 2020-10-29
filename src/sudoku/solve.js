@@ -8,6 +8,7 @@ export function solve(grid) {
     let clonedGrid = clone(grid)
 
     const steps = []
+    const methods = []
     let helpers = initHelpers()
     helpers = updateHelpers(helpers, clonedGrid)
 
@@ -15,6 +16,8 @@ export function solve(grid) {
         const nextStep = findNextStep(helpers)
         if (nextStep) {
             steps.push(nextStep)
+            methods.push(nextStep.method)
+
             const { grid: updatedGrid , helpers: updatedHelpers } = applyStep(clonedGrid, helpers, nextStep)
             clonedGrid = updatedGrid
             helpers = updatedHelpers
@@ -28,5 +31,6 @@ export function solve(grid) {
     return {
         isSolvable: true,
         steps,
+        methods,
     }
 }

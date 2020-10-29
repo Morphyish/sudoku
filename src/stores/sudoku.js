@@ -2,6 +2,7 @@ import { get, writable } from 'svelte/store'
 import { updateHelpers } from '../helper'
 import { generateNewGrid } from '../grid'
 import { findNextStep, isDone, solve, validate } from '../sudoku'
+import { clone } from '../utils'
 import { errors } from './errors'
 import { grid } from './grid'
 import { helper } from './helper'
@@ -10,6 +11,9 @@ import { history } from './history'
 const initialState = {
     isValid: true,
     isDone: false,
+    initialGrid: null,
+    difficulty: 0,
+    methodsUsed: [],
 }
 
 function sudokuStore() {
@@ -49,11 +53,16 @@ function sudokuStore() {
         history.reset()
         helper.reset()
 
-        const newGrid = generateNewGrid()
-        grid.set(newGrid)
+        const { grid: newGrid, difficulty, methods } = generateNewGrid()
 
+        console.log(methods)
+
+        grid.set(newGrid)
         sudoku.set({
             ...initialState,
+            initialGrid: clone(newGrid),
+            difficulty,
+            methods,
         })
     }
 

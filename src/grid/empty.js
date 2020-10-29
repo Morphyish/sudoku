@@ -10,7 +10,9 @@ export function empty(grid) {
 
 function removeNextPair(grid, cellIndexes) {
     if (cellIndexes.length < 20) {
-        return grid
+        return {
+            grid,
+        }
     }
 
     for (const cellIndex of cellIndexes) {
@@ -21,16 +23,21 @@ function removeNextPair(grid, cellIndexes) {
         setCell(clonedGrid, col, row, 0)
         setCell(clonedGrid, symCol, symRow, 0)
 
-        const { isSolvable, steps } = solve(clonedGrid)
+        const { isSolvable, methods } = solve(clonedGrid)
         if (isSolvable) {
             const index = cellIndexes.indexOf(cellIndex)
             cellIndexes.splice(index, 1)
             const symIndex = cellIndexes.indexOf(symCellIndex)
             cellIndexes.splice(symIndex, 1)
-            console.log('steps to solve', steps.length)
-            return removeNextPair(clonedGrid, cellIndexes)
+            const { grid: updatedGrid, methods: nextMethods } = removeNextPair(clonedGrid, cellIndexes)
+            return {
+                grid: updatedGrid,
+                methods: nextMethods || methods
+            }
         }
     }
 
-    return grid
+    return {
+        grid,
+    }
 }

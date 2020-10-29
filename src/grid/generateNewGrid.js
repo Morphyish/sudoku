@@ -5,5 +5,12 @@ import { obfuscate } from './obfuscate'
 export function generateNewGrid() {
     const newGrid = create()
     const obfuscatedGrid = obfuscate(newGrid)
-    return empty(obfuscatedGrid)
+    const { grid, methods } = empty(obfuscatedGrid)
+
+    const uniqueMethods = [...new Set(methods)]
+
+    return {
+        grid,
+        methods: uniqueMethods,
+    }
 }
