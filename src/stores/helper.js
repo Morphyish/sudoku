@@ -1,26 +1,27 @@
 import { writable } from 'svelte/store'
 import { initHelpers } from '../helper'
-import { clone } from '../utils'
+import { clone, setCell as genericSetCell } from '../utils'
+
+const initialState = initHelpers()
 
 function helperStore() {
-    const helper = writable([])
+    const helper = writable(initialState)
 
-    const init = () => helper.set(initHelpers())
+    const reset = () => helper.set(initialState)
 
     const setCell = (col, row, values) => {
         helper.update(snapshot => {
-            const updatedHelper = clone(snapshot)
+            const clonedHelper = clone(snapshot)
+            genericSetCell(clonedHelper, col, row, values)
 
-            updatedHelper[row][col] = values
-
-            return updatedHelper
+            return clonedHelper
         })
     }
 
     return {
         ...helper,
         setCell,
-        init,
+        reset,
     }
 }
 

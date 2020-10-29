@@ -1,9 +1,13 @@
 import { writable } from 'svelte/store'
 import { create, empty, obfuscate } from '../grid'
-import { clone } from '../utils'
+import { clone, setCell as genericSetCell } from '../utils'
+
+const initialState = Array(9).fill([Array(9).fill(0)])
 
 function gridStore() {
-    const grid = writable(null)
+    const grid = writable(initialState)
+
+    const reset = () => grid.set(initialState)
 
     const generate = () => {
         const newGrid = create()
@@ -15,15 +19,16 @@ function gridStore() {
 
     const setCell = (col, row, value) => {
         grid.update(snapshot => {
-            const gridToFill = clone(snapshot)
-            gridToFill[row][col] = value
+            const clonedGrid = clone(snapshot)
+            genericSetCell(clonedGrid, col, row, value)
 
-            return gridToFill
+            return clonedGrid
         })
     }
 
     return {
         ...grid,
+        reset,
         generate,
         setCell,
     }

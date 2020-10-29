@@ -35,7 +35,7 @@ function sudokuStore() {
         const gridSnapshop = JSON.parse(localStorage.getItem('grid'))
 
         if (sudokuSnapshop) {
-            helper.init()
+            helper.reset()
             sudoku.set(sudokuSnapshop)
             grid.set(gridSnapshop)
         } else {
@@ -46,7 +46,7 @@ function sudokuStore() {
     const start = () => {
         errors.reset()
         history.reset()
-        helper.init()
+        helper.reset()
         grid.generate()
 
         sudoku.set({
