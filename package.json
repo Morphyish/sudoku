@@ -1,5 +1,5 @@
 {
-  "name": "@morph/sudoku",
+  "name": "@morphyish/sudoku",
   "version": "0.0.1",
   "scripts": {
     "build": "rollup -c",
