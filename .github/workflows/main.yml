@@ -6,8 +6,19 @@ on:
       - main
 
 jobs:
+  quality:
+    name: Quality
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repo
+        uses: actions/checkout@master
+      - name: Install Dependencies
+        run: yarn
+      - name: Unit Testing
+        run: yarn test --coverage
   build:
     name: Build
+    needs: quality
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Repo
