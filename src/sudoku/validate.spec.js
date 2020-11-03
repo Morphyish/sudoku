@@ -32,9 +32,9 @@ describe('sudoku/validate', () => {
         expect(cellsWithError.size).toBe(0)
     })
 
-    it('should return false if the board has the same number is a row, col or square', () => {
+    it('should return false if the board has the same number in a row', () => {
         const invalidBoard = [
-            [9, 6, 0, 0, 0, 7, 0, 2, 0],
+            [9, 6, 0, 0, 6, 7, 0, 2, 0],
             [0, 0, 2, 0, 3, 0, 0, 0, 8],
             [1, 0, 0, 2, 4, 0, 0, 0, 0],
             [0, 0, 7, 0, 0, 0, 3, 0, 6],
@@ -42,7 +42,7 @@ describe('sudoku/validate', () => {
             [2, 0, 5, 0, 0, 0, 8, 0, 0],
             [0, 0, 0, 0, 9, 6, 0, 0, 1],
             [7, 0, 0, 0, 5, 0, 6, 0, 0],
-            [0, 3, 0, 1, 0, 0, 6, 4, 5],
+            [0, 3, 0, 1, 0, 0, 0, 4, 5],
         ]
 
         const helpers = [
@@ -60,9 +60,75 @@ describe('sudoku/validate', () => {
         const { isValid, cellsWithError } = validate(invalidBoard, helpers)
 
         expect(isValid).toBe(false)
-        expect(cellsWithError.size).not.toBe(0)
-        expect(cellsWithError.has('6,7')).toBe(true)
-        expect(cellsWithError.has('6,8')).toBe(true)
+        expect(cellsWithError.size).toBe(2)
+        expect(cellsWithError.has('1,0')).toBe(true)
+        expect(cellsWithError.has('4,0')).toBe(true)
+    })
+
+    it('should return false if the board has the same number in a col', () => {
+        const invalidBoard = [
+            [9, 6, 0, 0, 0, 7, 0, 2, 0],
+            [0, 0, 2, 0, 3, 0, 0, 0, 8],
+            [1, 0, 0, 2, 4, 0, 0, 0, 0],
+            [0, 0, 7, 0, 0, 0, 3, 0, 6],
+            [0, 0, 0, 0, 8, 0, 0, 0, 0],
+            [2, 6, 5, 0, 0, 0, 8, 0, 0],
+            [0, 0, 0, 0, 9, 6, 0, 0, 1],
+            [7, 0, 0, 0, 5, 0, 6, 0, 0],
+            [0, 3, 0, 1, 0, 0, 0, 4, 5],
+        ]
+
+        const helpers = [
+            [[], [], [3, 4, 8], [5, 8], [1], [], [1, 4, 5], [], [3, 4]],
+            [[4, 5], [4, 5, 7], [], [5, 6, 9], [], [1, 5, 9], [1, 4, 5, 7, 9], [1, 5, 6, 7, 9], []],
+            [[], [5, 7, 8], [3, 8], [], [], [5, 8, 9], [5, 7, 9], [3, 5, 6, 7, 9], [3, 7, 9]],
+            [[4, 8], [1, 4, 8, 9], [], [4, 5, 9], [1, 2], [1, 2, 4, 5, 9], [], [1, 5, 9], []],
+            [[3, 4, 6], [1, 4, 9], [1, 3, 4, 6, 9], [3, 4, 5, 6, 7, 9], [], [1, 2, 3, 4, 5, 9], [1, 2, 4, 5, 7, 9], [1, 5, 7, 9], [2, 4, 7, 9]],
+            [[], [1, 4, 9], [], [3, 4, 6, 7, 9], [1, 6, 7], [1, 3, 4, 9], [], [1, 7, 9], [4, 7, 9]],
+            [[4, 5, 8], [2, 4, 5, 8], [4, 8], [3, 4, 7, 8], [], [], [2, 7], [3, 7, 8], []],
+            [[], [1, 2, 4, 8, 9], [1, 4, 8, 9], [3, 4, 8], [], [2, 3, 4, 8], [], [3, 8, 9], [2, 3, 9]],
+            [[8], [], [8, 9], [], [2, 7], [2, 8], [], [], []],
+        ]
+
+        const { isValid, cellsWithError } = validate(invalidBoard, helpers)
+
+        expect(isValid).toBe(false)
+        expect(cellsWithError.size).toBe(2)
+        expect(cellsWithError.has('1,0')).toBe(true)
+        expect(cellsWithError.has('1,5')).toBe(true)
+    })
+
+    it('should return false if the board has the same number in a square', () => {
+        const invalidBoard = [
+            [9, 6, 0, 0, 0, 7, 0, 2, 0],
+            [6, 0, 2, 0, 3, 0, 0, 0, 8],
+            [1, 0, 0, 2, 4, 0, 0, 0, 0],
+            [0, 0, 7, 0, 0, 0, 3, 0, 6],
+            [0, 0, 0, 0, 8, 0, 0, 0, 0],
+            [2, 0, 5, 0, 0, 0, 8, 0, 0],
+            [0, 0, 0, 0, 9, 6, 0, 0, 1],
+            [7, 0, 0, 0, 5, 0, 6, 0, 0],
+            [0, 3, 0, 1, 0, 0, 0, 4, 5],
+        ]
+
+        const helpers = [
+            [[], [], [3, 4, 8], [5, 8], [1], [], [1, 4, 5], [], [3, 4]],
+            [[4, 5], [4, 5, 7], [], [5, 6, 9], [], [1, 5, 9], [1, 4, 5, 7, 9], [1, 5, 6, 7, 9], []],
+            [[], [5, 7, 8], [3, 8], [], [], [5, 8, 9], [5, 7, 9], [3, 5, 6, 7, 9], [3, 7, 9]],
+            [[4, 8], [1, 4, 8, 9], [], [4, 5, 9], [1, 2], [1, 2, 4, 5, 9], [], [1, 5, 9], []],
+            [[3, 4, 6], [1, 4, 9], [1, 3, 4, 6, 9], [3, 4, 5, 6, 7, 9], [], [1, 2, 3, 4, 5, 9], [1, 2, 4, 5, 7, 9], [1, 5, 7, 9], [2, 4, 7, 9]],
+            [[], [1, 4, 9], [], [3, 4, 6, 7, 9], [1, 6, 7], [1, 3, 4, 9], [], [1, 7, 9], [4, 7, 9]],
+            [[4, 5, 8], [2, 4, 5, 8], [4, 8], [3, 4, 7, 8], [], [], [2, 7], [3, 7, 8], []],
+            [[], [1, 2, 4, 8, 9], [1, 4, 8, 9], [3, 4, 8], [], [2, 3, 4, 8], [], [3, 8, 9], [2, 3, 9]],
+            [[8], [], [8, 9], [], [2, 7], [2, 8], [], [], []],
+        ]
+
+        const { isValid, cellsWithError } = validate(invalidBoard, helpers)
+
+        expect(isValid).toBe(false)
+        expect(cellsWithError.size).toBe(2)
+        expect(cellsWithError.has('0,1')).toBe(true)
+        expect(cellsWithError.has('1,0')).toBe(true)
     })
 
     it('should return false if the helpers for an empty cell are missing', () => {
