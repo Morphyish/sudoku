@@ -95,7 +95,6 @@ function sudokuStore() {
         }
 
         history.addEntry(step)
-        history.goToLastStep()
     }
 
     const solveNextStep = () => {

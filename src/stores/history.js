@@ -2,7 +2,7 @@ import { writable } from 'svelte/store'
 
 const initialState = {
     entries: [],
-    currentStep: 0,
+    currentStep: null,
 }
 
 function historyStore() {
@@ -10,8 +10,8 @@ function historyStore() {
 
     const addEntry = entry => {
         history.update(snapshot => ({
-            ...snapshot,
             entries: [...snapshot.entries, entry],
+            currentStep: null,
         }))
     }
 
@@ -28,27 +28,6 @@ function historyStore() {
         })
     }
 
-    const goToNextStep = () => {
-        history.update(snapshot => {
-            const nextStep = snapshot.currentStep + 1
-            if (nextStep < snapshot.entries.length) {
-                return {
-                    ...snapshot,
-                    currentStep: nextStep,
-                }
-            }
-
-            return snapshot
-        })
-    }
-
-    const goToLastStep = () => {
-        history.update(snapshot => ({
-            ...snapshot,
-            currentStep: snapshot.entries.length - 1,
-        }))
-    }
-
     const reset = () => {
         history.set(initialState)
     }
@@ -57,8 +36,6 @@ function historyStore() {
         ...history,
         addEntry,
         goToStep,
-        goToNextStep,
-        goToLastStep,
         reset,
     }
 }
