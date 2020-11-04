@@ -1,11 +1,30 @@
 import { methods } from '../algorithms'
+import { applyStep } from './applyStep'
 
 export function findNextStep(helpers) {
     for (const method of methods) {
-        const nextStep = method.algorithm(helpers)
-        if (nextStep) {
+        const step = method.algorithm(helpers)
+        if (step) {
+            if (step.helpers) {
+                const { helpers: updatedHelpers } = applyStep([], helpers, step)
+                const nextStep = findNextStep(updatedHelpers)
+                if (nextStep) {
+                    return {
+                        helpers: [
+                            ...step.helpers,
+                            ...nextStep.helpers,
+                        ],
+                        grid: nextStep.grid,
+                        method: nextStep.method,
+                    }
+                }
+
+                return null
+            }
+
             return {
-                ...nextStep,
+                helpers: [],
+                grid: step.grid,
                 method: method.name,
             }
         }
