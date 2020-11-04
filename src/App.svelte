@@ -1,8 +1,5 @@
 <script>
-    import Board from './components/Board.svelte'
-    import History from './components/History.svelte'
-    import Button from './components/Button.svelte'
-    import Toggle from './components/Toggle.svelte'
+    import { Board, History, Button, Toggle } from './components'
 
     import { onMount } from 'svelte'
     import { settings, sudoku } from './stores'
