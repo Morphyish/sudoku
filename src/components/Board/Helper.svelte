@@ -4,7 +4,7 @@
     const cells = Array.from(Array(9).keys()).map(v => v + 1)
 </script>
 
-<div class="helper">
+<div class="helper noprint">
     {#each cells as cell}
         <div class="value">{values.includes(cell) ? cell : ''}</div>
     {/each}

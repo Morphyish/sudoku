@@ -9,14 +9,14 @@
     })
 </script>
 
-<h1>Sudoku</h1>
+<h1 class="noprint">Sudoku Trainer</h1>
 <main>
     <div class="game">
         {#if $sudoku.isDone}
-            <p class="success">You won, congratulations!</p>
+            <p class="success noprint">You won, congratulations!</p>
         {/if}
         {#if !$sudoku.isValid}
-            <p class="error">
+            <p class="error noprint">
                 <strong>Something went wrong!</strong><br />
                 The current board might not have a solution, or maybe our current algorithms can't solve it.<br />
             </p>
@@ -24,12 +24,12 @@
 
         <Board />
 
-        <div class="settings">
+        <div class="settings noprint">
             <Toggle checked={$settings.showErrors} on:click={settings.toggleErrors}>Show errors</Toggle>
             <Toggle checked={$settings.showHelpers} on:click={settings.toggleHelpers}>Show helpers</Toggle>
         </div>
 
-        <div class="actions">
+        <div class="actions noprint">
             <Button on:click={sudoku.start}>New grid</Button>
             <Button on:click={sudoku.restart}>Restart</Button>
             <Button on:click={sudoku.solveNextStep}>Solve next step</Button>

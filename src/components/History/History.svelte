@@ -20,7 +20,7 @@
 </script>
 
 {#if $history.entries && $history.entries.length}
-    <aside>
+    <aside class="noprint">
         <h2>History</h2>
         <div class="entries" bind:this={entriesList}>
             {#each $history.entries as entry, step}

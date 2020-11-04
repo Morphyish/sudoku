@@ -54,3 +54,9 @@ input:disabled {
 button {
 	text-transform: uppercase;
 }
+
+@media print {
+	.noprint {
+		display: none !important;
+	}
+}
