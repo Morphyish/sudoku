@@ -37,6 +37,7 @@
 
     .title {
         display: inline-block;
+        flex: 1;
     }
 
     .step {
