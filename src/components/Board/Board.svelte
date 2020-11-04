@@ -1,7 +1,7 @@
 <script>
     import Cell from './Cell.svelte'
-    import { errors, grid, helper, settings, sudoku } from '../stores'
-    import { getCell, getCoordinatesFromIndex } from '../utils'
+    import { errors, grid, helper, settings, history, sudoku } from '../../stores'
+    import { getCell, getCoordinatesFromIndex } from '../../utils'
 
     const cells = []
     let focusedCell = 0
@@ -63,6 +63,7 @@
     }
 
     const isStartingCell = (initialGrid, col, row) => getCell(initialGrid, col, row) !== 0
+    const isHighlighted = (entry, col, row) => entry && entry.grid[0].col === col && entry.grid[0].row === row
 
     const focusFirstCell = () => {
         focusedCell = 0
@@ -79,6 +80,7 @@
                             cell={getCell($grid, col, row)}
                             helpers={getCell($helper, col, row)}
                             startingCell={isStartingCell($sudoku.initialGrid, col, row)}
+                            highlighted={isHighlighted($history.entries[$history.currentStep], col, row)}
                             hasError={$errors.has(`${col},${row}`)}
                             showErrors={$settings.showErrors}
                             showHelpers={$settings.showHelpers}

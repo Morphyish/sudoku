@@ -5,12 +5,13 @@
     export let helpers = []
     export let hasError = false
     export let startingCell = false
+    export let highlighted = false
     export let showErrors = false
     export let showHelpers = false
     export let element = null
 </script>
 
-<div class="cell" class:error={hasError && showErrors && !startingCell} class:startingCell={startingCell} bind:this={element} on:focus on:keydown tabindex="-1">
+<div class="cell" class:error={hasError && showErrors && !startingCell} class:startingCell class:highlighted bind:this={element} on:focus on:keydown tabindex="-1">
     {#if cell}
         {cell}
     {:else if showHelpers}
@@ -34,6 +35,10 @@
 
     .cell:last-child {
         border-right: 0;
+    }
+
+    .highlighted {
+        background: rgba(255, 62, 0, .3);
     }
 
     .startingCell {
