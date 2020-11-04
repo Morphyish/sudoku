@@ -82,15 +82,11 @@ function sudokuStore() {
     }
 
     const applyStep = step => {
+        helper.reset()
+
         if (step.grid) {
             for (const { col, row, value } of step.grid) {
                 grid.setCell(col, row, value)
-            }
-        }
-
-        if (step.helpers) {
-            for (const { col, row, values } of step.helpers) {
-                helper.setCell(col, row, values)
             }
         }
 
