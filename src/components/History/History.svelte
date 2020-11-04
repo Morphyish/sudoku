@@ -2,7 +2,7 @@
     import Entry from './Entry.svelte'
 
     import { afterUpdate } from 'svelte'
-    import { history } from '../stores'
+    import { history } from '../../stores'
 
     let entriesList
     let entries = []
@@ -25,7 +25,7 @@
             {#each $history.entries as entry, step}
                 <Entry
                         {entry}
-                        current={$history.currentStep === step}
+                        open={$history.currentStep === step}
                         bind:element={entries[step]}
                         on:click={() => history.goToStep(step)}
                 />
