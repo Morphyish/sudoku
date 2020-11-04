@@ -97,6 +97,10 @@
 
 <style>
     .grid {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        flex: 1;
         font-size: 2rem;
         color: #333;
     }

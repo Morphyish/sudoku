@@ -42,10 +42,10 @@
 
 <style>
     h1 {
+        margin: .5rem 1rem 2rem 1rem;
         color: #ff3e00;
-        text-align: center;
         text-transform: uppercase;
-        font-size: 4em;
+        font-size: 2em;
         font-weight: 100;
     }
 

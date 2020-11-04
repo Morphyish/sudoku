@@ -35,7 +35,6 @@ input, button, select, textarea {
 	color: #333;
 	font-family: inherit;
 	font-size: inherit;
-	-webkit-padding: 0.4em 0;
 	padding: 0.4em;
 	margin: 0 .5rem 0.5rem .5rem;
 	box-sizing: border-box;
