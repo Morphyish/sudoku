@@ -1,6 +1,7 @@
-import Button from './Button.svelte'
-import Toggle from './Toggle.svelte'
+import Messages from './Messages.svelte'
 import { Board } from './Board'
 import { History } from './History'
+import { Settings } from './Settings'
+import { Actions } from './Actions'
 
-export { Button, Toggle, Board, History }
+export { Messages, Board, History, Settings, Actions }

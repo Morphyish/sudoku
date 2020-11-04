@@ -1,8 +1,8 @@
 <script>
-    import { Board, History, Button, Toggle } from './components'
+    import { Board, History, Settings, Messages, Actions } from './components'
 
     import { onMount } from 'svelte'
-    import { settings, sudoku } from './stores'
+    import { sudoku } from './stores'
 
     onMount(() => {
         sudoku.load()
@@ -12,30 +12,12 @@
 <h1 class="noprint">Sudoku Trainer</h1>
 <main>
     <div class="game">
-        {#if $sudoku.isDone}
-            <p class="success noprint">You won, congratulations!</p>
-        {/if}
-        {#if !$sudoku.isValid}
-            <p class="error noprint">
-                <strong>Something went wrong!</strong><br />
-                The current board might not have a solution, or maybe our current algorithms can't solve it.<br />
-            </p>
-        {/if}
-
         <Board />
 
-        <div class="settings noprint">
-            <Toggle checked={$settings.showErrors} on:click={settings.toggleErrors}>Show errors</Toggle>
-            <Toggle checked={$settings.showHelpers} on:click={settings.toggleHelpers}>Show helpers</Toggle>
-        </div>
+        <Messages />
 
-        <div class="actions noprint">
-            <Button on:click={sudoku.start}>New grid</Button>
-            <Button on:click={sudoku.restart}>Restart</Button>
-            <Button on:click={sudoku.solveNextStep}>Solve next step</Button>
-            <Button on:click={sudoku.solveAll}>Solve</Button>
-            <Button on:click={sudoku.save}>Save</Button>
-        </div>
+        <Settings />
+        <Actions />
     </div>
     <History />
 </main>
@@ -62,21 +44,5 @@
         flex: 1;
         align-items: center;
         padding: 0 8px;
-    }
-
-    .success {
-        color: #4CAF50;
-    }
-
-    .error {
-        color: #D13C2F;
-    }
-
-    .settings,
-    .actions {
-        display: flex;
-        flex-wrap: wrap;
-        justify-content: center;
-        margin-top: 2rem;
     }
 </style>

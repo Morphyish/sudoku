@@ -50,7 +50,7 @@
         color: #ff3e00;
         text-transform: uppercase;
         font-size: 1.25rem;
-        font-weight: 600;
+        font-weight: 400;
         margin-top: 0;
     }
 

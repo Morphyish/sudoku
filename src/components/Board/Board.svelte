@@ -73,7 +73,7 @@
 </script>
 
 {#if $grid}
-    <div class="grid" tabindex="0" on:focus={focusFirstCell}>
+    <div class="board" tabindex="0" on:focus={focusFirstCell}>
         {#each rows as row}
             <div class="row">
                 {#each columns as col}
@@ -96,11 +96,11 @@
 {/if}
 
 <style>
-    .grid {
+    .board {
         display: flex;
         flex-direction: column;
         justify-content: center;
-        flex: 1;
+        margin: auto 0;
         font-size: 2rem;
         color: #333;
     }
