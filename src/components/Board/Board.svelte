@@ -101,8 +101,6 @@
         flex-direction: column;
         justify-content: center;
         margin: auto 0;
-        font-size: 2rem;
-        color: #333;
     }
 
     .row {

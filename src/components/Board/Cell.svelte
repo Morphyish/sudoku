@@ -23,6 +23,8 @@
     .cell {
         height: 3rem;
         width: 3rem;
+        font-size: 2rem;
+        color: #333;
         text-align: center;
         line-height: 3rem;
         border-right: 1px solid #d7d7d7;
@@ -47,5 +49,14 @@
 
     .error {
         color: #D13C2F;
+    }
+
+    @media screen and (max-width: 30rem) {
+        .cell {
+            height: 2rem;
+            width: 2rem;
+            font-size: 1.5rem;
+            line-height: 2rem;
+        }
     }
 </style>

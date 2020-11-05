@@ -45,4 +45,10 @@
         align-items: center;
         padding: 0 8px;
     }
+
+    @media screen and (max-width: 50rem) {
+        main {
+            overflow: auto;
+        }
+    }
 </style>

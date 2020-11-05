@@ -26,4 +26,17 @@
         text-align: center;
         line-height: 1rem;
     }
+
+    @media screen and (max-width: 30rem) {
+        .helper {
+            font-size: .5rem;
+        }
+
+        .value {
+            height: .666rem;
+            width: .666rem;
+            text-align: center;
+            line-height: .666rem;
+        }
+    }
 </style>
