@@ -32,7 +32,8 @@ function removeNextPair(grid, cellIndexes) {
             const { grid: updatedGrid, methods: nextMethods } = removeNextPair(clonedGrid, cellIndexes)
             return {
                 grid: updatedGrid,
-                methods: nextMethods || methods
+                methods: nextMethods || methods,
+                nbOfCells: cellIndexes.length,
             }
         }
     }
