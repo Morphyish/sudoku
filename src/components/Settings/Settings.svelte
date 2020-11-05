@@ -15,6 +15,6 @@
         display: flex;
         flex-wrap: wrap;
         justify-content: center;
-        margin-top: 2rem;
+        margin-bottom: 1px;
     }
 </style>

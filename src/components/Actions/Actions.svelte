@@ -17,6 +17,5 @@
         display: flex;
         flex-wrap: wrap;
         justify-content: center;
-        margin-top: 2rem;
     }
 </style>

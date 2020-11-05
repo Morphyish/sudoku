@@ -81,7 +81,6 @@
     }
 </script>
 
-<div class="container">
 {#if $grid}
     <div class="board" tabindex="0" on:focus={focusFirstCell}>
         {#each rows as row}
@@ -107,16 +106,8 @@
 {#if $settings.showKeyboard}
     <VirtualKeyboard on:input={handleVirtualKeyboard}/>
 {/if}
-</div>
 
 <style>
-    .container {
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        margin: auto 0;
-    }
-
     .board {
         display: flex;
         flex-direction: column;

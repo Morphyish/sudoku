@@ -12,11 +12,10 @@
 <Title />
 <main>
     <div class="game">
+        <Settings />
         <Board />
 
         <Messages />
-
-        <Settings />
         <Actions />
     </div>
     <History />
