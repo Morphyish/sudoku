@@ -8,7 +8,7 @@
     let entries = []
 
     afterUpdate(() => {
-        let currentStep = $history.currentStep || entries.length - 1
+        let currentStep = $history.currentStep !== null ? $history.currentStep : entries.length - 1
         const entry = entries[currentStep]
         if (entriesList && entry) {
             const listHeight = entriesList.offsetHeight
