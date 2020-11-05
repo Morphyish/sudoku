@@ -43,8 +43,6 @@ function sudokuStore() {
             helper.reset()
             sudoku.set(sudokuSnapshop)
             grid.set(gridSnapshop)
-        } else {
-            start()
         }
     }
 
