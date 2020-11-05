@@ -28,7 +28,7 @@
                         {entry}
                         open={$history.currentStep === step}
                         bind:element={entries[step]}
-                        on:click={() => history.goToStep(step)}
+                        on:click={() => history.toggleEntry(step)}
                 />
             {/each}
         </div>

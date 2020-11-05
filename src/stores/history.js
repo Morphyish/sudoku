@@ -15,9 +15,14 @@ function historyStore() {
         }))
     }
 
-    const goToStep = step => {
+    const toggleEntry = step => {
         history.update(snapshot => {
-            if (step >= 0 && step < snapshot.entries.length) {
+            if (step === snapshot.currentStep) {
+               return {
+                   ...snapshot,
+                   currentStep: null,
+               }
+            } else if (step >= 0 && step < snapshot.entries.length) {
                 return {
                     ...snapshot,
                     currentStep: step,
@@ -35,7 +40,7 @@ function historyStore() {
     return {
         ...history,
         addEntry,
-        goToStep,
+        toggleEntry,
         reset,
     }
 }
