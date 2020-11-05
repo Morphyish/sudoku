@@ -26,7 +26,6 @@
         display: flex;
         flex: 1;
         overflow: hidden;
-        padding: 8px 0;
     }
 
     .game {
@@ -34,7 +33,7 @@
         flex-direction: column;
         flex: 1;
         align-items: center;
-        padding: 0 8px;
+        padding: 0 .5rem .5rem .5rem;
     }
 
     @media screen and (max-width: 50rem) {
