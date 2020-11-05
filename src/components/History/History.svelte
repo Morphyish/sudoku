@@ -42,21 +42,19 @@
         width: 30vw;
     }
 
-    aside > * {
-        padding: 0 8px;
-    }
-
     h2 {
         color: #ff3e00;
         text-transform: uppercase;
         font-size: 1.25rem;
         font-weight: 400;
         margin-top: 0;
+        padding: 0 8px;
     }
 
     .entries {
         position: relative;
         flex: 1;
         overflow: auto;
+        padding: 0 8px;
     }
 </style>
