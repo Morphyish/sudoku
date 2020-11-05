@@ -16,7 +16,6 @@
         text-align: center;
         background: transparent;
         border: 1px solid #d7d7d7;
-        font-weight: 100;
         border-radius: 50%;
         margin: 0;
         padding: 0;
