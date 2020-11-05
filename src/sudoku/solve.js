@@ -16,7 +16,7 @@ export function solve(grid) {
         const nextStep = findNextStep(helpers)
         if (nextStep) {
             steps.push(nextStep)
-            methods.push(nextStep.method)
+            methods.push(...nextStep.methods)
 
             const { grid: updatedGrid , helpers: updatedHelpers } = applyStep(clonedGrid, helpers, nextStep)
             clonedGrid = updatedGrid

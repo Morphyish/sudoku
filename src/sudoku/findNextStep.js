@@ -15,7 +15,10 @@ export function findNextStep(helpers) {
                             ...nextStep.helpers,
                         ],
                         grid: nextStep.grid,
-                        method: nextStep.method,
+                        methods: [
+                            method.name,
+                            ...nextStep.methods,
+                        ],
                     }
                 }
 
@@ -25,7 +28,7 @@ export function findNextStep(helpers) {
             return {
                 helpers: [],
                 grid: step.grid,
-                method: method.name,
+                methods: [method.name],
             }
         }
     }

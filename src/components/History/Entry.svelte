@@ -8,7 +8,7 @@
 <details {open} on:click|preventDefault bind:this={element}>
     <summary>
         <span class="title">
-            {entry.method}<br>
+            {entry.methods[entry.methods.length - 1]}<br>
             <span class="step">
                 <span>Col: <strong>{entry.grid.col + 1}</strong></span>
                 <span>Row: <strong>{entry.grid.row + 1}</strong></span>

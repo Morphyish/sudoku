@@ -9,7 +9,7 @@ export function empty(grid) {
 }
 
 function removeNextPair(grid, cellIndexes) {
-    if (cellIndexes.length < 20) {
+    if (cellIndexes.length < 18) {
         return {
             grid,
         }
