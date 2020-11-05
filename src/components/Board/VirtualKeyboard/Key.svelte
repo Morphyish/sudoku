@@ -20,12 +20,4 @@
         margin: 0;
         padding: 0;
     }
-
-    @media screen and (max-width: 30rem) {
-        button {
-            height: 1.75rem;
-            width: 1.75rem;
-            font-size: 1rem;
-        }
-    }
 </style>

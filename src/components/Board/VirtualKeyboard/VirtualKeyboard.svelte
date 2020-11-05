@@ -31,8 +31,9 @@
 
     @media screen and (max-width: 30rem) {
         .keyboard {
-            grid-template-columns: repeat(10, 1.75rem);
-            grid-gap: .125rem;
+            grid-template-rows: repeat(2, 2.5rem);
+            grid-template-columns: repeat(5, 2.5rem);
+            grid-gap: .5rem;
         }
     }
 </style>
