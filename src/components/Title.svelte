@@ -27,7 +27,7 @@
 
     @media screen and (max-width: 30rem) {
         h1 {
-            margin: .5rem .5rem 2rem .5rem;
+            margin: .5rem;
             font-size: 1rem;
         }
 
