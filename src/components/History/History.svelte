@@ -39,7 +39,7 @@
     aside {
         display: flex;
         flex-direction: column;
-        width: 30vw;
+        width: 20rem;
     }
 
     h2 {
@@ -56,5 +56,11 @@
         flex: 1;
         overflow: auto;
         padding: 0 8px;
+    }
+
+    @media screen and (max-width: 50rem) {
+        aside {
+            display: none;
+        }
     }
 </style>
