@@ -1,5 +1,5 @@
 <script>
-    import { Board, History, Settings, Messages, Actions } from './components'
+    import { Board, History, Settings, Messages, Actions, Title } from './components'
 
     import { onMount } from 'svelte'
     import { sudoku } from './stores'
@@ -9,7 +9,7 @@
     })
 </script>
 
-<h1 class="noprint">Sudoku Trainer</h1>
+<Title />
 <main>
     <div class="game">
         <Board />
@@ -23,14 +23,6 @@
 </main>
 
 <style>
-    h1 {
-        margin: .5rem 1rem 2rem 1rem;
-        color: #ff3e00;
-        text-transform: uppercase;
-        font-size: 2em;
-        font-weight: 100;
-    }
-
     main {
         display: flex;
         flex: 1;
