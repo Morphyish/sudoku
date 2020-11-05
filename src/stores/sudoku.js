@@ -13,7 +13,7 @@ const initialState = {
     isDone: false,
     initialGrid: Array(9).fill(Array(9).fill(0)),
     difficulty: 0,
-    methodsUsed: [],
+    methods: [],
 }
 
 function sudokuStore() {
@@ -46,6 +46,14 @@ function sudokuStore() {
         } else {
             start()
         }
+    }
+
+    const empty = () => {
+        errors.reset()
+        history.reset()
+        helper.reset()
+        grid.reset()
+        sudoku.set(initialState)
     }
 
     const start = () => {
@@ -149,6 +157,7 @@ function sudokuStore() {
 
     return {
         ...sudoku,
+        empty,
         start,
         restart,
         fillCell,
