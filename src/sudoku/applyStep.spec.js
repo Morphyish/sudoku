@@ -27,11 +27,11 @@ describe('sudoku/applyStep', () => {
         ]
 
         const step = {
-            grid: [{
+            grid: {
                 col: 4,
                 row: 0,
                 value: 1,
-            }],
+            },
         }
 
         const result = applyStep(grid, helpers, step)
