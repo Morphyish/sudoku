@@ -1,4 +1,5 @@
 <script>
+    import { VirtualKeyboard } from './VirtualKeyboard'
     import Cell from './Cell.svelte'
     import { errors, grid, helper, settings, history, sudoku } from '../../stores'
     import { getCell, getCoordinatesFromIndex } from '../../utils'
@@ -62,6 +63,17 @@
         }
     }
 
+    const handleVirtualKeyboard = ({ detail }) => {
+        const { key } = detail
+        const [col, row] = getCoordinatesFromIndex(focusedCell)
+
+        if (key === 0) {
+            sudoku.emptyCell(col, row)
+        }
+
+        sudoku.fillCell(col, row, key)
+    }
+
     const isStartingCell = (initialGrid, col, row) => getCell(initialGrid, col, row) !== 0
 
     const isHighlighted = (currentEntry, col, row) => currentEntry && currentEntry.grid[0].col === col && currentEntry.grid[0].row === row
@@ -72,6 +84,7 @@
     }
 </script>
 
+<div class="container">
 {#if $grid}
     <div class="board" tabindex="0" on:focus={focusFirstCell}>
         {#each rows as row}
@@ -94,13 +107,23 @@
         {/each}
     </div>
 {/if}
+{#if $settings.showKeyboard}
+    <VirtualKeyboard on:input={handleVirtualKeyboard}/>
+{/if}
+</div>
 
 <style>
-    .board {
+    .container {
         display: flex;
         flex-direction: column;
         justify-content: center;
         margin: auto 0;
+    }
+
+    .board {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
     }
 
     .row {

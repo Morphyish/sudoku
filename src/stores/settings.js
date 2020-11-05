@@ -3,6 +3,7 @@ import { writable } from 'svelte/store'
 const initialState = {
     showErrors: false,
     showHelpers: false,
+    showKeyboard: false,
 }
 
 function settingsStore() {
@@ -22,10 +23,18 @@ function settingsStore() {
         }))
     }
 
+    const toggleKeyboard = () => {
+        settings.update(state => ({
+            ...state,
+            showKeyboard: !state.showKeyboard,
+        }))
+    }
+
     return {
         ...settings,
         toggleErrors,
         toggleHelpers,
+        toggleKeyboard,
     }
 }
 

@@ -29,6 +29,7 @@
         line-height: 3rem;
         border-right: 1px solid #d7d7d7;
         font-weight: 100;
+        cursor: pointer;
     }
 
     .cell:nth-child(3n) {

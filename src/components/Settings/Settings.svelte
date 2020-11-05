@@ -5,8 +5,9 @@
 </script>
 
 <div class="settings noprint">
-    <Toggle checked={$settings.showErrors} on:click={settings.toggleErrors}>Show errors</Toggle>
-    <Toggle checked={$settings.showHelpers} on:click={settings.toggleHelpers}>Show helpers</Toggle>
+    <Toggle checked={$settings.showKeyboard} on:click={settings.toggleKeyboard}>Keyboard</Toggle>
+    <Toggle checked={$settings.showErrors} on:click={settings.toggleErrors}>Errors</Toggle>
+    <Toggle checked={$settings.showHelpers} on:click={settings.toggleHelpers}>Helpers</Toggle>
 </div>
 
 <style>
