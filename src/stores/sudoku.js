@@ -53,9 +53,12 @@ function sudokuStore() {
         history.reset()
         helper.reset()
 
-        const { grid: newGrid, difficulty, methods } = generateNewGrid()
+        const { grid: newGrid, difficulty, methods, nbOfCells } = generateNewGrid()
 
-        console.log(methods)
+        console.log('methods', methods)
+        console.log('difficulty', difficulty)
+        console.log('nbOfCells', nbOfCells)
+        console.log('~~~~~~~~~~~~~~~~~~~~~~')
 
         grid.set(newGrid)
         sudoku.set({
