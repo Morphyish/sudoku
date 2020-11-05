@@ -74,7 +74,7 @@
 
     const isStartingCell = (initialGrid, col, row) => getCell(initialGrid, col, row) !== 0
 
-    const isHighlighted = (currentEntry, col, row) => currentEntry && currentEntry.grid[0].col === col && currentEntry.grid[0].row === row
+    const isHighlighted = (currentEntry, col, row) => currentEntry && currentEntry.grid.col === col && currentEntry.grid.row === row
 
     const focusFirstCell = () => {
         focusedCell = 0

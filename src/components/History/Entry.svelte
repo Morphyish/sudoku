@@ -10,9 +10,9 @@
         <span class="title">
             {entry.method}<br>
             <span class="step">
-                <span>Col: <strong>{entry.grid[0].col + 1}</strong></span>
-                <span>Row: <strong>{entry.grid[0].row + 1}</strong></span>
-                <span>Value: <strong>{entry.grid[0].value}</strong></span>
+                <span>Col: <strong>{entry.grid.col + 1}</strong></span>
+                <span>Row: <strong>{entry.grid.row + 1}</strong></span>
+                <span>Value: <strong>{entry.grid.value}</strong></span>
             </span>
         </span>
     </summary>

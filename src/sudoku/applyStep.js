@@ -12,9 +12,8 @@ export function applyStep(grid, helpers, step) {
     }
 
     if (step.grid) {
-        for (const { col, row, value } of step.grid) {
-            setCell(clonedGrid, col, row, value)
-        }
+        const { col, row, value } = step.grid
+        setCell(clonedGrid, col, row, value)
         clonedHelpers = updateHelpers(clonedHelpers, clonedGrid)
     }
 

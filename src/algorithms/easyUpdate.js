@@ -6,11 +6,11 @@ export function easyUpdate(helpers) {
             const values = getCell(helpers, col, row)
             if (values.length === 1) {
                 return {
-                    grid: [{
+                    grid: {
                         col,
                         row,
                         value: values[0],
-                    }],
+                    },
                 }
             }
         }

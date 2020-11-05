@@ -85,9 +85,8 @@ function sudokuStore() {
         helper.reset()
 
         if (step.grid) {
-            for (const { col, row, value } of step.grid) {
-                grid.setCell(col, row, value)
-            }
+            const { col, row, value } = step.grid
+            grid.setCell(col, row, value)
         }
 
         history.addEntry(step)

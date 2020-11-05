@@ -13,7 +13,7 @@ export function sectorUpdate(helpers) {
                 const update = checkHelper(helpers, j, i, rowIdx + 1)
                 if (update) {
                     return {
-                        grid: [update]
+                        grid: update
                     }
                 }
             }
@@ -26,7 +26,7 @@ export function sectorUpdate(helpers) {
                 const update = checkHelper(helpers, i, j, colIdx + 1)
                 if (update) {
                     return {
-                        grid: [update]
+                        grid: update
                     }
                 }
             }
@@ -48,7 +48,7 @@ export function sectorUpdate(helpers) {
                     )
                     if (update) {
                         return {
-                            grid: [update]
+                            grid: update
                         }
                     }
                 }
