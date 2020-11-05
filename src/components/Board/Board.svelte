@@ -66,6 +66,7 @@
 
         if (key === 0) {
             sudoku.emptyCell(col, row)
+            return
         }
 
         sudoku.fillCell(col, row, key)
