@@ -21,9 +21,18 @@
 
 <style>
     .keyboard {
-        display: flex;
+        display: grid;
+        grid-template-columns: repeat(10, 2.5rem);
+        grid-gap: .5rem;
         align-items: center;
         justify-content: space-between;
         margin-top: 1rem;
+    }
+
+    @media screen and (max-width: 30rem) {
+        .keyboard {
+            grid-template-columns: repeat(10, 1.75rem);
+            grid-gap: .125rem;
+        }
     }
 </style>
