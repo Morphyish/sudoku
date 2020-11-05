@@ -5,10 +5,18 @@
     import { getCell, getCoordinatesFromIndex } from '../../utils'
 
     const cells = []
-    let focusedCell = 0
+    let focusedCell = -1
+    let focusedCol = -1
+    let focusedRow = -1
 
     const rows = Array.from(Array(9).keys())
     const columns = Array.from(Array(9).keys())
+
+    const handleFocus = (col, row) => () => {
+        focusedCell = 9 * row + col
+        focusedCol = col
+        focusedRow = row
+    }
 
     const handleUserInput = (col, row) => event => {
         if (event.isComposing || event.keyCode === 229) {
@@ -27,8 +35,6 @@
             sudoku.emptyCell(col, row)
             return
         }
-
-        const [focusedCol, focusedRow] = getCoordinatesFromIndex(focusedCell)
 
         switch (event.key) {
             case 'ArrowUp':
@@ -62,14 +68,13 @@
 
     const handleVirtualKeyboard = ({ detail }) => {
         const { key } = detail
-        const [col, row] = getCoordinatesFromIndex(focusedCell)
 
         if (key === 0) {
-            sudoku.emptyCell(col, row)
+            sudoku.emptyCell(focusedCol, focusedRow)
             return
         }
 
-        sudoku.fillCell(col, row, key)
+        sudoku.fillCell(focusedCol, focusedRow, key)
     }
 
     const isStartingCell = (initialGrid, col, row) => getCell(initialGrid, col, row) !== 0
@@ -77,7 +82,9 @@
     const isHighlighted = (currentEntry, col, row) => currentEntry && currentEntry.grid.col === col && currentEntry.grid.row === row
 
     const focusFirstCell = () => {
-        focusedCell = 0
+        focusedCell = -1
+        focusedCol = -1
+        focusedRow = -1
         cells[0].focus()
     }
 </script>
@@ -95,7 +102,8 @@
                             hasError={$errors.has(`${col},${row}`)}
                             showErrors={$settings.showErrors}
                             showHelpers={$settings.showHelpers}
-                            on:focus={() => focusedCell = 9 * row + col}
+                            isFocused={col === focusedCol && row === focusedRow}
+                            on:focus={handleFocus(col, row)}
                             on:keydown={handleUserInput(col, row)}
                             bind:element={cells[9 * row + col]}
                     />

@@ -4,6 +4,7 @@
     export let cell = 0
     export let helpers = []
     export let hasError = false
+    export let isFocused = false
     export let startingCell = false
     export let highlighted = false
     export let showErrors = false
@@ -11,7 +12,7 @@
     export let element = null
 </script>
 
-<div class="cell" class:error={hasError && showErrors && !startingCell} class:startingCell class:highlighted bind:this={element} on:focus on:keydown tabindex="-1">
+<div class="cell" class:error={hasError && showErrors && !startingCell} class:startingCell class:highlighted class:isFocused bind:this={element} on:focus on:keydown tabindex="-1">
     {#if cell}
         {cell}
     {:else if showHelpers}
@@ -38,6 +39,10 @@
 
     .cell:last-child {
         border-right: 0;
+    }
+
+    .isFocused {
+        outline-style: auto;
     }
 
     .highlighted {
