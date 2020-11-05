@@ -15,41 +15,6 @@
             return
         }
 
-        const [focusedCol, focusedRow] = getCoordinatesFromIndex(focusedCell)
-
-        switch (event.key) {
-            case 'ArrowUp':
-                if (focusedRow > 0) {
-                    focusedCell -= 9
-                    cells[focusedCell].focus()
-                }
-                return
-            case 'ArrowDown':
-                if (focusedRow < 8) {
-                    focusedCell += 9
-                    cells[focusedCell].focus()
-                }
-                return
-            case 'ArrowLeft':
-                if (focusedCol > 0) {
-                    focusedCell -= 1
-                    cells[focusedCell].focus()
-                }
-                return
-            case 'ArrowRight':
-                if (focusedCol < 8) {
-                    focusedCell += 1
-                    cells[focusedCell].focus()
-                }
-                return
-            default:
-                break
-        }
-
-        if (isStartingCell($sudoku.initialGrid, col, row)) {
-            return
-        }
-
         const allowedKeys = [1, 2, 3, 4, 5, 6, 7, 8, 9]
         const key = parseInt(event.key)
 
@@ -60,6 +25,38 @@
 
         if (key === 0 || event.key === 'Backspace') {
             sudoku.emptyCell(col, row)
+            return
+        }
+
+        const [focusedCol, focusedRow] = getCoordinatesFromIndex(focusedCell)
+
+        switch (event.key) {
+            case 'ArrowUp':
+                if (focusedRow > 0) {
+                    focusedCell -= 9
+                    cells[focusedCell].focus()
+                }
+                break
+            case 'ArrowDown':
+                if (focusedRow < 8) {
+                    focusedCell += 9
+                    cells[focusedCell].focus()
+                }
+                break
+            case 'ArrowLeft':
+                if (focusedCol > 0) {
+                    focusedCell -= 1
+                    cells[focusedCell].focus()
+                }
+                break
+            case 'ArrowRight':
+                if (focusedCol < 8) {
+                    focusedCell += 1
+                    cells[focusedCell].focus()
+                }
+                break
+            default:
+                break
         }
     }
 

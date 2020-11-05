@@ -2,7 +2,7 @@ import { get, writable } from 'svelte/store'
 import { updateHelpers } from '../helper'
 import { generateNewGrid } from '../grid'
 import { findNextStep, isDone, solve, validate } from '../sudoku'
-import { clone } from '../utils'
+import { clone, getCell } from '../utils'
 import { errors } from './errors'
 import { grid } from './grid'
 import { helper } from './helper'
@@ -118,8 +118,11 @@ function sudokuStore() {
             method: 'User input',
             grid: [{ col, row, value }],
         }
+        const initialGrid = get(sudoku).initialGrid
 
-        applyStep(step)
+        if (getCell(initialGrid, col, row) === 0) {
+            applyStep(step)
+        }
     }
 
     const emptyCell = (col, row) => {
@@ -127,8 +130,11 @@ function sudokuStore() {
             method: 'User input',
             grid: [{ col, row, value: 0 }],
         }
+        const initialGrid = get(sudoku).initialGrid
 
-        applyStep(step)
+        if (getCell(initialGrid, col, row) === 0) {
+            applyStep(step)
+        }
     }
 
     const save = () => {
