@@ -125,8 +125,8 @@ function sudokuStore() {
 
     const fillCell = (col, row, value) => {
         const step = {
-            method: 'User input',
-            grid: [{ col, row, value }],
+            methods: ['User input'],
+            grid: { col, row, value },
         }
         const initialGrid = get(sudoku).initialGrid
 
@@ -137,8 +137,8 @@ function sudokuStore() {
 
     const emptyCell = (col, row) => {
         const step = {
-            method: 'User input',
-            grid: [{ col, row, value: 0 }],
+            methods: ['User input'],
+            grid: { col, row, value: 0 },
         }
         const initialGrid = get(sudoku).initialGrid
 
