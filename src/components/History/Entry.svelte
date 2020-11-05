@@ -2,13 +2,16 @@
     export let entry = {}
     export let open = false
     export let element = null
+
+    let methods
+    $: methods = entry.methods
 </script>
 
 
 <details {open} on:click|preventDefault bind:this={element}>
     <summary>
         <span class="title">
-            {entry.methods[entry.methods.length - 1]}<br>
+            {methods[methods.length - 1]}<br>
             <span class="step">
                 <span>Col: <strong>{entry.grid.col + 1}</strong></span>
                 <span>Row: <strong>{entry.grid.row + 1}</strong></span>
@@ -16,12 +19,19 @@
             </span>
         </span>
     </summary>
+    <strong>Detail:</strong>
+    <ul>
+        {#each methods as method}
+            <li>{method}</li>
+        {/each}
+    </ul>
 </details>
 
 <style>
     details {
-        cursor: pointer;
         margin-bottom: .5rem;
+        padding: 0 .5rem;
+        cursor: pointer;
     }
 
     details[open] {
@@ -32,7 +42,8 @@
         display: flex;
         align-items: center;
         outline: none;
-        padding: 1rem .5rem;
+        padding: 1rem 0;
+        user-select: none;
     }
 
     .title {
