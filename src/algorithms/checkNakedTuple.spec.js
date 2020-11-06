@@ -197,6 +197,24 @@ describe('algorithms/checkNakedTuple', () => {
         })
     })
 
+    it('should return null if it finds a solution but it doesn\'t update any cells', () => {
+        const helpers = [
+            [[1, 2, 3], [], [], [], [], [], [], [], []],
+            [[1, 4], [], [], [], [], [], [], [], []],
+            [[5, 9], [], [], [], [], [], [], [], []],
+            [[2, 3], [], [], [], [], [], [], [], []],
+            [[1, 2], [], [], [], [], [], [], [], []],
+            [[5, 9], [], [], [], [], [], [], [], []],
+            [[4, 7], [], [], [], [], [], [], [], []],
+            [[1, 7, 8], [], [], [], [], [], [], [], []],
+            [[1, 8], [], [], [], [], [], [], [], []],
+        ]
+
+        const result = checkNakedTuple(helpers)
+
+        expect(result).toBeNull()
+    })
+
     it('should return null if it can\'t find a solution', () => {
         const helpers = [
             [[1, 2], [1, 2], [1, 2], [1, 2], [1, 2], [1, 2], [1, 2], [1, 2], [1, 2]],
