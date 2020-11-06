@@ -88,8 +88,6 @@ function remove(helpers, values, index, zone) {
                 }
             }
             break
-        default:
-            break
     }
 
     return {
