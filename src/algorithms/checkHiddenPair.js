@@ -130,8 +130,6 @@ function remove(helpers, num, tuple, indexes, zone) {
                 }
             }
             break
-        default:
-            break
     }
 
     return {
