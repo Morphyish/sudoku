@@ -15,9 +15,16 @@ function removeNextPair(grid, cellIndexes) {
         }
     }
 
+    const skipCells = []
+
     for (const cellIndex of cellIndexes) {
+        if (skipCells.includes(cellIndex)) continue
+
         const clonedGrid = clone(grid)
+
         const symCellIndex = 80 - cellIndex
+        skipCells.push(cellIndex, symCellIndex)
+
         const [col, row] = getCoordinatesFromIndex(cellIndex)
         const [symCol, symRow] = getCoordinatesFromIndex(symCellIndex)
         setCell(clonedGrid, col, row, 0)
