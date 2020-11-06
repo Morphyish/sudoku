@@ -64,7 +64,7 @@ function fill(arr) {
 }
 
 function checkHelper(helpers, col, row, value) {
-    if (getCell(helpers, col, row).indexOf(value) >= 0) {
+    if (getCell(helpers, col, row).includes(value)) {
         return {
             col,
             row,
