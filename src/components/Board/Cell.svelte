@@ -12,7 +12,7 @@
     export let element = null
 </script>
 
-<div class="cell" class:error={hasError && showErrors && !startingCell} class:startingCell class:highlighted class:isFocused bind:this={element} on:focus on:keydown tabindex="-1">
+<div class="cell" class:error={hasError && showErrors && !startingCell} class:startingCell class:highlighted class:isFocused bind:this={element} on:focus on:blur on:keydown tabindex="-1">
     {#if cell}
         {cell}
     {:else if showHelpers}

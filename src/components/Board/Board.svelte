@@ -12,10 +12,22 @@
     const rows = Array.from(Array(9).keys())
     const columns = Array.from(Array(9).keys())
 
+    const resetFocus = () => {
+        focusedCell = -1
+        focusedCol = -1
+        focusedRow = -1
+    }
+
     const handleFocus = (col, row) => () => {
         focusedCell = 9 * row + col
         focusedCol = col
         focusedRow = row
+    }
+
+    const handleBlur = event => {
+        if (event.relatedTarget?.dataset?.focus !== 'virtual-keyboard') {
+            resetFocus()
+        }
     }
 
     const handleUserInput = (col, row) => event => {
@@ -69,22 +81,23 @@
     const handleVirtualKeyboard = ({ detail }) => {
         const { key } = detail
 
+        if (focusedCell === -1) return
+
         if (key === 0) {
             sudoku.emptyCell(focusedCol, focusedRow)
-            return
+        } else {
+            sudoku.fillCell(focusedCol, focusedRow, key)
         }
 
-        sudoku.fillCell(focusedCol, focusedRow, key)
+        resetFocus()
     }
 
     const isStartingCell = (initialGrid, col, row) => getCell(initialGrid, col, row) !== 0
 
-    const isHighlighted = (currentEntry, col, row) => currentEntry && currentEntry.grid.col === col && currentEntry.grid.row === row
+    const isHighlighted = (currentEntry, col, row) => currentEntry?.grid.col === col && currentEntry?.grid.row === row
 
     const focusFirstCell = () => {
-        focusedCell = -1
-        focusedCol = -1
-        focusedRow = -1
+        resetFocus()
         cells[0].focus()
     }
 </script>
@@ -103,6 +116,7 @@
                             showErrors={$settings.showErrors}
                             showHelpers={$settings.showHelpers}
                             isFocused={col === focusedCol && row === focusedRow}
+                            on:blur={handleBlur}
                             on:focus={handleFocus(col, row)}
                             on:keydown={handleUserInput(col, row)}
                             bind:element={cells[9 * row + col]}

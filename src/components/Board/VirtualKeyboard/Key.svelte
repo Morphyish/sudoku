@@ -2,7 +2,7 @@
     export let key = 0
 </script>
 
-<button on:click>
+<button on:click data-focus="virtual-keyboard">
     {key}
 </button>
 
