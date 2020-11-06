@@ -91,6 +91,24 @@ describe('algorithms/checkHiddenPair', () => {
         ])
     })
 
+    it('should return null if it finds a solution but it doesn\'t update any cells', () => {
+        const helpers = [
+            [[1, 4], [], [], [], [], [], [], [], []],
+            [[2, 4], [], [], [], [], [], [], [], []],
+            [[5, 9], [], [], [], [], [], [], [], []],
+            [[], [], [], [], [], [], [], [], []],
+            [[5, 9], [], [], [], [], [], [], [], []],
+            [[], [], [], [], [], [], [], [], []],
+            [[2, 3, 8], [], [], [], [], [], [], [], []],
+            [[4, 6, 8, 9], [], [], [], [], [], [], [], []],
+            [[], [], [], [], [], [], [], [], []],
+        ]
+
+        const result = checkHiddenPair(helpers)
+
+        expect(result).toBeNull()
+    })
+
     it('should return null if it can\'t find a solution', () => {
         const helpers = [
             [[1, 2], [1, 2], [1, 2], [1, 2], [1, 2], [1, 2], [1, 2], [1, 2], [1, 2]],
