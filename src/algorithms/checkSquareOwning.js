@@ -36,7 +36,7 @@ function findOwnInRow(helpers, col, row) {
 
     let rowHelpers = new Set()
     for (let c = colAnchor; c < colAnchor + 3; c++) {
-        const own = new Set(getCell(helpers, c, row))
+        const own = getCell(helpers, c, row)
         rowHelpers = new Set([...rowHelpers, ...own])
     }
     removeSquareDuplicatesFromLine(helpers, rowHelpers, undefined, row, colAnchor, rowAnchor)
@@ -49,7 +49,7 @@ function findOwnInCol(helpers, col, row) {
 
     let colHelpers = new Set()
     for (let r = rowAnchor; r < rowAnchor + 3; r++) {
-        const own = new Set(getCell(helpers, col, r))
+        const own = getCell(helpers, col, r)
         colHelpers = new Set([...colHelpers, ...own])
     }
     removeSquareDuplicatesFromLine(helpers, colHelpers, col, undefined, colAnchor, rowAnchor)
