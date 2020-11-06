@@ -1,6 +1,6 @@
 import { easyUpdate } from './easyUpdate'
 import { sectorUpdate } from './sectorUpdate'
-import { checkOwning } from './checkOwning'
+import { checkSquareOwning } from './checkSquareOwning'
 import { checkNakedTuple } from './checkNakedTuple'
 import { checkHiddenPair } from './checkHiddenPair'
 
@@ -15,7 +15,7 @@ export const methods = [
     },
     {
         name: 'Square Owning',
-        algorithm: checkOwning,
+        algorithm: checkSquareOwning,
     },
     {
         name: 'Naked Tuple',

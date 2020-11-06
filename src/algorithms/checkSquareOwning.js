@@ -1,6 +1,6 @@
 import { getCell } from '../utils'
 
-export function checkOwning(helpers) {
+export function checkSquareOwning(helpers) {
     for (let i = 0; i < 9; i++) {
         const { rowAnchor } = getAnchors(0, i)
 
