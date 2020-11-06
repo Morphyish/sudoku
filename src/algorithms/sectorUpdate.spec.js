@@ -106,8 +106,3 @@ describe('algorithms/sectorUpdate', () => {
         expect(result).toBeNull()
     })
 })
-
-jest.mock('../utils', () => ({
-    ...jest.requireActual('../utils'),
-    shuffle: jest.fn(),
-}))

@@ -60,8 +60,3 @@ describe('algorithms/easyUpdate', () => {
         expect(result).toBeNull()
     })
 })
-
-jest.mock('../utils', () => ({
-    ...jest.requireActual('../utils'),
-    shuffle: jest.fn(),
-}))
