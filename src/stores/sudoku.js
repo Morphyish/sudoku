@@ -30,7 +30,6 @@ function sudokuStore() {
             sudoku.update(state => ({
                 ...state,
                 isDone: isValid && isDone(gridSnapshot),
-                isValid,
             }))
         }
     })
@@ -105,6 +104,11 @@ function sudokuStore() {
         const nextStep = findNextStep(get(helper))
         if (nextStep) {
             applyStep(nextStep)
+        } else {
+            sudoku.update(state => ({
+                ...state,
+                isValid: false,
+            }))
         }
     }
 
