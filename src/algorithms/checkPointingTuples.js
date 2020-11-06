@@ -1,15 +1,15 @@
 import { getCell } from '../utils'
 
-export function checkSquareOwning(helpers) {
+export function checkPointingTuples(helpers) {
     for (let i = 0; i < 9; i++) {
-        const { rowAnchor } = getAnchors(0, i)
+        // const { rowAnchor } = getAnchors(0, i)
 
         for (let j = 0; j < 9; j += 3) {
             const ownInRow = findOwnInRow(helpers, j, i)
             const { takenInRow, cells: cellsFromRow } = removeTakenFromRow(helpers, ownInRow, i, j)
 
             if (takenInRow.size > 0) {
-                const square = `(${rowAnchor + 1}, ${j + 1}) -> (${rowAnchor + 3}, ${j + 3})`
+                // const square = `(${rowAnchor + 1}, ${j + 1}) -> (${rowAnchor + 3}, ${j + 3})`
                 // console.log(`${[...takenInRow]} taken in row ${i + 1} by square ${square}`)
                 return {
                     helpers: cellsFromRow
@@ -20,7 +20,7 @@ export function checkSquareOwning(helpers) {
             const { takenInCol, cells: cellsFromCol } = removeTakenFromCol(helpers, ownInCol, i, j)
 
             if (takenInCol.size > 0) {
-                const square = `(${j + 1}, ${rowAnchor + 1}) -> (${j + 3}, ${rowAnchor + 3})`
+                // const square = `(${j + 1}, ${rowAnchor + 1}) -> (${j + 3}, ${rowAnchor + 3})`
                 // console.log(`${[...takenInCol]} taken in col ${i + 1} by square ${square}`)
                 return {
                     helpers: cellsFromCol
