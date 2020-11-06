@@ -101,16 +101,3 @@ function remove(helpers, values, index, zone) {
 function filterOutValues(cell, valuesToRemove) {
     return cell.filter(value => !valuesToRemove.includes(value))
 }
-
-// TODO: use this grid to test algo
-const grid = [
-    [8, 0, 0, 0, 1, 0, 0, 0, 9],
-    [0, 3, 5, 0, 4, 0, 0, 0, 1],
-    [0, 0, 0, 0, 7, 0, 0, 0, 3],
-    [1, 8, 0, 3, 9, 4, 6, 0, 0],
-    [5, 9, 6, 7, 2, 1, 3, 8, 4],
-    [3, 0, 4, 5, 8, 6, 0, 1, 0],
-    [2, 6, 0, 4, 3, 0, 0, 0, 0],
-    [7, 1, 0, 0, 5, 0, 2, 4, 6],
-    [4, 5, 0, 0, 6, 0, 0, 0, 8],
-]
