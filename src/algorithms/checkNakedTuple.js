@@ -9,20 +9,21 @@ export function checkNakedTuple(helpers) {
         }
 
         for (let [label, zone] of Object.entries(zones)) {
-            const updatedHelpers = zone.some((updatedCells, values) => {
+            const updates = []
+            for (let values of zone) {
                 const sameValueCells = zone.filter(cell => JSON.stringify(cell) === JSON.stringify(values))
                 if (sameValueCells.length === values.length) {
                     const { updated, cells } = remove(helpers, values, i, label)
                     if (updated) {
                         // console.log(`found tuple ${values} in ${label} ${i + 1}`)
-                        return updatedCells.push(...cells)
+                        updates.push(...cells)
+                        break
                     }
                 }
-                return updatedCells
-            }, [])
-            if (updatedHelpers.length) {
+            }
+            if (updates.length) {
                 return {
-                    helpers: updatedHelpers
+                    helpers: updates
                 }
             }
         }
@@ -40,12 +41,14 @@ function remove(helpers, values, index, zone) {
             helperRow.forEach((cell, col) => {
                 if (JSON.stringify(cell) !== JSON.stringify(values)) {
                     const newValues = filterOutValues(cell, values)
-                    cells.push({
-                        col,
-                        row: index,
-                        values: newValues,
-                    })
-                    updated = true
+                    if (JSON.stringify(cell) !== JSON.stringify(newValues)) {
+                        cells.push({
+                            col,
+                            row: index,
+                            values: newValues,
+                        })
+                        updated = true
+                    }
                 }
             })
             break
@@ -54,12 +57,14 @@ function remove(helpers, values, index, zone) {
             helperCol.forEach((cell, row) => {
                 if (JSON.stringify(cell) !== JSON.stringify(values)) {
                     const newValues = filterOutValues(cell, values)
-                    cells.push({
-                        col: index,
-                        row,
-                        values: newValues,
-                    })
-                    updated = true
+                    if (JSON.stringify(cell) !== JSON.stringify(newValues)) {
+                        cells.push({
+                            col: index,
+                            row,
+                            values: newValues,
+                        })
+                        updated = true
+                    }
                 }
             })
             break
@@ -71,12 +76,14 @@ function remove(helpers, values, index, zone) {
                     const cell = getCell(helpers, colAnchor + col, rowAnchor + row)
                     if (JSON.stringify(cell) !== JSON.stringify(values)) {
                         const newValues = filterOutValues(cell, values)
-                        cells.push({
-                            col: colAnchor + col,
-                            row: rowAnchor + row,
-                            values: newValues,
-                        })
-                        updated = true
+                        if (JSON.stringify(cell) !== JSON.stringify(newValues)) {
+                            cells.push({
+                                col: colAnchor + col,
+                                row: rowAnchor + row,
+                                values: newValues,
+                            })
+                            updated = true
+                        }
                     }
                 }
             }
