@@ -14,15 +14,15 @@ export const methods = [
         algorithm: sectorUpdate,
     },
     {
-        name: 'Intersection Removal',
-        algorithm: checkIntersectionRemoval,
-    },
-    {
         name: 'Naked Tuple',
         algorithm: checkNakedTuple,
     },
     {
         name: 'Hidden Pair',
         algorithm: checkHiddenPair,
+    },
+    {
+        name: 'Intersection Removal',
+        algorithm: checkIntersectionRemoval,
     },
 ]
