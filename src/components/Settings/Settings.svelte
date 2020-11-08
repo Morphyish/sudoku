@@ -1,13 +1,13 @@
 <script>
     import Toggle from './Toggle.svelte'
 
-    import { settings } from '../../stores'
+    import { sudoku, settings } from '../../stores'
 </script>
 
 <div class="settings noprint">
-    <Toggle checked={$settings.showKeyboard} on:click={settings.toggleKeyboard}>Keyboard</Toggle>
-    <Toggle checked={$settings.showErrors} on:click={settings.toggleErrors}>Errors</Toggle>
-    <Toggle checked={$settings.showHelpers} on:click={settings.toggleHelpers}>Helpers</Toggle>
+    <Toggle checked={$settings.showKeyboard} disabled={$sudoku.loading} on:click={settings.toggleKeyboard}>Keyboard</Toggle>
+    <Toggle checked={$settings.showErrors} disabled={$sudoku.loading} on:click={settings.toggleErrors}>Errors</Toggle>
+    <Toggle checked={$settings.showHelpers} disabled={$sudoku.loading} on:click={settings.toggleHelpers}>Helpers</Toggle>
 </div>
 
 <style>

@@ -2,7 +2,7 @@
     export let checked = false
 </script>
 
-<button class:checked on:click>
+<button class:checked on:click  {...$$props}>
     <slot />
 </button>
 
@@ -19,5 +19,9 @@
 
     .checked {
         color: #ff3e00;
+    }
+
+    button:disabled {
+        color: #999;
     }
 </style>

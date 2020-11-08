@@ -5,12 +5,12 @@
 </script>
 
 <div class="actions noprint">
-    <Button on:click={sudoku.empty}>Empty</Button>
-    <Button on:click={sudoku.start}>New grid</Button>
-    <Button on:click={sudoku.restart}>Restart</Button>
-    <Button on:click={sudoku.solveNextStep}>Solve next step</Button>
-    <Button on:click={sudoku.solveAll}>Solve</Button>
-    <Button on:click={sudoku.save}>Save</Button>
+    <Button disabled={$sudoku.loading} on:click={sudoku.empty}>Empty</Button>
+    <Button disabled={$sudoku.loading} on:click={sudoku.start}>New grid</Button>
+    <Button disabled={$sudoku.loading} on:click={sudoku.restart}>Restart</Button>
+    <Button disabled={$sudoku.loading} on:click={sudoku.solveNextStep}>Solve next step</Button>
+    <Button disabled={$sudoku.loading} on:click={sudoku.solveAll}>Solve</Button>
+    <Button disabled={$sudoku.loading} on:click={sudoku.save}>Save</Button>
 </div>
 
 <style>
