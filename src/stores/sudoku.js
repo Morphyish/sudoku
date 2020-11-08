@@ -82,6 +82,8 @@ function sudokuStore() {
                 methods,
                 loading: false,
             })
+
+            factory.terminate()
         }
         factory.start()
     }
