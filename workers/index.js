@@ -7,8 +7,6 @@ export function GridFactory() {
         this.worker.postMessage('new')
     }
 
-    this.terminate = this.worker.terminate
-
     this.worker.onmessage = ({ data }) => {
         const { updates, success } = data
         if (updates && this.onprogress) {
@@ -19,6 +17,7 @@ export function GridFactory() {
 
         if (success && this.onsuccess) {
             this.onsuccess(success)
+            this.worker.terminate()
         }
     }
 }

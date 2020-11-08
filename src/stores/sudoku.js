@@ -17,6 +17,8 @@ const initialState = {
     methods: [],
 }
 
+let factory
+
 function sudokuStore() {
     const sudoku = writable(initialState)
 
@@ -64,7 +66,7 @@ function sudokuStore() {
             loading: true,
         }))
 
-        const factory = new GridFactory()
+        factory = new GridFactory()
         factory.onprogress = ({ message }) => {
             console.log(message)
         }
@@ -82,8 +84,6 @@ function sudokuStore() {
                 methods,
                 loading: false,
             })
-
-            factory.terminate()
         }
         factory.start()
     }
