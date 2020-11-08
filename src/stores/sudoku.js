@@ -1,3 +1,4 @@
+import { GridFactory } from '../../workers'
 import { get, writable } from 'svelte/store'
 import { updateHelpers } from '../helper'
 import { findNextStep, isDone, solve, validate } from '../sudoku'
@@ -63,10 +64,8 @@ function sudokuStore() {
             loading: true,
         }))
 
-        const factory = new Worker('/workers/grid-factory.js')
-        factory.onmessage = ({ data }) => {
-            const { grid: newGrid, methods, difficulty, nbOfCells } = data
-
+        const factory = new GridFactory()
+        factory.onsuccess = ({ grid: newGrid, methods, difficulty, nbOfCells }) => {
             console.log('methods', methods)
             console.log('difficulty', difficulty)
             console.log('nbOfCells', nbOfCells)
@@ -81,7 +80,7 @@ function sudokuStore() {
                 loading: false,
             })
         }
-        factory.postMessage('new')
+        factory.start()
     }
 
     const restart = () => {
