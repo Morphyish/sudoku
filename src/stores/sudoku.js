@@ -65,6 +65,9 @@ function sudokuStore() {
         }))
 
         const factory = new GridFactory()
+        factory.onprogress = ({ message }) => {
+            console.log(message)
+        }
         factory.onsuccess = ({ grid: newGrid, methods, difficulty, nbOfCells }) => {
             console.log('methods', methods)
             console.log('difficulty', difficulty)
