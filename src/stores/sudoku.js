@@ -1,6 +1,5 @@
 import { get, writable } from 'svelte/store'
 import { updateHelpers } from '../helper'
-import { generateNewGrid } from '../grid'
 import { findNextStep, isDone, solve, validate } from '../sudoku'
 import { clone, getCell } from '../utils'
 import { errors } from './errors'
@@ -9,6 +8,7 @@ import { helper } from './helper'
 import { history } from './history'
 
 const initialState = {
+    loading: false,
     isValid: true,
     isDone: false,
     initialGrid: Array(9).fill(Array(9).fill(0)),
@@ -58,20 +58,30 @@ function sudokuStore() {
         history.reset()
         helper.reset()
 
-        const { grid: newGrid, difficulty, methods, nbOfCells } = generateNewGrid()
+        sudoku.update(state => ({
+            ...state,
+            loading: true,
+        }))
 
-        console.log('methods', methods)
-        console.log('difficulty', difficulty)
-        console.log('nbOfCells', nbOfCells)
-        console.log('~~~~~~~~~~~~~~~~~~~~~~')
+        const factory = new Worker('/workers/grid-factory.js')
+        factory.onmessage = ({ data }) => {
+            const { grid: newGrid, methods, difficulty, nbOfCells } = data
 
-        grid.set(newGrid)
-        sudoku.set({
-            ...initialState,
-            initialGrid: clone(newGrid),
-            difficulty,
-            methods,
-        })
+            console.log('methods', methods)
+            console.log('difficulty', difficulty)
+            console.log('nbOfCells', nbOfCells)
+            console.log('~~~~~~~~~~~~~~~~~~~~~~')
+
+            grid.set(newGrid)
+            sudoku.set({
+                ...initialState,
+                initialGrid: clone(newGrid),
+                difficulty,
+                methods,
+                loading: false,
+            })
+        }
+        factory.postMessage('new')
     }
 
     const restart = () => {
