@@ -1,6 +1,7 @@
 import { easyUpdate } from './easyUpdate'
 import { sectorUpdate } from './sectorUpdate'
-import { checkIntersectionRemoval } from './checkIntersectionRemoval'
+import { checkPointingTuples } from './checkPointingTuples'
+import { checkBoxLineReduction } from './checkBoxLineReduction'
 import { checkNakedPair } from './checkNakedPair'
 import { checkNakedTuple } from './checkNakedTuple'
 import { checkHiddenPair } from './checkHiddenPair'
@@ -27,7 +28,11 @@ export const methods = [
         algorithm: checkNakedTuple,
     },
     {
-        name: 'Intersection Removal',
-        algorithm: checkIntersectionRemoval,
+        name: 'Pointing Tuples',
+        algorithm: checkPointingTuples,
+    },
+    {
+        name: 'Box Line Reduction',
+        algorithm: checkBoxLineReduction,
     },
 ]
