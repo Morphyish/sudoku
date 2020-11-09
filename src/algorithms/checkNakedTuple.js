@@ -1,4 +1,4 @@
-import { getCell, getCol, getRow, getSquare } from '../utils'
+import { getCell, getCol, getRow, getSquare, removeDuplicates } from '../utils'
 
 export function checkNakedTuple(helpers) {
     for (let i = 0; i < 9; i++) {
@@ -33,7 +33,7 @@ export function checkNakedTuple(helpers) {
                         ]
 
                         // Triples
-                        let values = [...new Set(tripleCandidates.flat())]
+                        let values = removeDuplicates(tripleCandidates.flat())
                         if (values.length === 3) {
                             const { updated, cells: updatedCells } = remove(helpers, values, i, zone)
                             if (updated) {
@@ -54,7 +54,7 @@ export function checkNakedTuple(helpers) {
                                 ...tripleCandidates,
                                 cells[l],
                             ]
-                            const values = [...new Set(quadCandidates.flat())]
+                            const values = removeDuplicates(quadCandidates.flat())
                             if (values.length === 4) {
                                 const { updated, cells: updatedCells } = remove(helpers, values, i, zone)
                                 if (updated) {

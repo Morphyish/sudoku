@@ -1,4 +1,5 @@
 import { create, obfuscate, empty } from '../src/factory'
+import { removeDuplicates } from '../src/utils'
 
 self.addEventListener(
     'message',
@@ -45,7 +46,7 @@ self.addEventListener(
         do {
             const result = empty(obfuscatedGrid)
             grid = result.grid
-            methods = [...new Set(result.methods)]
+            methods = removeDuplicates(result.methods)
             difficulty = methods.length
             nbOfCells = result.nbOfCells
             i++

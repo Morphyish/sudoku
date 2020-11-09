@@ -1,4 +1,4 @@
-import { getCell, getCol, getRow, getSquare } from '../utils'
+import { getCell, getCol, getRow, getSquare, removeDuplicates } from '../utils'
 
 export function checkIntersectionRemoval(helpers) {
     for (let i = 0; i < 9; i++) {
@@ -13,8 +13,8 @@ export function checkIntersectionRemoval(helpers) {
         for (let j = 0; j < 3; j++) {
             const squareCol = getCol(square, j)
             const squareRow = getRow(square, j)
-            const squareColHelpers = [...new Set(squareCol.flat())]
-            const squareRowHelpers = [...new Set(squareRow.flat())]
+            const squareColHelpers = removeDuplicates(squareCol.flat())
+            const squareRowHelpers = removeDuplicates(squareRow.flat())
             // Pointing Tuples
             const colPointingTuple = pointingTuples(helpers, squareColHelpers, i, col + j, j, 'col')
             if (colPointingTuple) {
