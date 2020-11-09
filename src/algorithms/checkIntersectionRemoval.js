@@ -81,8 +81,10 @@ function pointingTuples(helpers, boxHelpers, num, line, squareLine, zone) {
 function removeFromLine(helpers, helpersToRemove, lineIndex, squareToIgnore, zone) {
     const steps = []
 
+    const indexToIgnore = zone === 'col' ? Math.floor(squareToIgnore / 3) : squareToIgnore % 3
+
     for (let i = 0; i < 9; i++) {
-        if (i >= squareToIgnore * 3 && i < squareToIgnore * 3 + 3) {
+        if (i >= indexToIgnore * 3 && i < indexToIgnore * 3 + 3) {
             continue
         }
 
