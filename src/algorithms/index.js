@@ -1,6 +1,7 @@
 import { easyUpdate } from './easyUpdate'
 import { sectorUpdate } from './sectorUpdate'
 import { checkIntersectionRemoval } from './checkIntersectionRemoval'
+import { checkNakedPair } from './checkNakedPair'
 import { checkNakedTuple } from './checkNakedTuple'
 import { checkHiddenPair } from './checkHiddenPair'
 
@@ -14,12 +15,16 @@ export const methods = [
         algorithm: sectorUpdate,
     },
     {
-        name: 'Naked Tuple',
-        algorithm: checkNakedTuple,
+        name: 'Naked Pair',
+        algorithm: checkNakedPair,
     },
     {
         name: 'Hidden Pair',
         algorithm: checkHiddenPair,
+    },
+    {
+        name: 'Naked Tuple',
+        algorithm: checkNakedTuple,
     },
     {
         name: 'Intersection Removal',
