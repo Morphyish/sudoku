@@ -1,7 +1,7 @@
 import { GridFactory } from '../../workers'
 import { get, writable } from 'svelte/store'
-import { updateHelpers } from '../helper'
-import { findNextStep, isDone, solve, validate } from '../sudoku'
+import { getHelpers } from '../helper'
+import { applyGridStep, solveNextCell, isDone, solve, validate } from '../sudoku'
 import { clone, getCell } from '../utils'
 import { errors } from './errors'
 import { grid } from './grid'
@@ -24,11 +24,10 @@ function sudokuStore() {
 
     grid.subscribe(gridSnapshot => {
         if (gridSnapshot) {
-            const helperSnapshot = get(helper)
-            const updatedHelpers = updateHelpers(helperSnapshot, gridSnapshot)
-            const { isValid, cellsWithError } = validate(gridSnapshot, updatedHelpers)
+            const helpers = getHelpers(gridSnapshot)
+            const { isValid, cellsWithError } = validate(gridSnapshot, helpers)
 
-            helper.set(updatedHelpers)
+            helper.set(helpers)
             errors.set(cellsWithError)
             sudoku.update(state => ({
                 ...state,
@@ -42,7 +41,6 @@ function sudokuStore() {
         const gridSnapshop = JSON.parse(localStorage.getItem('grid'))
 
         if (sudokuSnapshop) {
-            helper.reset()
             sudoku.set(sudokuSnapshop)
             grid.set(gridSnapshop)
         }
@@ -51,7 +49,6 @@ function sudokuStore() {
     const empty = () => {
         errors.reset()
         history.reset()
-        helper.reset()
         grid.reset()
         sudoku.set(initialState)
     }
@@ -59,7 +56,6 @@ function sudokuStore() {
     const start = () => {
         errors.reset()
         history.reset()
-        helper.reset()
 
         sudoku.update(state => ({
             ...state,
@@ -91,7 +87,6 @@ function sudokuStore() {
     const restart = () => {
         errors.reset()
         history.reset()
-        helper.reset()
         sudoku.update(snapshot => {
             grid.set(clone(snapshot.initialGrid))
 
@@ -104,20 +99,15 @@ function sudokuStore() {
     }
 
     const applyStep = step => {
-        helper.reset()
-
-        if (step.grid) {
-            const { col, row, value } = step.grid
-            grid.setCell(col, row, value)
-        }
-
+        grid.update(snapshot => applyGridStep(snapshot, step.grid))
         history.addEntry(step)
     }
 
     const solveNextStep = () => {
-        const nextStep = findNextStep(get(helper))
-        if (nextStep) {
-            applyStep(nextStep)
+        const { isSolvable, step } = solveNextCell(get(grid))
+
+        if (isSolvable) {
+            applyStep(step)
         } else {
             sudoku.update(state => ({
                 ...state,

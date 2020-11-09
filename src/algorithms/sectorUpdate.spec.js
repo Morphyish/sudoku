@@ -1,5 +1,5 @@
 import { sectorUpdate } from './sectorUpdate'
-import { initHelpers, updateHelpers } from '../helper'
+import { getHelpers } from '../helper'
 
 describe('algorithms/sectorUpdate', () => {
     it('should find an update in the first row', () => {
@@ -61,7 +61,7 @@ describe('algorithms/sectorUpdate', () => {
             [0, 3, 0, 0, 0, 6, 0, 0, 0],
         ]
 
-        const helpers = updateHelpers(initHelpers(), grid)
+        const helpers = getHelpers(grid)
         const result = sectorUpdate(helpers)
 
         expect(result).not.toBeNull()

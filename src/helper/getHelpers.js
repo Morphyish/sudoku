@@ -1,9 +1,10 @@
-import { clone, getCell, setCell } from '../utils'
+import { initHelpers } from './initHelpers'
+import { getCell, setCell } from '../utils'
 import { removeValueFromLines } from './removeValueFromLines'
 import { removeValueFromSquares } from './removeValueFromSquares'
 
-export function updateHelpers(helpers, grid) {
-    const clonedHelpers = clone(helpers)
+export function getHelpers(grid) {
+    const helpers = initHelpers()
 
     for (let col = 0; col < 9; col++) {
         for (let row = 0; row < 9; row++) {
@@ -13,12 +14,12 @@ export function updateHelpers(helpers, grid) {
                 continue
             }
 
-            removeValueFromLines(clonedHelpers, col, row, num)
-            removeValueFromSquares(clonedHelpers, col, row, num)
+            removeValueFromLines(helpers, col, row, num)
+            removeValueFromSquares(helpers, col, row, num)
 
-            setCell(clonedHelpers, col, row, [])
+            setCell(helpers, col, row, [])
         }
     }
 
-    return clonedHelpers
+    return helpers
 }

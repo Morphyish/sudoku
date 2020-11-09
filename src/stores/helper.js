@@ -7,8 +7,6 @@ const initialState = initHelpers()
 function helperStore() {
     const helper = writable(initialState)
 
-    const reset = () => helper.set(initialState)
-
     const setCell = (col, row, values) => {
         helper.update(snapshot => {
             const clonedHelper = clone(snapshot)
@@ -21,7 +19,6 @@ function helperStore() {
     return {
         ...helper,
         setCell,
-        reset,
     }
 }
 
