@@ -8,43 +8,86 @@ export function checkNakedTuple(helpers) {
             square: getSquare(helpers, i),
         }
 
-        for (let [label, zone] of Object.entries(zones)) {
-            const updates = []
-            for (let values of zone) {
-                const sameValueCells = zone.filter(cell => JSON.stringify(cell) === JSON.stringify(values))
-                if (sameValueCells.length === values.length) {
-                    const { updated, cells } = remove(helpers, values, i, label)
-                    if (updated) {
-                        // console.log(`found tuple ${values} in ${label} ${i + 1}`)
-                        updates.push(...cells)
-                        break
-                    }
+        for (let [zone, cells] of Object.entries(zones)) {
+            const length = cells.length - 1
+            // for (let i = 0; i < length - 2; i++) {
+            for (let i = 0; i < 1; i++) {
+                if (cells[i].length === 0) {
+                    continue
                 }
-            }
-            if (updates.length) {
-                return {
-                    helpers: updates
+
+                for (let j = i + 1; j < length - 1; j++) {
+                    if (cells[j].length === 0) {
+                        continue
+                    }
+
+                    for (let k = j + 1; k < length; k++) {
+                        if (cells[k].length === 0) {
+                            continue
+                        }
+
+                        const tripleCandidates = [
+                            cells[i],
+                            cells[j],
+                            cells[k],
+                        ]
+
+                        // Triples
+                        let values = [...new Set(tripleCandidates.flat())]
+                        if (values.length === 3) {
+                            const { updated, cells: updatedCells } = remove(helpers, values, i, zone)
+                            if (updated) {
+                                console.log(`found naked triple ${values} in ${zone} ${i + 1}`)
+                                return {
+                                    helpers: updatedCells
+                                }
+                            }
+                        }
+
+                        // Quads
+                        for (let l = k + 1; l < length; l++) {
+                            if (cells[l].length === 0) {
+                                continue
+                            }
+
+                            const quadCandidates = [
+                                ...tripleCandidates,
+                                cells[l],
+                            ]
+                            const values = [...new Set(quadCandidates.flat())]
+                            if (values.length === 4) {
+                                const { updated, cells: updatedCells } = remove(helpers, values, i, zone)
+                                if (updated) {
+                                    console.log(`found naked quads ${values} in ${zone} ${i + 1}`)
+                                    return {
+                                        helpers: updatedCells
+                                    }
+                                }
+                            }
+                        }
+                    }
                 }
             }
         }
     }
+
     return null
 }
 
-function remove(helpers, values, index, zone) {
+function remove(helpers, values, num, zone) {
     let updated = false
     const cells = []
 
     switch (zone) {
         case 'row':
-            const helperRow = getRow(helpers, index)
+            const helperRow = getRow(helpers, num)
             helperRow.forEach((cell, col) => {
-                if (JSON.stringify(cell) !== JSON.stringify(values)) {
+                if (cell.some(value => !values.includes(value))) {
                     const newValues = filterOutValues(cell, values)
                     if (JSON.stringify(cell) !== JSON.stringify(newValues)) {
                         cells.push({
                             col,
-                            row: index,
+                            row: num,
                             values: newValues,
                         })
                         updated = true
@@ -53,13 +96,13 @@ function remove(helpers, values, index, zone) {
             })
             break
         case 'col':
-            const helperCol = getCol(helpers, index)
+            const helperCol = getCol(helpers, num)
             helperCol.forEach((cell, row) => {
-                if (JSON.stringify(cell) !== JSON.stringify(values)) {
+                if (cell.some(value => !values.includes(value))) {
                     const newValues = filterOutValues(cell, values)
                     if (JSON.stringify(cell) !== JSON.stringify(newValues)) {
                         cells.push({
-                            col: index,
+                            col: num,
                             row,
                             values: newValues,
                         })
@@ -69,12 +112,12 @@ function remove(helpers, values, index, zone) {
             })
             break
         case 'square':
-            const rowAnchor = 3 * Math.floor(index / 3)
-            const colAnchor = 3 * (index % 3)
+            const rowAnchor = 3 * Math.floor(num / 3)
+            const colAnchor = 3 * (num % 3)
             for (let col = 0; col < 3; col++) {
                 for (let row = 0; row < 3; row++) {
                     const cell = getCell(helpers, colAnchor + col, rowAnchor + row)
-                    if (JSON.stringify(cell) !== JSON.stringify(values)) {
+                    if (cell.some(value => !values.includes(value))) {
                         const newValues = filterOutValues(cell, values)
                         if (JSON.stringify(cell) !== JSON.stringify(newValues)) {
                             cells.push({
