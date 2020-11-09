@@ -66,8 +66,8 @@ describe('algorithms/sectorUpdate', () => {
 
         expect(result).not.toBeNull()
         expect(result.grid).toEqual({
-            col: 5,
-            row: 1,
+            col: 4,
+            row: 0,
             value: 6,
         })
     })
