@@ -23,7 +23,7 @@ export function checkIntersectionRemoval(helpers) {
                 }
             }
 
-            const rowPointingTuple = pointingTuples(helpers, squareColHelpers, i, row + j, j, 'row')
+            const rowPointingTuple = pointingTuples(helpers, squareRowHelpers, i, row + j, j, 'row')
             if (rowPointingTuple) {
                 return {
                     helpers: rowPointingTuple.steps,
