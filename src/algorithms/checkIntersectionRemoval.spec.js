@@ -148,7 +148,7 @@ describe('algorithms/checkIntersectionRemoval', () => {
         ])
     })
 
-    it.only('should return null if it can\'t find a solution', () => {
+    it('should return null if it can\'t find a solution', () => {
         const grid = [
             [2, 4, 0, 5, 6, 1, 3, 9, 7],
             [7, 1, 9, 0, 4, 3, 2, 6, 5],
