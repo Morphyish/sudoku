@@ -2,7 +2,7 @@
     import { VirtualKeyboard } from './VirtualKeyboard'
     import Cell from './Cell.svelte'
     import { errors, grid, helper, settings, history, sudoku } from '../../stores'
-    import { getCell, getCoordinatesFromIndex } from '../../utils'
+    import { getCell } from '../../utils'
 
     const cells = []
     let focusedCell = -1
