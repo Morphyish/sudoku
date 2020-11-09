@@ -1,4 +1,4 @@
-import { initHelpers, updateHelpers } from '../helper'
+import { getHelpers } from '../helper'
 import { checkIntersectionRemoval } from './checkIntersectionRemoval'
 
 describe('algorithms/checkIntersectionRemoval', () => {
@@ -15,7 +15,7 @@ describe('algorithms/checkIntersectionRemoval', () => {
             [0, 0, 5, 0, 8, 0, 4, 0, 0],
         ]
 
-        const helpers = updateHelpers(initHelpers(), grid)
+        const helpers = getHelpers(grid)
         const result = checkIntersectionRemoval(helpers)
 
         // console.log(helpers)
@@ -48,7 +48,7 @@ describe('algorithms/checkIntersectionRemoval', () => {
             [0, 0, 5, 6, 0, 1, 7, 2, 0],
         ]
 
-        const helpers = updateHelpers(initHelpers(), grid)
+        const helpers = getHelpers(grid)
         const result = checkIntersectionRemoval(helpers)
 
         expect(result).not.toBeNull()
@@ -84,7 +84,7 @@ describe('algorithms/checkIntersectionRemoval', () => {
             [5, 1, 0, 6, 0, 0, 9, 2, 4],
         ]
 
-        const helpers = updateHelpers(initHelpers(), grid)
+        const helpers = getHelpers(grid)
         const result = checkIntersectionRemoval(helpers)
 
         expect(result).not.toBeNull()
@@ -125,7 +125,7 @@ describe('algorithms/checkIntersectionRemoval', () => {
             [6, 0, 0, 9, 2, 4, 5, 1, 0],
         ]
 
-        const helpers = updateHelpers(initHelpers(), grid)
+        const helpers = getHelpers(grid)
         const result = checkIntersectionRemoval(helpers)
 
         expect(result).not.toBeNull()
