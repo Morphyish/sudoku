@@ -25,6 +25,7 @@
     }
 
     const handleBlur = event => {
+        console.log(event)
         if (event.relatedTarget?.dataset?.focus !== 'virtual-keyboard') {
             resetFocus()
         }
