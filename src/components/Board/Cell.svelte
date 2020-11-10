@@ -1,6 +1,8 @@
 <script>
     import Helper from './Helper.svelte'
 
+    export let col = 0
+    export let row = 0
     export let cell = 0
     export let helpers = []
     export let hasError = false
@@ -12,7 +14,22 @@
     export let element = null
 </script>
 
-<div class="cell" class:error={hasError && showErrors && !startingCell} class:startingCell class:highlighted class:isFocused bind:this={element} on:focus on:blur on:keydown tabindex="-1">
+<div
+        class="cell"
+        aria-label={`Column ${col} Row ${row}`}
+        class:thickRightBorder={col % 3 === 2}
+        class:thickBottomBorder={row % 3 === 2}
+        class:rightmostCell={col === 8}
+        class:bottommostCell={row === 8}
+        class:error={hasError && showErrors && !startingCell}
+        class:startingCell
+        class:highlighted
+        class:isFocused
+        bind:this={element}
+        on:focus
+        on:blur
+        on:keydown tabindex="-1"
+>
     {#if cell}
         {cell}
     {:else if showHelpers}
@@ -29,16 +46,25 @@
         text-align: center;
         line-height: 3rem;
         border-right: 1px solid #d7d7d7;
+        border-bottom: 1px solid #d7d7d7;
         font-weight: 100;
         cursor: pointer;
     }
 
-    .cell:nth-child(3n) {
+    .thickRightBorder {
         border-right: 1px solid #333;
     }
 
-    .cell:last-child {
+    .thickBottomBorder {
+        border-bottom: 1px solid #333;
+    }
+
+    .rightmostCell {
         border-right: 0;
+    }
+
+    .bottommostCell {
+        border-bottom: 0;
     }
 
     .isFocused {

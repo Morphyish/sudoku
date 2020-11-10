@@ -105,48 +105,43 @@
 {#if $grid}
     <div class="board" tabindex="0" on:focus={focusFirstCell}>
         {#each rows as row}
-            <div class="row">
-                {#each columns as col}
-                    <Cell
-                            cell={getCell($grid, col, row)}
-                            helpers={getCell($helper, col, row)}
-                            startingCell={isStartingCell($sudoku.initialGrid, col, row)}
-                            highlighted={isHighlighted($history.entries[$history.currentStep], col, row)}
-                            hasError={$errors.has(`${col},${row}`)}
-                            showErrors={$settings.showErrors}
-                            showHelpers={$settings.showHelpers}
-                            isFocused={col === focusedCol && row === focusedRow}
-                            on:blur={handleBlur}
-                            on:focus={handleFocus(col, row)}
-                            on:keydown={handleUserInput(col, row)}
-                            bind:element={cells[9 * row + col]}
-                    />
-                {/each}
-            </div>
+            {#each columns as col}
+                <Cell
+                        {row}
+                        {col}
+                        cell={getCell($grid, col, row)}
+                        helpers={getCell($helper, col, row)}
+                        startingCell={isStartingCell($sudoku.initialGrid, col, row)}
+                        highlighted={isHighlighted($history.entries[$history.currentStep], col, row)}
+                        hasError={$errors.has(`${col},${row}`)}
+                        showErrors={$settings.showErrors}
+                        showHelpers={$settings.showHelpers}
+                        isFocused={col === focusedCol && row === focusedRow}
+                        on:blur={handleBlur}
+                        on:focus={handleFocus(col, row)}
+                        on:keydown={handleUserInput(col, row)}
+                        bind:element={cells[9 * row + col]}
+                />
+            {/each}
         {/each}
     </div>
 {/if}
 {#if $settings.showKeyboard}
-    <VirtualKeyboard on:input={handleVirtualKeyboard}/>
+    <VirtualKeyboard on:input={handleVirtualKeyboard} />
 {/if}
 
 <style>
     .board {
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
+        display: grid;
+        grid-template-columns: repeat(9, 3rem);
+        grid-template-rows: repeat(9, 3rem);
+        grid-gap: 1px;
     }
 
-    .row {
-        display: flex;
-        border-bottom: 1px solid #d7d7d7;
-    }
-
-    .row:nth-child(3n) {
-        border-bottom: 1px solid #333;
-    }
-
-    .row:last-child {
-        border-bottom: 0;
+    @media screen and (max-width: 30rem) {
+        .board {
+            grid-template-columns: repeat(9, 2rem);
+            grid-template-rows: repeat(9, 2rem);
+        }
     }
 </style>
