@@ -12,7 +12,7 @@ export function checkHiddenPair(helpers) {
 
         for (let [label, zone] of Object.entries(zones)) {
             const hiddenPairs = findHiddenPairs(zone)
-            if (hiddenPairs) {
+            if (hiddenPairs.length) {
                 for (const hiddenPair of hiddenPairs) {
                     const [pair, indexes] = hiddenPair
                     const tuple = pair.split(',').map(v => parseInt(v))
