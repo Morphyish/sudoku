@@ -88,8 +88,6 @@
         } else {
             sudoku.fillCell(focusedCol, focusedRow, key)
         }
-
-        resetFocus()
     }
 
     const isStartingCell = (initialGrid, col, row) => getCell(initialGrid, col, row) !== 0
