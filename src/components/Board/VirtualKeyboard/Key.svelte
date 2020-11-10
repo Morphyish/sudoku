@@ -1,8 +1,19 @@
 <script>
+    import { createEventDispatcher } from 'svelte';
+
     export let key = 0
+
+    let element = null
+    const dispatch = createEventDispatcher();
+
+    const handleClick = () => {
+        dispatch('input', {
+            key,
+        });
+    }
 </script>
 
-<button on:click data-focus="virtual-keyboard">
+<button on:click={handleClick} on:mousedown={element.focus} data-focus="virtual-keyboard" bind:this={element}>
     {key}
 </button>
 
@@ -19,5 +30,10 @@
         border-radius: 50%;
         margin: 0;
         padding: 0;
+    }
+
+    button:hover,
+    button:focus {
+        border-color: #333;
     }
 </style>
