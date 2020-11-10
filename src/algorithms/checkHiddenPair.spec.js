@@ -2,109 +2,114 @@ import { getHelpers } from '../helper'
 import { checkHiddenPair } from './checkHiddenPair'
 
 describe('algorithms/checkHiddenPair', () => {
-    it('should find an update in the first row', () => {
-        const helpers = [
-            [[1, 4], [2, 4], [5, 7, 9], [], [1, 5, 9], [], [3, 6, 8], [4, 6, 8, 9], []],
-            [[], [], [], [], [], [], [], [], []],
-            [[], [], [], [], [], [], [], [], []],
-            [[], [], [], [], [], [], [], [], []],
-            [[], [], [], [], [], [], [], [], []],
-            [[], [], [], [], [], [], [], [], []],
-            [[], [], [], [], [], [], [], [], []],
-            [[], [], [], [], [], [], [], [], []],
-            [[], [], [], [], [], [], [], [], []],
+    it('should find an update in a col', () => {
+        const grid = [
+            [7, 2, 0, 4, 0, 8, 0, 3, 0],
+            [0, 8, 0, 0, 0, 0, 0, 4, 7],
+            [4, 0, 1, 0, 7, 6, 8, 0, 2],
+            [8, 1, 0, 7, 3, 9, 0, 0, 0],
+            [0, 0, 0, 8, 5, 1, 0, 0, 0],
+            [0, 0, 0, 2, 6, 4, 0, 8, 0],
+            [2, 0, 9, 6, 8, 0, 4, 1, 3],
+            [3, 4, 0, 0, 0, 0, 0, 0, 8],
+            [1, 6, 8, 9, 4, 3, 2, 7, 5],
         ]
 
+        const helpers = getHelpers(grid)
         const result = checkHiddenPair(helpers)
 
         expect(result).not.toBeNull()
         expect(result.helpers).toEqual([
             {
-                col: 6,
-                row: 0,
-                values: [6, 8],
+                col: 2,
+                row: 3,
+                values: [2, 4],
             },
             {
-                col: 7,
-                row: 0,
-                values: [6, 8],
+                col: 2,
+                row: 4,
+                values: [2, 4],
             },
         ])
     })
 
-    it('should find an update in the first col', () => {
-        const helpers = [
-            [[1, 4], [], [], [], [], [], [], [], []],
-            [[2, 4], [], [], [], [], [], [], [], []],
-            [[5, 7, 9], [], [], [], [], [], [], [], []],
-            [[], [], [], [], [], [], [], [], []],
-            [[1, 5, 9], [], [], [], [], [], [], [], []],
-            [[], [], [], [], [], [], [], [], []],
-            [[3, 6, 8], [], [], [], [], [], [], [], []],
-            [[4, 6, 8, 9], [], [], [], [], [], [], [], []],
-            [[], [], [], [], [], [], [], [], []],
+    it('should find an update in a row', () => {
+        const grid = [
+            [0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 6, 0, 7, 9, 0, 4],
+            [1, 0, 0, 8, 0, 4, 0, 7, 6],
+            [0, 8, 0, 7, 0, 1, 3, 0, 9],
+            [3, 0, 1, 0, 0, 0, 7, 0, 8],
+            [7, 0, 2, 3, 0, 8, 0, 5, 1],
+            [6, 1, 0, 5, 0, 2, 0, 0, 7],
+            [2, 0, 8, 4, 0, 3, 0, 0, 5],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0],
         ]
 
+        const helpers = getHelpers(grid)
         const result = checkHiddenPair(helpers)
 
         expect(result).not.toBeNull()
         expect(result.helpers).toEqual([
             {
-                col: 0,
-                row: 6,
-                values: [6, 8],
+                col: 1,
+                row: 0,
+                values: [6, 7],
             },
             {
-                col: 0,
-                row: 7,
-                values: [6, 8],
+                col: 2,
+                row: 0,
+                values: [6, 7],
             },
         ])
     })
 
-    it('should find an update in the first square', () => {
-        const helpers = [
-            [[1, 4], [2, 4], [5, 7, 9], [], [], [], [], [], []],
-            [[], [1, 5, 9], [], [], [], [], [], [], []],
-            [[3, 6, 8], [4, 6, 8, 9], [], [], [], [], [], [], []],
-            [[], [], [], [], [], [], [], [], []],
-            [[], [], [], [], [], [], [], [], []],
-            [[], [], [], [], [], [], [], [], []],
-            [[], [], [], [], [], [], [], [], []],
-            [[], [], [], [], [], [], [], [], []],
-            [[], [], [], [], [], [], [], [], []],
+    it('should find an update in a square', () => {
+        const grid = [
+            [0, 0, 0, 6, 0, 7, 9, 0, 4],
+            [1, 0, 0, 8, 0, 4, 0, 7, 6],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 8, 0, 7, 0, 1, 3, 0, 9],
+            [3, 0, 1, 0, 0, 0, 7, 0, 8],
+            [7, 0, 2, 3, 0, 8, 0, 5, 1],
+            [6, 1, 0, 5, 0, 2, 0, 0, 7],
+            [2, 0, 8, 4, 0, 3, 0, 0, 5],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0],
         ]
 
+        const helpers = getHelpers(grid)
+        console.log(helpers[0])
         const result = checkHiddenPair(helpers)
 
         expect(result).not.toBeNull()
         expect(result.helpers).toEqual([
-            {
-                col: 0,
-                row: 2,
-                values: [6, 8],
-            },
             {
                 col: 1,
                 row: 2,
-                values: [6, 8],
+                values: [6, 7],
+            },
+            {
+                col: 2,
+                row: 2,
+                values: [6, 7],
             },
         ])
     })
 
-    it('should return null if it finds a solution but it doesn\'t update any cells', () => {
-        const helpers = [
-            [[1, 4], [], [], [], [], [], [], [], []],
-            [[2, 4], [], [], [], [], [], [], [], []],
-            [[5, 9], [], [], [], [], [], [], [], []],
-            [[], [], [], [], [], [], [], [], []],
-            [[5, 9], [], [], [], [], [], [], [], []],
-            [[], [], [], [], [], [], [], [], []],
-            [[2, 3, 8], [], [], [], [], [], [], [], []],
-            [[4, 6, 8, 9], [], [], [], [], [], [], [], []],
-            [[], [], [], [], [], [], [], [], []],
+    it.skip('should return null if it finds a solution but it doesn\'t update any cells', () => {
+        const grid = [
+            [4, 0, 0, 0, 0, 0, 9, 3, 8],
+            [0, 3, 2, 0, 9, 4, 1, 0, 0],
+            [8, 9, 5, 3, 0, 0, 2, 4, 0],
+            [3, 7, 0, 6, 0, 9, 0, 5, 4],
+            [5, 2, 9, 0, 0, 1, 6, 7, 3],
+            [6, 0, 4, 7, 0, 3, 0, 9, 0],
+            [9, 5, 7, 0, 0, 8, 3, 0, 0],
+            [0, 8, 3, 9, 0, 0, 4, 0, 0],
+            [2, 4, 0, 0, 3, 0, 7, 0, 9],
         ]
 
+        const helpers = getHelpers(grid)
         const result = checkHiddenPair(helpers)
 
         expect(result).toBeNull()
