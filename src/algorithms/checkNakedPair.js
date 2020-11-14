@@ -15,7 +15,7 @@ export function checkNakedPair(helpers) {
                     if (sameValueCells.length === 2) {
                         const { updated, cells: updatedCells } = remove(helpers, cell, i, zone)
                         if (updated) {
-                            // console.log(`found naked pair ${cell} in ${zone} ${i + 1}`)
+                            console.log(`found naked pair ${cell} in ${zone} ${i + 1}`)
                             return {
                                 helpers: updatedCells
                             }

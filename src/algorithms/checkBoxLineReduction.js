@@ -47,8 +47,11 @@ function findBoxColReduction(helpers, boxHelpers, col, row, colInSquare) {
 
     const pinnedHelpers = getPinnedHelpers(colHelpers, boxHelpers, row)
     if (pinnedHelpers.length) {
-        // console.log('pinned helpers', pinnedHelpers, 'in square', col, row, 'from col', colIndex)
-        return removeFromSquare(helpers, pinnedHelpers, col, row, colIndex, 'col')
+        const result = removeFromSquare(helpers, pinnedHelpers, col, row, colIndex, 'col')
+        if (result) {
+            console.log('pinned values', pinnedHelpers, 'in square', col + 1, row + 1, 'from col', col + colIndex + 1)
+        }
+        return result
     }
 
     return null
@@ -60,8 +63,11 @@ function findBoxRowReduction(helpers, boxHelpers, col, row, rowInSquare) {
 
     const pinnedHelpers = getPinnedHelpers(rowHelpers, boxHelpers, col)
     if (pinnedHelpers.length) {
-        // console.log('pinned helpers', pinnedHelpers, 'in square', col, row, 'from row', rowIndex)
-        return removeFromSquare(helpers, pinnedHelpers, col, row, rowIndex, 'row')
+        const result = removeFromSquare(helpers, pinnedHelpers, col, row, rowIndex, 'row')
+        if (result) {
+            console.log('pinned values', pinnedHelpers, 'in square', col + 1, row + 1, 'from row', row + rowIndex + 1)
+        }
+        return result
     }
 
     return null

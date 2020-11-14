@@ -50,8 +50,11 @@ function findPointingColTuples(helpers, boxHelpers, num, col, colInSquare) {
 
     const pinnedHelpers = getPinnedHelpers(boxHelpers, squareHelpers)
     if (pinnedHelpers.length) {
-        // console.log('pinned helpers', pinnedHelpers, 'in col', col, 'from square', num)
-        return removeFromCol(helpers, pinnedHelpers, col, num)
+        const result = removeFromCol(helpers, pinnedHelpers, col, num)
+        if (result) {
+            console.log('pinned values', pinnedHelpers, 'in col', col + 1, 'from square', num + 1)
+        }
+        return result
     }
 
     return null
@@ -63,8 +66,11 @@ function findPointingRowTuples(helpers, boxHelpers, num, row, rowInSquare) {
 
     const pinnedHelpers = getPinnedHelpers(boxHelpers, squareHelpers)
     if (pinnedHelpers.length) {
-        // console.log('pinned helpers', pinnedHelpers, 'in row', line, 'from square', num)
-        return removeFromRow(helpers, pinnedHelpers, row, num)
+        const result = removeFromRow(helpers, pinnedHelpers, row, num)
+        if (result) {
+            console.log('pinned values', pinnedHelpers, 'in row', row + 1, 'from square', num + 1)
+        }
+        return result
     }
 
     return null

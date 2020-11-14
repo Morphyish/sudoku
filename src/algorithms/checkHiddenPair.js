@@ -19,7 +19,7 @@ export function checkHiddenPair(helpers) {
                     const {updated, cells} = remove(helpers, i, tuple, indexes, label)
 
                     if (updated) {
-                        // console.log(`found hidden tuple ${pair} in ${label} ${i + 1}`)
+                        console.log(`found hidden pair ${pair} in ${label} ${i + 1}`)
                         return {
                             helpers: cells,
                         }

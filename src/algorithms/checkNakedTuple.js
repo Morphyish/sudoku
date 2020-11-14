@@ -36,7 +36,7 @@ export function checkNakedTuple(helpers) {
                         if (values.length === 3) {
                             const { updated, cells: updatedCells } = remove(helpers, values, num, zone)
                             if (updated) {
-                                // console.log(`found naked triple ${values} in ${zone} ${i + 1}`)
+                                console.log(`found naked triple ${values} in ${zone} ${num + 1}`)
                                 return {
                                     helpers: updatedCells
                                 }
@@ -57,7 +57,7 @@ export function checkNakedTuple(helpers) {
                             if (values.length === 4) {
                                 const { updated, cells: updatedCells } = remove(helpers, values, num, zone)
                                 if (updated) {
-                                    // console.log(`found naked quads ${values} in ${zone} ${i + 1}`)
+                                    console.log(`found naked quads ${values} in ${zone} ${num + 1}`)
                                     return {
                                         helpers: updatedCells
                                     }
