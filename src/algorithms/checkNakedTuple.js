@@ -1,11 +1,11 @@
 import { getCell, getCol, getRow, getSquare, removeDuplicates } from '../utils'
 
 export function checkNakedTuple(helpers) {
-    for (let i = 0; i < 9; i++) {
+    for (let num = 0; num < 9; num++) {
         const zones = {
-            row: getRow(helpers, i),
-            col: getCol(helpers, i),
-            square: getSquare(helpers, i),
+            row: getRow(helpers, num),
+            col: getCol(helpers, num),
+            square: getSquare(helpers, num),
         }
 
         for (let [zone, cells] of Object.entries(zones)) {
@@ -34,7 +34,7 @@ export function checkNakedTuple(helpers) {
                         // Triples
                         let values = removeDuplicates(tripleCandidates.flat())
                         if (values.length === 3) {
-                            const { updated, cells: updatedCells } = remove(helpers, values, i, zone)
+                            const { updated, cells: updatedCells } = remove(helpers, values, num, zone)
                             if (updated) {
                                 // console.log(`found naked triple ${values} in ${zone} ${i + 1}`)
                                 return {
@@ -55,7 +55,7 @@ export function checkNakedTuple(helpers) {
                             ]
                             const values = removeDuplicates(quadCandidates.flat())
                             if (values.length === 4) {
-                                const { updated, cells: updatedCells } = remove(helpers, values, i, zone)
+                                const { updated, cells: updatedCells } = remove(helpers, values, num, zone)
                                 if (updated) {
                                     // console.log(`found naked quads ${values} in ${zone} ${i + 1}`)
                                     return {
