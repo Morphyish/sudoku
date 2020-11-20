@@ -1,8 +1,8 @@
+import Button from './Button.svelte'
+import Toggle from './Toggle.svelte'
 import Messages from './Messages.svelte'
+import Nav from './Nav.svelte'
 import Title from './Title.svelte'
-import { Board } from './Board'
-import { History } from './History'
-import { Settings } from './Settings'
-import { Actions } from './Actions'
+import Route from './Route.svelte'
 
-export { Messages, Title, Board, History, Settings, Actions }
+export { Messages, Title, Toggle, Button, Route, Nav }

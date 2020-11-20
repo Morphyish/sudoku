@@ -1,8 +1,8 @@
 <script>
     import { VirtualKeyboard } from './VirtualKeyboard'
     import Cell from './Cell.svelte'
-    import { errors, grid, helper, settings, history, sudoku } from '../../stores'
-    import { getCell } from '../../utils'
+    import { errors, grid, helper, settings, history, sudoku } from '../../../stores'
+    import { getCell } from '../../../utils'
 
     const cells = []
     let focusedCell = -1

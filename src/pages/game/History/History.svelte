@@ -2,7 +2,7 @@
     import Entry from './Entry.svelte'
 
     import { afterUpdate } from 'svelte'
-    import { history } from '../../stores'
+    import { history } from '../../../stores'
 
     let entriesList
     let entries = []

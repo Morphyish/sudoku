@@ -1,44 +1,20 @@
 <script>
-    import { Board, History, Settings, Messages, Actions, Title } from './components'
+    import { Layout, Router } from './pages'
 
     import { onMount } from 'svelte'
-    import { sudoku } from './stores'
+    import { grid, sudoku } from './stores'
 
     onMount(() => {
-        sudoku.load()
+        const sudokuSnapshop = JSON.parse(localStorage.getItem('sudoku'))
+        const gridSnapshop = JSON.parse(localStorage.getItem('grid'))
+
+        if (sudokuSnapshop) {
+            sudoku.set(sudokuSnapshop)
+            grid.set(gridSnapshop)
+        }
     })
 </script>
 
-<Title />
-<main>
-    <div class="game">
-        <Settings />
-        <Board />
-
-        <Messages />
-        <Actions />
-    </div>
-    <History />
-</main>
-
-<style>
-    main {
-        display: flex;
-        flex: 1;
-        overflow: hidden;
-    }
-
-    .game {
-        display: flex;
-        flex-direction: column;
-        flex: 1;
-        align-items: center;
-        padding: 0 .5rem .5rem .5rem;
-    }
-
-    @media screen and (max-width: 50rem) {
-        main {
-            overflow: auto;
-        }
-    }
-</style>
+<Layout>
+    <Router />
+</Layout>

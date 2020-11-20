@@ -36,16 +36,6 @@ function sudokuStore() {
         }
     })
 
-    const load = () => {
-        const sudokuSnapshop = JSON.parse(localStorage.getItem('sudoku'))
-        const gridSnapshop = JSON.parse(localStorage.getItem('grid'))
-
-        if (sudokuSnapshop) {
-            sudoku.set(sudokuSnapshop)
-            grid.set(gridSnapshop)
-        }
-    }
-
     const empty = () => {
         errors.reset()
         history.reset()
@@ -171,7 +161,6 @@ function sudokuStore() {
         solveNextStep,
         solveAll,
         save,
-        load,
     }
 }
 

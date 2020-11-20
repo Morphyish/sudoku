@@ -1,6 +1,5 @@
 <script>
-    import Toggle from './Toggle.svelte'
-
+    import { Toggle } from '../../components'
     import { sudoku, settings } from '../../stores'
 </script>
 

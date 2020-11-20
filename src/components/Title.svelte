@@ -1,4 +1,4 @@
-<h1 class="noprint">
+<h1>
     <span class="sudoku">Sudoku</span>
     <span class="trainer">trainer</span>
 </h1>
@@ -7,9 +7,9 @@
     h1 {
         display: flex;
         flex-direction: column;
-        margin: .5rem 1rem 2rem 1rem;
         font-size: 2rem;
         line-height: .75;
+        margin: 0;
     }
 
     .sudoku {
