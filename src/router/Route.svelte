@@ -1,5 +1,5 @@
 <script>
-    import { CURRENT_ROUTE } from './current-route'
+    import { CURRENT_ROUTE } from './routing'
 
     export let path = undefined
     export let component

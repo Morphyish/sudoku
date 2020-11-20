@@ -1,5 +1,5 @@
 <script>
-    import Link from './Link.svelte'
+    import { Link } from '../router'
 
     let gameIsActive = false
     let newIsActive = false

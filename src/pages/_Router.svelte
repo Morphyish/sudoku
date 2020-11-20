@@ -1,5 +1,5 @@
 <script>
-    import { Route } from '../components'
+    import { Route } from '../router'
     import { Game } from './game'
     import { New } from './new'
 </script>
